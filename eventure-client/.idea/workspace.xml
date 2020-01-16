@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b939a5ce-b1ac-4120-b36a-cfe4bd893aa1" name="Default Changelist" comment="" />
+    <list default="true" id="b939a5ce-b1ac-4120-b36a-cfe4bd893aa1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +36,13 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../exampleRepos/react-admin-nestjsx-crud-dataprovider" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="ServiceViewManager">
@@ -55,7 +67,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1578769277364</updated>
-      <workItem from="1578769279258" duration="3079000" />
+      <workItem from="1578769279258" duration="4065000" />
+      <workItem from="1578899756909" duration="13397000" />
     </task>
     <servers />
   </component>
@@ -70,21 +83,29 @@
       <screen x="67" y="27" width="1533" height="873" />
     </state>
     <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl/67.27.1533.873@67.27.1533.873" timestamp="1578770640539" />
-    <state width="1510" height="219" key="GridCell.Tab.0.bottom" timestamp="1578769714166">
+    <state width="1510" height="219" key="GridCell.Tab.0.bottom" timestamp="1579026181593">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state width="1510" height="219" key="GridCell.Tab.0.bottom/67.27.1533.873@67.27.1533.873" timestamp="1578769714166" />
-    <state width="1510" height="219" key="GridCell.Tab.0.center" timestamp="1578769714166">
+    <state width="1510" height="219" key="GridCell.Tab.0.bottom/67.27.1533.873@67.27.1533.873" timestamp="1579026181593" />
+    <state width="1510" height="219" key="GridCell.Tab.0.center" timestamp="1579026181592">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state width="1510" height="219" key="GridCell.Tab.0.center/67.27.1533.873@67.27.1533.873" timestamp="1578769714166" />
-    <state width="1510" height="219" key="GridCell.Tab.0.left" timestamp="1578769714165">
+    <state width="1510" height="219" key="GridCell.Tab.0.center/67.27.1533.873@67.27.1533.873" timestamp="1579026181592" />
+    <state width="1510" height="219" key="GridCell.Tab.0.left" timestamp="1579026181592">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state width="1510" height="219" key="GridCell.Tab.0.left/67.27.1533.873@67.27.1533.873" timestamp="1578769714165" />
-    <state width="1510" height="219" key="GridCell.Tab.0.right" timestamp="1578769714166">
+    <state width="1510" height="219" key="GridCell.Tab.0.left/67.27.1533.873@67.27.1533.873" timestamp="1579026181592" />
+    <state width="1510" height="219" key="GridCell.Tab.0.right" timestamp="1579026181593">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state width="1510" height="219" key="GridCell.Tab.0.right/67.27.1533.873@67.27.1533.873" timestamp="1578769714166" />
+    <state width="1510" height="219" key="GridCell.Tab.0.right/67.27.1533.873@67.27.1533.873" timestamp="1579026181593" />
+    <state x="487" y="80" width="683" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578931407995">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="487" y="80" width="683" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1533.873@67.27.1533.873" timestamp="1578931407995" />
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup" timestamp="1578991691702">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1578991691702" />
   </component>
 </project>
