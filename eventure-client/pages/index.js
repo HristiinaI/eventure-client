@@ -1,58 +1,43 @@
-import React from 'react'
-import axios from 'axios'
-// import ReactTable from 'react-table'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from "../components/form"
+import React, {Component} from 'react';
+// import fetch from 'isomorphic-unfetch';
+// import Form from '../components/form.js';
+import axios from "axios";
+// import { Formik, Form, Field} from "formik";
 
-const columns = [
-  {
-    Header: 'Name',
-    accessor: 'name'
+
+export default class Home extends React.Component {
+  state = {
+    name: '',
   }
-]
-
-const data = [
-  {
-    name: 'Stan Lee',
-    review: 'This movie was awesome',
-    rating: '9.5'
+  handleChange = event =>{
+    this.setState({value: event.target.value});
   }
-]
+  
+  handleSubmit = event =>{
+    event.preventDefault();
 
-export default class Index extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      data: data
-    }
-  }
+    const eventName ={
+      name: this.state.name
+    };
 
-  handleFormSubmit (data) {
-    axios.post('http://localhost:8080', data)
+    axios.post('http://localhost:8080/events', { eventName })
     .then(res => {
-      console.log('received by server')
+      console.log(res);
+      console.log(res.data);
     })
-    .catch(error => {
-      throw error
-    })
-  }
-
-  render () {
+  };
+  
+  render() {
     return (
       <div>
-        <Form handleFormSubmit={this.handleFormSubmit.bind(this)} />
-        {/* <ReactTable
-          data={this.state.data}
-          columns={columns}
-          defaultPageSize={10}
-        /> */}
-      </div>
-    )
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Event Name:
+          <input type="text" name="name" onChange={this.handleChange} />
+        </label>
+        <button type="submit" value="Submit"></button>
+      </form>
+    </div>
+    );
   }
 }
-// const Index = () => (
-// <Form>Welcome to WHATABYTE!</Form>
-// )
-
-// export default Index;
-
