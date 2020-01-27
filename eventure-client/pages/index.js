@@ -10,17 +10,17 @@ export default class Home extends React.Component {
     name: '',
   }
   handleChange = event =>{
-    this.setState({value: event.target.value});
+    this.setState({name: event.target.value});
   }
   
   handleSubmit = event =>{
     event.preventDefault();
 
-    const eventName ={
-      name: this.state.name
-    };
+    name = this.state.name;
 
-    axios.post('http://localhost:8080/events', { eventName })
+    console.log(name);
+
+    axios.post('http://localhost:8080/events', { name })
     .then(res => {
       console.log(res);
       console.log(res.data);
@@ -33,7 +33,7 @@ export default class Home extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Event Name:
-          <input type="text" name="name" onChange={this.handleChange} />
+          <input type="text" name="name" value = {this.state.name} onChange={this.handleChange} />
         </label>
         <button type="submit" value="Submit"></button>
       </form>
