@@ -1,23 +1,27 @@
 import React, {Component} from 'react';
-// import fetch from 'isomorphic-unfetch';
-// import Form from '../components/form.js';
 import axios from "axios";
-import { timingSafeEqual } from 'crypto';
-// import { Formik, Form, Field} from "formik";
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+ 
+import 'react-datepicker/dist/react-datepicker.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default class Home extends React.Component {
   state = {
     name: '',
     type: '',
+    startDate: new Date(),
   }
   onNameChanged = event =>{
     this.setState({name: event.target.value});
 
   }
-
   onTypeChanged = event =>{
     this.setState({type: event.target.value});
+  }
+  onDateChanged = date =>{
+    this.setState({startDate: date});
   }
 
   
@@ -26,10 +30,11 @@ export default class Home extends React.Component {
 
     const name = this.state.name;
     const type = this.state.type;
-
+    const date = this.state.startDate;
+  
     console.log(name);
 
-    axios.post('http://localhost:8080/events', { name, type })
+    axios.post('http://localhost:8080/events', { name, type, date})
     .then(res => {
       console.log(res);
       console.log(res.data);
@@ -38,8 +43,6 @@ export default class Home extends React.Component {
   
   render() {
     return (
-    
-    
     <div>
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -66,6 +69,15 @@ export default class Home extends React.Component {
               onChange={this.onTypeChanged}/>
               Private
           </label>
+        </div>
+        <div class="form-group">
+          <label>Select date:</label>
+          <DatePicker
+            selected={ this.state.startDate }
+            onChange={ this.onDateChanged }
+            name="startDate"
+            dateFormat="MM/dd/yyyy"
+          />
         </div>
         <button type="submit" value="Submit"></button>
       </form>
