@@ -1,88 +1,113 @@
-import React from 'react'
-import Head from 'next/head'
-import Nav from '../components/nav'
+import React, {Component} from 'react';
+import axios from "axios";
 
-const Home = () => (
-  <div>
-    <Head>
-      <title>Home</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+export default class Home extends React.Component {
+  state = {
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    type: '',
+  }
+  onEmailChanged = user =>{
+    this.setState({email: user.target.value});
 
-    <Nav />
+  }
 
-    <div className="hero">
-      <h1 className="title">Welcome to Next.js!</h1>
-      <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
-      </p>
+  onPasswordChanged = user =>{
+    this.setState({password: user.target.value});
 
-      <div className="row">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Learn more about Next.js in the documentation.</p>
-        </a>
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Next.js Learn &rarr;</h3>
-          <p>Learn about Next.js by following an interactive tutorial!</p>
-        </a>
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Find other example boilerplates on the Next.js GitHub.</p>
-        </a>
-      </div>
+  }
+
+  onFirstNameChanged = user =>{
+    this.setState({firstName: user.target.value});
+
+  }
+  
+  onLastNameChanged = user =>{
+    this.setState({lastName: user.target.value});
+
+  }
+
+  onTypeChanged = user =>{
+    this.setState({type: user.target.value});
+  }
+
+  handleSubmit = user =>{
+    user.preventDefault();
+
+    const email = this.state.email;
+    const password = this.state.password;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const type = this.state.type;
+
+    console.log(email);
+
+    axios.post('http://localhost:8000/users', { email, password, firstName, lastName, type })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
+  };
+  
+  render() {
+    return (
+    <div>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Email:
+          <input type="text" name="email" value = {this.state.email} 
+            onChange={this.onEmailChanged} />
+        </label>
+        <label>
+          Password:
+          <input type="text" name="password" value = {this.state.password} 
+            onChange={this.onPasswordChanged} />
+        </label>
+        <label>
+          First Name:
+          <input type="text" name="firstName" value = {this.state.firstName} 
+            onChange={this.onFirstNameChanged} />
+        </label>
+        <label>
+          Last Name:
+          <input type="text" name="lastName" value = {this.state.lastName} 
+            onChange={this.onLastNameChanged} />
+        </label>
+        <div className="radio">
+          <label>
+            <input 
+              type="radio" 
+              value="organizer" 
+              checked={this.state.type === 'organizer'}
+              onChange={this.onTypeChanged} />
+              Organizer
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            <input 
+              type="radio" 
+              value="sponsor" 
+              checked={this.state.type === 'sponsor'} 
+              onChange={this.onTypeChanged}/>
+              Sponsor
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            <input 
+              type="radio" 
+              value="volunteer" 
+              checked={this.state.type === 'volunteer'} 
+              onChange={this.onTypeChanged}/>
+              Volunteer
+          </label>
+        </div>
+        <button type="submit" value="Submit"></button>
+      </form>
     </div>
-
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title,
-      .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
-  </div>
-)
-
-export default Home
+    );
+  }
+}

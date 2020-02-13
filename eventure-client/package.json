@@ -8,8 +8,24 @@
     "start": "next start"
   },
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "cors": "^2.8.5",
+    "formik": "^2.1.2",
+    "isomorphic-unfetch": "^3.0.0",
+    "nest": "6.13.2",
     "next": "9.1.4",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": "16.12.0",
+    "react-table": "^7.0.0-rc.15",
+    "reactstrap": "^8.4.1"
+  },
+  "devDependencies": {
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "ts-loader": "^6.2.1",
+    "webpack": "^4.41.5"
   }
 }
