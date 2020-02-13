@@ -4,7 +4,8 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
  
 import 'react-datepicker/dist/react-datepicker.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+// import ImageUploader from 'react-images-upload';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default class Home extends React.Component {
@@ -12,6 +13,7 @@ export default class Home extends React.Component {
     name: '',
     type: '',
     startDate: new Date(),
+    file: '',
   }
   onNameChanged = event =>{
     this.setState({name: event.target.value});
@@ -23,6 +25,11 @@ export default class Home extends React.Component {
   onDateChanged = date =>{
     this.setState({startDate: date});
   }
+  onPictureChanged = e =>{
+    this.setState({
+      file: e.target.files[0]
+    })
+  }
 
   
   handleSubmit = event =>{
@@ -31,10 +38,11 @@ export default class Home extends React.Component {
     const name = this.state.name;
     const type = this.state.type;
     const date = this.state.startDate;
+    const file = this.state.file;
   
     console.log(name);
 
-    axios.post('http://localhost:8080/events', { name, type, date})
+    axios.post('http://localhost:8080/events', { name, type, date, file})
     .then(res => {
       console.log(res);
       console.log(res.data);
@@ -42,6 +50,10 @@ export default class Home extends React.Component {
   };
   
   render() {
+    let imgPreview;
+      if (this.state.file) {
+          imgPreview = <img src={this.state.file} alt='' />;
+      }
     return (
     <div>
       <form onSubmit={this.handleSubmit}>
@@ -78,6 +90,12 @@ export default class Home extends React.Component {
             name="startDate"
             dateFormat="MM/dd/yyyy"
           />
+        </div>
+        <div className="form-group preview">
+          {imgPreview}
+        </div>
+        <div className="form-group">
+          <input type="file" className="form-control" onChange={this.onPictureChanged} />
         </div>
         <button type="submit" value="Submit"></button>
       </form>
