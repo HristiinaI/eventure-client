@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import '../styles/register.css';
 
 export default class Register extends Component {
@@ -55,7 +55,43 @@ export default class Register extends Component {
   
   render() {
     return(
-        <Form className = "register-form" onSubmit = {this.handleSubmit}> 
+          <Container>
+            <h2>Sign Up</h2>
+            <Form className = "form" onSubmit = {this.handleSubmit}>
+              <Col>
+                  <FormGroup>
+                    <Label>Email</Label>
+                    <Input type="email" placeholder="Email" value = {this.state.email} 
+                onChange = {this.onEmailChanged}/>
+                  </FormGroup>
+              </Col>
+              <Col>
+                  <FormGroup>
+                    <Label>Password</Label>
+                    <Input type="password" placeholder="Password" value = {this.state.password} 
+                onChange = {this.onPasswordChanged}/>
+                  </FormGroup>
+              </Col>
+              <Col>
+                  <FormGroup>
+                    <Label>First Name</Label>
+                    <Input type="firstName" placeholder="First Name" value = {this.state.firstName} 
+                onChange = {this.onFirstNameChanged}/>
+                  </FormGroup>
+              </Col>
+              <Col>
+                  <FormGroup>
+                    <Label>Last Name</Label>
+                    <Input type="lastName" placeholder="Last Name" value = {this.state.lastName} 
+                onChange = {this.onLastNameChanged}/>
+                  </FormGroup>
+              </Col>
+              <Button  className = "btn-rg btn-dark">Sign Up</Button>            
+            </Form>
+          </Container> 
+    );
+  } 
+      /*<Form className = "register-form" onSubmit = {this.handleSubmit}> 
             <h1>
                 <span className="font-weight-bold">Eventure</span>    
             </h1>
@@ -79,7 +115,7 @@ export default class Register extends Component {
             <Button  className = "btn-rg btn-dark"> Register</Button>          
         </Form>
     );
-  }
+  }*/
     /*return (
     <div>
       <form onSubmit={this.handleSubmit}>
