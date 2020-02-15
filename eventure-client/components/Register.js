@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import axios from "axios";
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import '../styles/register.css';
 
-export default class Login extends Component {
+export default class Register extends Component {
   state = {
     email: '',
     password: '',
@@ -52,7 +54,33 @@ export default class Login extends Component {
   };
   
   render() {
-    return (
+    return(
+        <Form className = "register-form" onSubmit = {this.handleSubmit}> 
+            <h1>
+                <span className="font-weight-bold">Eventure</span>    
+            </h1>
+            <h2 className="text-center">Welcome</h2>
+            <FormGroup>
+                <Input  type="email" placeholder="Email" value = {this.state.email} 
+                onChange = {this.onEmailChanged}/>
+            </FormGroup>
+            <FormGroup>
+                <Input type="password" placeholder="Password" value = {this.state.password} 
+                onChange = {this.onPasswordChanged}/>
+            </FormGroup>
+            <FormGroup>
+                <Input type="firstName" placeholder="First Name" value = {this.state.firstName} 
+                onChange = {this.onFirstNameChanged}/>
+            </FormGroup>
+            <FormGroup>
+                <Input type="lastName" placeholder="Last Name" value = {this.state.lastName} 
+                onChange = {this.onLastNameChanged}/>
+            </FormGroup>
+            <Button  className = "btn-rg btn-dark"> Register</Button>          
+        </Form>
+    );
+  }
+    /*return (
     <div>
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -108,6 +136,6 @@ export default class Login extends Component {
         <button type="submit" value="Submit"></button>
       </form>
     </div>
-    );
-  }
+    );*/
+  
 }
