@@ -74,7 +74,7 @@ export default class Register extends Component {
 
     axios.post('http://localhost:8000/users', { email, password, firstName, lastName, 
       type, country, education, workplace, about })
-    .then(res => {
+      .then(res => {
       console.log(res);
       console.log(res.data);
     });
@@ -159,7 +159,7 @@ export default class Register extends Component {
                     </FormGroup>
                     <FormGroup>
                       <Label>About</Label>
-                      <Input type="text" className = "form-control" placeholder="About you" value = {this.state.about} 
+                      <Input type="textarea" className = "form-control" placeholder="About you" value = {this.state.about} 
                   onChange = {this.onAboutChanged}/>
                     </FormGroup>
                 <Button type="submit" className="btn btn-primary btn-block">Sign Up</Button>

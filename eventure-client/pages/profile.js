@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 
-// reactstrap components
 import {
   Button,
   Card,
@@ -15,10 +14,12 @@ import {
   Input,
   Row,
   Col,
-  Nav, NavItem, NavLink
+  Nav, 
+  NavItem, 
+  NavLink
 } from "reactstrap";
 
-class Profile extends React.Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -50,23 +51,45 @@ class Profile extends React.Component {
     })
   }
   
+  handleSubmit = user => {
+    user.preventDefault();
+
+    const email = this.state.email;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const type = this.state.type;
+    const country = this.state.country;
+    const education = this.state.education;
+    const workplace = this.state.workplace;
+    const about = this.state.about;
+
+    axios.put('http://localhost:8000/users', { email, firstName, lastName, 
+    type, country, education, workplace, about })
+    .then(res => {
+      console.log(res);
+      console.log(res.data)
+    });
+  }
+
   render() {
     return (
-      <>
         <div className="content">
-        <Nav> 
+        <Nav>
+        <NavItem> 
+            <NavLink href = "/addOrganization">+ Add organization</NavLink>    
+        </NavItem> 
         <NavItem> 
             <NavLink href = "/home">Home</NavLink>    
         </NavItem>
         <NavItem> 
-            <NavLink href = "/addOrganization">Add organization</NavLink>    
+            <NavLink href = "/myOrganization">My organization</NavLink>    
         </NavItem>
       </Nav>
           <Row>
             <Col md="8">
               <Card>
                 <CardHeader>
-                  <h5 className="title">Your profile</h5>
+                  <h5 className="title">My profile</h5>
                 </CardHeader>
                 <CardBody>
                   <Form>
@@ -172,7 +195,7 @@ class Profile extends React.Component {
                   </Form>
                 </CardBody>
                 <CardFooter>
-                  <Button className="btn-fill" color="primary" type="submit">
+                  <Button className="btn-fill" color="primary" type="submit" onClick = {this.handleSubmit}>
                     Save
                   </Button>
                 </CardFooter>
@@ -196,76 +219,6 @@ class Profile extends React.Component {
             </Col>
           </Row>
         </div>
-      </>
     );
   }
 }
-export default Profile;
-/*import React, {Component} from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import axios from 'axios';
-import DataTable from '../components/DataTable';
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardText,
-  FormGroup,
-  Form,
-  Input,
-  Row,
-  Col
-} from "reactstrap";
-
-export default class Profile extends Component {
-  
-  constructor(props) {
-    super(props);
-    this.state = { userData: [] };
-  }
-  
-  componentDidMount() {
-    axios.get('http://localhost:8000/users')
-    .then(res => {
-      this.setState({ userData: res.data });
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-  }
-
-  dataTable() {
-    return this.state.userData.map((data, i) => {
-      return <DataTable obj={data} key={i} />;
-    });
-  }
-
-  render()  {
-    return (
-      <div className="wrapper-users">
-        <div className="container">
-          <table className="table table-striped table-dark">
-            <thead className="thead-dark">
-              <tr>
-                <td>Email</td>
-                <td>First Name</td>
-                <td>Last Name</td>
-                <td>Type</td>
-                <td>Country</td>
-                <td>Education</td>
-                <td>Workplace</td>
-                <td>About</td>
-              </tr>
-            </thead>
-            <tbody>
-              {this.dataTable()[5]}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
-}
-*/

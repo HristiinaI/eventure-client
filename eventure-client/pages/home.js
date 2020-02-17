@@ -7,10 +7,13 @@ export default class Home extends Component {
     return (
       <Nav> 
         <NavItem> 
+            <NavLink href = "/addOrganization">+ Add organization</NavLink>    
+        </NavItem>
+        <NavItem> 
             <NavLink href = "/profile">My profile</NavLink>    
         </NavItem>
         <NavItem> 
-            <NavLink href = "/addOrganization">Add organization</NavLink>    
+            <NavLink href = "/myOrganization">My organization</NavLink>    
         </NavItem>
       </Nav>
     );

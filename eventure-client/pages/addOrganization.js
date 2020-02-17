@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import { Container,  Nav, NavItem, NavLink, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+
 export default class AddOrganization extends Component {
     state = {
         name: '',
@@ -51,6 +52,9 @@ export default class AddOrganization extends Component {
                     <NavItem> 
                         <NavLink href = "/profile">My profile</NavLink>    
                     </NavItem>
+                    <NavItem> 
+                        <NavLink href = "/myOrganization">My organization</NavLink>    
+                    </NavItem>
                 </Nav>                  
                   <Container className = "App">
                   <h2>Add organization</h2>
@@ -72,7 +76,7 @@ export default class AddOrganization extends Component {
                         </FormGroup>
                         <FormGroup>
                           <Label>About</Label>
-                          <Input type="text" className = "form-control" placeholder="About the organization" value = {this.state.about} 
+                          <Input type="textarea" className = "form-control" placeholder="About the organization" value = {this.state.about} 
                       onChange = {this.onAboutChanged}/>
                         </FormGroup>
                     <Button type="submit" className="btn btn-primary btn-block">Add</Button>          

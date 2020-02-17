@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
+    "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
@@ -21,7 +22,8 @@
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "16.12.0",
     "react-table": "^7.0.0-rc.15",
-    "reactstrap": "^8.4.1"
+    "reactstrap": "^8.4.1",
+    "source-map-loader": "^0.2.4"
   },
   "devDependencies": {
     "babel-loader": "^8.0.6",

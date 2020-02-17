@@ -19,7 +19,7 @@ export default class SignInPage extends Component {
                         <Label>Password</Label>
                         <Input type="password" className = "form-control" placeholder="Password"/>
                       </FormGroup>
-                  <Button type="submit" className="btn btn-primary btn-block" onClick={() => Router.push('/profile')}>Sign In</Button>
+                  <Button type="submit" className="btn btn-primary btn-block" onClick={() => Router.push('/home')}>Sign In</Button>
                     <p className="forgot-password text-center">
                         Don't have an account yet? <Link href="signUp">Sign up</Link>
                     </p>           
