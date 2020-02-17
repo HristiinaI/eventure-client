@@ -159,7 +159,7 @@ export default class Register extends Component {
                     </FormGroup>
                     <FormGroup>
                       <Label>About</Label>
-                      <Input type="text" className = "form-control" placeholder="Last Name" value = {this.state.about} 
+                      <Input type="text" className = "form-control" placeholder="About you" value = {this.state.about} 
                   onChange = {this.onAboutChanged}/>
                     </FormGroup>
                 <Button type="submit" className="btn btn-primary btn-block">Sign Up</Button>

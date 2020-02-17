@@ -14,7 +14,8 @@ import {
   Form,
   Input,
   Row,
-  Col
+  Col,
+  Nav, NavItem, NavLink
 } from "reactstrap";
 
 class Profile extends React.Component {
@@ -53,6 +54,14 @@ class Profile extends React.Component {
     return (
       <>
         <div className="content">
+        <Nav> 
+        <NavItem> 
+            <NavLink href = "/home">Home</NavLink>    
+        </NavItem>
+        <NavItem> 
+            <NavLink href = "/addOrganization">Add organization</NavLink>    
+        </NavItem>
+      </Nav>
           <Row>
             <Col md="8">
               <Card>
