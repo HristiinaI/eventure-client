@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
-import Register from '../components/SignUp';
 import 'bootstrap/dist/css/bootstrap.css';
-import SignUp from '../components/SignUp';
-import SignIn from '../components/SignIn';
+import { Nav, NavItem, NavLink } from 'reactstrap';
 
 export default class App extends Component {
   render()  {
     return (
-        <div className = "col-md-6">
-          <h1>Welcome to Eventure!</h1>
-        </div>
+      <Nav> 
+        <NavItem> 
+            <NavLink href = "/index">Home</NavLink>    
+        </NavItem>
+        <NavItem> 
+            <NavLink href = "/signIn">Sign In</NavLink>    
+        </NavItem>
+        <NavItem> 
+            <NavLink href = "/signUp">Sign Up</NavLink>    
+        </NavItem>
+      </Nav>
     );
   }
 }

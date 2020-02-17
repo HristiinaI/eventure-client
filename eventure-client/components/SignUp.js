@@ -14,7 +14,8 @@ export default class Register extends Component {
     education: '',
     workplace: '',
     about: '',
-  }
+  };
+
   onEmailChanged = user =>{
     this.setState({email: user.target.value});
 
@@ -71,11 +72,11 @@ export default class Register extends Component {
     console.log(email);
 
     axios.post('http://localhost:8000/users', { email, password, firstName, lastName, 
-    type, country, education, workplace, about })
+      type, country, education, workplace, about })
     .then(res => {
       console.log(res);
       console.log(res.data);
-    })
+    });
   };
   
   render() {
