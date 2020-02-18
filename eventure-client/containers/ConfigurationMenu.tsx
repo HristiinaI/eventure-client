@@ -2,6 +2,7 @@ import * as React from "react";
 // import Tabs from 'react-bootstrap/Tabs'
 import EventName from "../components/EventName";
 import EventDate from "../components/EventDate";
+import HandleSubmit from "../components/HandleSubmit";
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -58,22 +59,17 @@ export default function ConfigurationMenu() {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-   
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(prevSkipped => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
   const handleReset = () => {
     setActiveStep(0);
   };
 
+  const handleSubmit = () => {
+    <HandleSubmit />
+  }
+
   return (
-    <div className={classes.root}>
+    <form onSubmit = {handleSubmit}>
+    <div className={classes.root} >
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -91,9 +87,12 @@ export default function ConfigurationMenu() {
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished
             </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
+            <Button onClick={handleSubmit} className={classes.button}>
+              Submit
             </Button>
+            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                Back
+              </Button>
           </div>
         ) : (
           <div>
@@ -104,17 +103,19 @@ export default function ConfigurationMenu() {
               </Button>
 
               <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
+                 variant="contained"
+                 color="primary"
+                 onClick={handleNext}
+                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {/* {activeStep === steps.length - 1 ? 'Submit' : 'Next'} */}
+                Next
               </Button>
             </div>
           </div>
         )}
       </div>
     </div>
+    </form>
   );
 }

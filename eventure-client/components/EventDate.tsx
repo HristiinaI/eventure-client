@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
@@ -8,58 +7,35 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { Button } from "@material-ui/core";
 
-class EventDate extends React.Component {
+export default function EventDate() {
 
-  state = {
-    startDate: new Date(),
-  }
-  onDateChanged(date: any){
-    this.setState({startDate: date});
-  }
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+    new Date('2020-08-18T21:11:54'),
+  );
 
-  handleSubmit(event: any){
-    event.preventDefault();
-
-    const date = this.state.startDate;
-
-    axios.post('http://localhost:8080/events', {date})
-    .then(res => {
-      console.log(res);
-      console.log(res.data);
-    })
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
   };
 
-    render(){
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid container justify="space-around">
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="date-picker-inline"
-              label="Start date"
-              value={this.state.startDate}
-              onChange={this.onDateChanged}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-              />
-        </Grid>
-        </MuiPickersUtilsProvider>
-        
-        <Button>Submit</Button>
-    </form>
-    );
-        }
+      return (
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Start date"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+                />
+          </Grid>
+          </MuiPickersUtilsProvider>
+          
+      );
 }
-
-const buttonStyle = {
-      margin: "10px 10px 10px 10px"
-    };
-
-export default EventDate;
