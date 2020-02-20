@@ -108,7 +108,6 @@ export default function ConfigurationMenu() {
                  onClick={handleNext}
                  className={classes.button}
               >
-                {/* {activeStep === steps.length - 1 ? 'Submit' : 'Next'} */}
                 Next
               </Button>
             </div>

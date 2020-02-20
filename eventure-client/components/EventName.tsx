@@ -31,7 +31,7 @@ class EventName extends React.Component<{}, {}> {
           <form className="container-fluid">
             <TextField 
               id="outlined-basic" 
-              label="Outlined" 
+              label="Enter event name" 
               variant="outlined" 
               value = {this.state.name}
               onChange = {this.onNameChanged}

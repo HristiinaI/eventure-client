@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
  
 import 'react-datepicker/dist/react-datepicker.css';
 // import ImageUploader from 'react-images-upload';

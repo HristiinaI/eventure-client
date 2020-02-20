@@ -9,6 +9,7 @@ export default class HandleSubmit extends React.Component {
       type: '',
       startDate: new Date(),
     }
+  
 
     handleSubmit(event: any){
         event.preventDefault();
@@ -19,7 +20,7 @@ export default class HandleSubmit extends React.Component {
       
         console.log(name);
     
-        axios.post('http://localhost:8080/events', { name, type, date})
+        axios.post('http://localhost:8080/events', {name, type, date})
         .then(res => {
           console.log(res);
           console.log(res.data);

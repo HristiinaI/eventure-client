@@ -10,13 +10,25 @@ import {
 
 export default function EventDate() {
 
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+
+
+
+  const [selectedStartDate, setSelectedStartDate] = React.useState<Date | null>(
     new Date('2020-08-18T21:11:54'),
   );
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
+  const handleStartDateChange = (date: Date | null) => {
+    setSelectedStartDate(date);
   };
+
+  const [selectedEndDate, setSelectedEndDate] = React.useState<Date | null>(
+    new Date('2020-08-18T21:11:54'),
+  );
+
+  const handleEndDateChange = (date: Date | null) => {
+    setSelectedEndDate(date);
+  };
+
 
       return (
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -28,14 +40,29 @@ export default function EventDate() {
                 margin="normal"
                 id="date-picker-inline"
                 label="Start date"
-                value={selectedDate}
-                onChange={handleDateChange}
+                value={selectedStartDate}
+                onChange={handleStartDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+                />
+                <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="End date"
+                value={selectedEndDate}
+                onChange={handleEndDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
                 }}
                 />
           </Grid>
           </MuiPickersUtilsProvider>
+
+          
           
       );
 }
