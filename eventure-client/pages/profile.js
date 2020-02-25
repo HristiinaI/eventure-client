@@ -23,6 +23,7 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+      id: '',
       email: '',
       firstName: '',
       lastName: '',
@@ -35,25 +36,54 @@ export default class Profile extends Component {
   }
   
   componentDidMount() {
-    axios.get('http://localhost:8000/users')
+    const em = localStorage.getItem('email').substring(1, localStorage.getItem('email').length-1);
+
+    axios.get('http://localhost:8000/users/' + em)
     .then(res => {
-      this.setState({ email: res.data[5].email });
-      this.setState({ firstName: res.data[5].firstName });
-      this.setState({ lastName: res.data[5].lastName });
-      this.setState({ type: res.data[5].type });
-      this.setState({ country: res.data[5].country });
-      this.setState({ education: res.data[5].education });
-      this.setState({ workplace: res.data[5].workplace });
-      this.setState({ about: res.data[5].about });
+      this.setState({ id: res.data._id });
+      this.setState({ email: res.data.email });
+      this.setState({ firstName: res.data.firstName });
+      this.setState({ lastName: res.data.lastName });
+      this.setState({ type: res.data.type });
+      this.setState({ country: res.data.country });
+      this.setState({ education: res.data.education });
+      this.setState({ workplace: res.data.workplace });
+      this.setState({ about: res.data.about });
     })
     .catch(function (error) {
       console.log(error);
     })
   }
-  
+
+  onEmailChanged = user => {
+    this.setState({ email: user.target.value });
+  }
+  onFirstNameChanged = user => {
+    this.setState({ firstName: user.target.value });
+  }
+  onLastNameChanged = user => {
+    this.setState({ lastName: user.target.value });
+  }
+  onTypeChanged = user => {
+    this.setState({ type: user.target.value });
+  }
+  onCountryChanged = user => {
+    this.setState({ country: user.target.value });
+  }
+  onEducationChanged = user => {
+    this.setState({ education: user.target.value });
+  }
+  onWorkplaceChanged = user => {
+    this.setState({ workplace: user.target.value });
+  }
+  onAboutChanged = user => {
+    this.setState({ about: user.target.value });
+  }
+
   handleSubmit = user => {
     user.preventDefault();
 
+    const id = this.state.id;
     const email = this.state.email;
     const firstName = this.state.firstName;
     const lastName = this.state.lastName;
@@ -63,12 +93,8 @@ export default class Profile extends Component {
     const workplace = this.state.workplace;
     const about = this.state.about;
 
-    axios.put('http://localhost:8000/users', { email, firstName, lastName, 
-    type, country, education, workplace, about })
-    .then(res => {
-      console.log(res);
-      console.log(res.data)
-    });
+    axios.put('http://localhost:8000/users/' + id, { email, firstName, lastName, 
+    type, country, education, workplace, about });
   }
 
   render() {
@@ -173,7 +199,8 @@ export default class Profile extends Component {
                         <FormGroup>
                           <label>Workplace</label>
                           <Input
-                            defaultValue={this.state.workplace}
+                            value = {this.state.workplace} 
+                            onChange = {this.onWorkplaceChanged}
                             placeholder="Workplace"
                             type="text"
                           />
@@ -204,15 +231,8 @@ export default class Profile extends Component {
             <Col md="4">
               <Card className="card-user">
                 <CardBody>
-                  <CardText />
-                  <div className="author">
-                    <div className="block block-one" />
-                    <div className="block block-two" />
-                    <div className="block block-three" />
-                    <div className="block block-four" />
-                    <div> 
-                      <img src = "https://softuni.bg/users/profile/showavatar/6ee3c3c3-d7dc-41fa-8c07-9d72fdc0af11" width="256" height="256"/>
-                    </div>
+                  <div >
+                      <img src = "https://ezadtech.com/wp-content/uploads/2019/03/chilled-cool-whatsapp-dp.jpg" width="256" height="256"/>
                   </div>
                 </CardBody>
               </Card>

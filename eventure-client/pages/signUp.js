@@ -19,7 +19,6 @@ export default class Register extends Component {
 
   onEmailChanged = user =>{
     this.setState({email: user.target.value});
-
   }
 
   onPasswordChanged = user =>{
@@ -57,7 +56,7 @@ export default class Register extends Component {
     this.setState({about: user.target.value});
   }
 
-  handleSubmit = user =>{
+  handleSubmit = user => {
     user.preventDefault();
 
     const email = this.state.email;

@@ -132,7 +132,7 @@ export default class MyOrganization extends Component {
                         <div className="block block-three" />
                         <div className="block block-four" />
                         <div> 
-                          <img src = "https://www.elsys-bg.org/web/files/news/316/main_image/profilna_official.png" width="256" height="256"/>
+                          <img src = "https://www.elsys-bg.org/web/files/news/270/gallery/thumb_980x630_logo2.png" width="356" height="256"/>
                         </div>
                       </div>
                     </CardBody>
