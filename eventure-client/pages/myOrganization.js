@@ -14,61 +14,60 @@ import {
   Input,
   Row,
   Col,
-  Nav, 
-  NavItem, 
-  NavLink
 } from "reactstrap";
+
+import Home from './home';
 
 export default class MyOrganization extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            members: '',
+          id: '',  
+          members: '',
             name: '',
             about: '',
         };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/organizations')
+      const org = localStorage.getItem('organizations').substring(1, localStorage.getItem('organizations').length - 1)
+        axios.get('http://localhost:8000/organizations/' + org)
         .then(res => {
-          this.setState({ members: res.data[1].members });
-          this.setState({ name: res.data[1].name });
-          this.setState({ about: res.data[1].about });
+          this.setState({ id: res.data._id });
+          this.setState({ members: res.data.members });
+          this.setState({ name: res.data.name });
+          this.setState({ about: res.data.about });
         })
         .catch(function (error) {
           console.log(error);
         })
     }
 
+    onMembersChanged = org => {
+      this.setState({ members: org.target.value });
+    }
+    onNameChanged = org => {
+      this.setState({ name: org.target.value });
+    }
+    onAboutChanged = org => {
+      this.setState({ about: org.target.value });
+    }
+
     handleSubmit = organization => {
         organization.preventDefault();
 
+        const id = this.state.id;
         const members = this.state.members;
         const name = this.state.name;
         const about = this.state.about;
     
-        axios.put('http://localhost:8000/organizations', { members, name, about })
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-        });
+        axios.put('http://localhost:8000/organizations/' + id, { members, name, about });
     }
 
     render() {
         return (
             <div className="content">
-            <Nav>
-            <NavItem> 
-                <NavLink href = "/addOrganization">+ Add organization</NavLink>    
-            </NavItem> 
-            <NavItem> 
-                <NavLink href = "/profile">My profile</NavLink>    
-            </NavItem>
-            <NavItem> 
-                <NavLink href = "/home">Home</NavLink>    
-            </NavItem>
-          </Nav>
+              <Home />
               <Row>
                 <Col md="8">
                   <Card>
@@ -82,7 +81,8 @@ export default class MyOrganization extends Component {
                             <FormGroup>
                               <label>Members</label>
                               <Input
-                                defaultValue={this.state.members}
+                                value={this.state.members}
+                                onChange={this.onMembersChanged}
                                 placeholder="Members"
                                 type="text"
                               />
@@ -92,7 +92,8 @@ export default class MyOrganization extends Component {
                             <FormGroup>
                               <label>Name</label>
                               <Input
-                                defaultValue={this.state.name}
+                                value={this.state.name}
+                                onChange={this.onNameChanged}
                                 placeholder="Name"
                                 type="text"
                               />
@@ -105,7 +106,8 @@ export default class MyOrganization extends Component {
                               <label>About Me</label>
                               <Input
                                 cols="80"
-                                defaultValue={this.state.about}
+                                value={this.state.about}
+                                onChange={this.onAboutChanged}
                                 placeholder="Say something about your organization here :)"
                                 rows="8"
                                 type="textarea"
@@ -116,7 +118,7 @@ export default class MyOrganization extends Component {
                       </Form>
                     </CardBody>
                     <CardFooter>
-                      <Button className="btn-fill" color="primary" type="submit" onClick={this.hand}>
+                      <Button className="btn-fill" color="primary" type="submit" onClick={this.handleSubmit}>
                         Save
                       </Button>
                     </CardFooter>
@@ -126,15 +128,9 @@ export default class MyOrganization extends Component {
                   <Card className="card-user">
                     <CardBody>
                       <CardText />
-                      <div className="author">
-                      <div className="block block-one" />
-                        <div className="block block-two" />
-                        <div className="block block-three" />
-                        <div className="block block-four" />
                         <div> 
                           <img src = "https://www.elsys-bg.org/web/files/news/270/gallery/thumb_980x630_logo2.png" width="356" height="256"/>
                         </div>
-                      </div>
                     </CardBody>
                   </Card>
                 </Col>

@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
-import { Container,  Nav, NavItem, NavLink, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container,  FormGroup, Label, Input } from 'reactstrap';
+import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+
+import Home from './home';
 
 export default class AddOrganization extends Component {
     state = {
@@ -37,25 +40,16 @@ export default class AddOrganization extends Component {
 
         axios.post('http://localhost:8000/organizations', { name, members, password, about })
             .then(res => {
-            console.log(res);
-            console.log(res.data);
-        });
+                localStorage.setItem('organizations', JSON.stringify(name));
+            }      
+        );
     };
 
     render() {
         return(
-              <div className = "col-md-6">
-                <Nav> 
-                    <NavItem> 
-                        <NavLink href = "/home">Home</NavLink>    
-                    </NavItem>
-                    <NavItem> 
-                        <NavLink href = "/profile">My profile</NavLink>    
-                    </NavItem>
-                    <NavItem> 
-                        <NavLink href = "/myOrganization">My organization</NavLink>    
-                    </NavItem>
-                </Nav>                  
+            <div align = "center">
+                <Home />        
+              <div className = "col-md-6" >           
                   <Container className = "App">
                   <h2>Add organization</h2>
                   <Form className = "form" onSubmit = {this.handleSubmit}>
@@ -83,6 +77,7 @@ export default class AddOrganization extends Component {
                   </Form>
                 </Container> 
               </div>
+            </div>
         );
     }
 }

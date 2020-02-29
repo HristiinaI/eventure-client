@@ -72,11 +72,7 @@ export default class Register extends Component {
     console.log(email);
 
     axios.post('http://localhost:8000/users', { email, password, firstName, lastName, 
-      type, country, education, workplace, about })
-      .then(res => {
-      console.log(res);
-      console.log(res.data);
-    });
+      type, country, education, workplace, about });
   };
   
   render() {

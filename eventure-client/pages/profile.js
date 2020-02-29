@@ -3,21 +3,19 @@ import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
   CardFooter,
-  CardText,
   FormGroup,
-  Form,
   Input,
   Row,
   Col,
-  Nav, 
-  NavItem, 
-  NavLink
+  Form,
+  Button
 } from "reactstrap";
+
+import Home from './home';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -100,17 +98,7 @@ export default class Profile extends Component {
   render() {
     return (
         <div className="content">
-        <Nav>
-        <NavItem> 
-            <NavLink href = "/addOrganization">+ Add organization</NavLink>    
-        </NavItem> 
-        <NavItem> 
-            <NavLink href = "/home">Home</NavLink>    
-        </NavItem>
-        <NavItem> 
-            <NavLink href = "/myOrganization">My organization</NavLink>    
-        </NavItem>
-      </Nav>
+          <Home />
           <Row>
             <Col md="8">
               <Card>
