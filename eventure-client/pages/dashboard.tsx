@@ -7,7 +7,8 @@ import GridContainer from '../components/Grid/GridContainer';
 import CardBody from '../components/Card/CardBody';
 import Card from '../components/Card/Card';
 import CardHeader from '../components/Card/CardHeader';
-
+import CardFooter from '../components/Card/CardFooter';
+import Button from '../components/CustomButton/Button'
 
 
 
@@ -67,15 +68,6 @@ function Dashboard(props: any) {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={3}>
                         <CustomInput
-                            labelText="Event location"
-                            id="eventLocation"
-                            formControlProps={{
-                            fullWidth: true
-                            }}
-                        />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={3}>
-                        <CustomInput
                             labelText="Event Strat Date"
                             id="eventStartDate"
                             formControlProps={{
@@ -109,8 +101,10 @@ function Dashboard(props: any) {
                         />
                         </GridItem>
                     </GridContainer>
-
                 </CardBody>
+                <CardFooter>
+                    <Button color="primary">Update Profile</Button>
+                </CardFooter>
             </Card>
             </GridItem>
         </GridContainer>
