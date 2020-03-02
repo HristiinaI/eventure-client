@@ -21,9 +21,9 @@ export default class Home extends Component {
   handleClick = user => {
     user.preventDefault();
     if(JSON.parse(localStorage.getItem('role')) == "Organization") {
-      Router.push('/myOrganization');
+      Router.push('/organizations/myOrganization');
     } else {
-      Router.push('/profile');
+      Router.push('/users/profile');
     }
   }
 
@@ -58,11 +58,11 @@ export default class Home extends Component {
       localStorage.setItem('avatar', JSON.stringify(this.state.item));
       
       if(item.includes("@")) {
-        Router.push('/userAvatar');
-        Router.reload('/userAvatar');
+        Router.push('/users/userAvatar');
+        Router.reload('/users/userAvatar');
       } else if(!item.includes("@")) {
-        Router.push('/orgAvatar');
-        Router.reload('/orgAvatar');
+        Router.push('/organizations/orgAvatar');
+        Router.reload('/organizations/orgAvatar');
       } 
     }
   };
@@ -79,11 +79,12 @@ export default class Home extends Component {
          <Navbar bg="light" variant="light">
            <Navbar.Brand href="/home">Home</Navbar.Brand>
              <Nav className="mr-auto">
-               <Nav.Link href="/addOrganization">Create organization</Nav.Link>            
+             <Nav.Link href = "/createEvent">Create event</Nav.Link>
+               <Nav.Link href="/organizations/addOrganization">Create organization</Nav.Link>            
                <NavDropdown title="Settings" id="collasible-nav-dropdown">
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
                  <NavDropdown.Divider />
-                 <NavDropdown.Item href="/changePassword">Change password</NavDropdown.Item>
+                 <NavDropdown.Item href="/users/changePassword">Change password</NavDropdown.Item>
                </NavDropdown>
              </Nav>
              <Form onSubmit = {this.handleSubmit} inline>
