@@ -18,7 +18,7 @@ import {
 
 import { ListGroup } from 'react-bootstrap';
 
-import Home from './home';
+import Home from '../home';
 
 export default class MyOrganizations extends Component {
     state = {

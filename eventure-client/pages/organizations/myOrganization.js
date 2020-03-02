@@ -16,7 +16,7 @@ import {
   Col,
 } from "reactstrap";
 
-import Home from './home';
+import Home from '../home';
 
 export default class MyOrganization extends Component {
     constructor(props) {

@@ -15,7 +15,7 @@ import {
   Button
 } from "reactstrap";
 
-import Home from './home';
+import Home from '../home';
 
 export default class Profile extends Component {
   constructor(props) {

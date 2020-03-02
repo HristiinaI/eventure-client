@@ -4,7 +4,7 @@ import axios from "axios";
 import { Container,  FormGroup, Label, Input } from 'reactstrap';
 import { Form, Button } from 'react-bootstrap';
 
-import Home from './home';
+import Home from '../home';
 
 export default class AddOrganization extends Component {
     state = {

@@ -7,7 +7,7 @@ import {
   Input,
 } from "reactstrap";
 
-import Home from './home';
+import Home from '../home';
 
 export default class Avatar extends Component {
     state = { 
