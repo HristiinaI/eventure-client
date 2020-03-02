@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+import { Nav, Navbar, Form, NavDropdown, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Router from 'next/router';
 
@@ -9,51 +9,94 @@ import { Input } from 'reactstrap';
 export default class Home extends Component {
   state = {
       item: '',
-      statusCode: '',  
+      role: '', 
   };
   
+
+
   onSearch = user => {
     this.setState({item: user.target.value});
   }
 
+  handleClick = user => {
+    user.preventDefault();
+    if(JSON.parse(localStorage.getItem('role')) == "Organization") {
+      Router.push('/myOrganization');
+    } else {
+      Router.push('/profile');
+    }
+  }
+
   handleSubmit = user => {
     user.preventDefault();
-    
+
     const item = this.state.item;
-    
-    axios.get('http://localhost:8000/users/' + item)
-    .then(res => {
-      this.setState({ item: res.data.email });
-    })
-    .catch(function (error) {
-      if(error.response) {
-        console.log(error);
-      }
-    });
+    if(item) {
+        if(item.includes("@")) {
+          axios.get('http://localhost:8080/users/' + item)
+          .then(res => {
+            this.setState({ item: res.data.email });
+            this.setState({ role: res.data.role });
+          })
+          .catch(function (error) {
+            if(error.response) {
+              console.log(error);
+            }
+          });
+        }  else {
+            axios.get('http://localhost:8080/organizations/' + item)
+            .then(res => {
+              this.setState({ item: res.data.name });
+            })
+            .catch(function (error) {
+              if(error.response) {
+                console.log(error);
+              }
+            });
+    }
   
-    localStorage.setItem('email_avatar', JSON.stringify(this.state.item));
-    Router.push('/userAvatar');
-    
+      localStorage.setItem('avatar', JSON.stringify(this.state.item));
+      
+      if(item.includes("@")) {
+        Router.push('/userAvatar');
+        Router.reload('/userAvatar');
+      } else if(!item.includes("@")) {
+        Router.push('/orgAvatar');
+        Router.reload('/orgAvatar');
+      } 
+    }
   };
 
-  render()  {
-    return (
-     <div>
-      <Navbar bg="light" variant="light">
-        <Navbar.Brand href="/home">Home</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="/addOrganization">+Add organization</Nav.Link>
-            <Nav.Link href="/profile">My profile</Nav.Link>
-            <Nav.Link href="/myOrganization">Organizations</Nav.Link>
-          </Nav>
-          <Form onSubmit = {this.handleSubmit} inline>
-            <Input value = {this.state.item} onChange = {this.onSearch} 
-            type="text" placeholder="Search" className="mr-sm-2" />
-            <Button  type = "submit" variant="outline-primary">Search</Button>
-          </Form>
-      </Navbar>
-      <br/>
-     </div>
-    );
+  hanleLogOut = user => {
+    localStorage.clear();
+    Router.push('/');
   }
+    
+
+  render() {
+      return (
+        <div>
+         <Navbar bg="light" variant="light">
+           <Navbar.Brand href="/home">Home</Navbar.Brand>
+             <Nav className="mr-auto">
+               <Nav.Link href="/addOrganization">Create organization</Nav.Link>            
+               <NavDropdown title="Settings" id="collasible-nav-dropdown">
+                 <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
+                 <NavDropdown.Divider />
+                 <NavDropdown.Item href="/changePassword">Change password</NavDropdown.Item>
+               </NavDropdown>
+             </Nav>
+             <Form onSubmit = {this.handleSubmit} inline>
+               <Input value = {this.state.item} onChange = {this.onSearch} 
+               type="text" placeholder="Search" className="mr-sm-2" />
+               <Button  type = "submit" variant="outline-primary">Search</Button>
+             </Form>
+             <Form inline onSubmit = {this.hanleLogOut}>
+               <Button  type = "log out" variant="outline-primary">Log Out</Button>
+             </Form>
+         </Navbar>
+         <br/>
+        </div>
+       );
+    } 
 }

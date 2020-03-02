@@ -7,7 +7,6 @@ import {
   Input,
 } from "reactstrap";
 
-import { Nav, Navbar} from 'react-bootstrap';
 import Home from './home';
 
 export default class Avatar extends Component {
@@ -24,9 +23,9 @@ export default class Avatar extends Component {
     };
   
   componentDidMount() {
-    const item = JSON.parse(localStorage.getItem('email_avatar'));
+    const item = JSON.parse(localStorage.getItem('avatar'));
     
-    axios.get('http://localhost:8000/users/' + item)
+    axios.get('http://localhost:8080/users/' + item)
     .then(res => {
         console.log(res.data.email);
       this.setState({ email: res.data.email });

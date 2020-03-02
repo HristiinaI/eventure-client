@@ -24,16 +24,17 @@ export default class MyOrganization extends Component {
         this.state = {
           id: '',  
           members: '',
-            name: '',
-            about: '',
+          name: '',
+          about: '',
         };
     }
 
     componentDidMount() {
-      const org = localStorage.getItem('organizations').substring(1, localStorage.getItem('organizations').length - 1)
-        axios.get('http://localhost:8000/organizations/' + org)
+      const org = JSON.parse(localStorage.getItem('orgName'));
+        axios.get('http://localhost:8080/organizations/' + org)
         .then(res => {
           this.setState({ id: res.data._id });
+          console.log(this.state.id);
           this.setState({ members: res.data.members });
           this.setState({ name: res.data.name });
           this.setState({ about: res.data.about });
@@ -61,7 +62,7 @@ export default class MyOrganization extends Component {
         const name = this.state.name;
         const about = this.state.about;
     
-        axios.put('http://localhost:8000/organizations/' + id, { members, name, about });
+        axios.put('http://localhost:8080/organizations/' + id, { members, name, about });
     }
 
     render() {

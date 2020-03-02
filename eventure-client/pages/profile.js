@@ -29,33 +29,34 @@ export default class Profile extends Component {
       country: '',
       education: '',
       workplace: '',
-      about: '',  
+      about: '',
     };
   }
   
   componentDidMount() {
-    const em = localStorage.getItem('email').substring(1, localStorage.getItem('email').length-1);
+      const em = JSON.parse(localStorage.getItem('email'));
 
-    axios.get('http://localhost:8000/users/' + em)
-    .then(res => {
-      this.setState({ id: res.data._id });
-      this.setState({ email: res.data.email });
-      this.setState({ firstName: res.data.firstName });
-      this.setState({ lastName: res.data.lastName });
-      this.setState({ type: res.data.type });
-      this.setState({ country: res.data.country });
-      this.setState({ education: res.data.education });
-      this.setState({ workplace: res.data.workplace });
-      this.setState({ about: res.data.about });
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+      axios.get('http://localhost:8080/users/' + em)
+      .then(res => {
+        this.setState({ id: res.data._id });
+        this.setState({ email: res.data.email });
+        this.setState({ firstName: res.data.firstName });
+        this.setState({ lastName: res.data.lastName });
+        this.setState({ type: res.data.type });
+        this.setState({ country: res.data.country });
+        this.setState({ education: res.data.education });
+        this.setState({ workplace: res.data.workplace });
+        this.setState({ about: res.data.about });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
   onEmailChanged = user => {
     this.setState({ email: user.target.value });
   }
+
   onFirstNameChanged = user => {
     this.setState({ firstName: user.target.value });
   }
@@ -91,7 +92,7 @@ export default class Profile extends Component {
     const workplace = this.state.workplace;
     const about = this.state.about;
 
-    axios.put('http://localhost:8000/users/' + id, { email, firstName, lastName, 
+    axios.put('http://localhost:8080/users/' + id, { email, firstName, lastName, 
     type, country, education, workplace, about });
   }
 
@@ -103,38 +104,17 @@ export default class Profile extends Component {
             <Col md="8">
               <Card>
                 <CardHeader>
-                  <h5 className="title">My profile</h5>
+                  <h5 className="title">{this.state.firstName} {this.state.lastName}</h5>
                 </CardHeader>
                 <CardBody>
-                  <Form>
-                    <Row>
-                      <Col className="pr-md-1" md="6">
-                        <FormGroup>
-                          <label>Organization</label>
-                          <Input
-                            defaultValue="None"
-                            disabled
-                            placeholder="Organization"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-md-1" md="6">
-                        <FormGroup>
-                          <label htmlFor="exampleInputEmail1">
-                            Email address
-                          </label>
-                          <Input defaultValue={this.state.email} placeholder="Email" type="email" />
-                        </FormGroup>
-                      </Col>
-                    </Row>
+                  <Form >
                     <Row>
                       <Col className="pr-md-1" md="6">
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            defaultValue={this.state.firstName}
-                            placeholder="Company"
+                            defaultValue={this.state.firstName} onChange = {this.onFirstNameChanged}
+                            placeholder="First Name"
                             type="text"
                           />
                         </FormGroup>
@@ -143,7 +123,7 @@ export default class Profile extends Component {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            defaultValue={this.state.lastName}
+                            defaultValue={this.state.lastName} onChange = {this.onLastNameChanged}
                             placeholder="Last Name"
                             type="text"
                           />
@@ -151,31 +131,44 @@ export default class Profile extends Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-md-1" md="4">
+                      <Col className="pr-md-1" md="6">
+                        <FormGroup>
+                          <label>Email</label>
+                          <Input
+                            disabled
+                            defaultValue={this.state.email} onChange = {this.onEmailChanged}
+                            placeholder="Email"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col className="pr-md-1" md="6">
                         <FormGroup>
                           <label>Type</label>
                           <Input
-                            defaultValue={this.state.type}
+                            defaultValue={this.state.type} onChange = {this.onTypeChanged}
                             placeholder="Type"
                             type="text"
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="px-md-1" md="4">
+                    </Row>
+                    <Row>
+                      <Col className="px-md-1" md="6">
                         <FormGroup>
                           <label>Country</label>
                           <Input
-                            defaultValue={this.state.country}
+                            defaultValue={this.state.country} onChange = {this.onCountryChanged}
                             placeholder="Country"
                             type="text"
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-md-1" md="4">
+                      <Col className="pl-md-1" md="6">
                         <FormGroup>
                           <label>Education</label>
                           <Input
-                            defaultValue={this.state.education}
+                            defaultValue={this.state.education} onChange = {this.onEducationChanged}
                             placeholder="Education"
                             type="text"
                           />
@@ -187,7 +180,7 @@ export default class Profile extends Component {
                         <FormGroup>
                           <label>Workplace</label>
                           <Input
-                            value = {this.state.workplace} 
+                            value = {this.state.workplace}
                             onChange = {this.onWorkplaceChanged}
                             placeholder="Workplace"
                             type="text"
@@ -200,6 +193,7 @@ export default class Profile extends Component {
                           <Input
                             cols="80"
                             defaultValue={this.state.about}
+                            onChange = {this.onAboutChanged}
                             placeholder="Say something about you here :)"
                             rows="4"
                             type="textarea"

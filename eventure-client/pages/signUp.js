@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import Link from 'next/link';
-import { Container, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Col, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button } from 'react-bootstrap';
 
 export default class Register extends Component {
   state = {
@@ -11,10 +12,6 @@ export default class Register extends Component {
     firstName: '',
     lastName: '',
     type: '',
-    country: '',
-    education: '',
-    workplace: '',
-    about: '',
   };
 
   onEmailChanged = user =>{
@@ -40,22 +37,6 @@ export default class Register extends Component {
     this.setState({type: user.target.value});
   }
 
-  onCountryChanged = user =>{
-    this.setState({country: user.target.value});
-  }
-  
-  onEducationChanged = user =>{
-    this.setState({education: user.target.value});
-  }
-
-  onWorkplaceChanged = user =>{
-    this.setState({workplace: user.target.value});
-  }
-
-  onAboutChanged = user =>{
-    this.setState({about: user.target.value});
-  }
-
   handleSubmit = user => {
     user.preventDefault();
 
@@ -64,19 +45,14 @@ export default class Register extends Component {
     const firstName = this.state.firstName;
     const lastName = this.state.lastName;
     const type = this.state.type;
-    const country = this.state.country;
-    const education = this.state.education;
-    const workplace = this.state.workplace;
-    const about = this.state.about;
 
-    console.log(email);
-
-    axios.post('http://localhost:8000/users', { email, password, firstName, lastName, 
-      type, country, education, workplace, about });
+    axios.post('http://localhost:8080/users', { email, password, firstName, lastName, type });
   };
   
   render() {
     return(
+        <div classname = "col-md-12" align = "center">
+          <br/>
           <div className = "col-md-6">
               <Container className = "App">
               <h2>Sign Up</h2>
@@ -102,7 +78,7 @@ export default class Register extends Component {
                   onChange = {this.onLastNameChanged}/>
                     </FormGroup>
                 <Col>
-                  <div className="radio">
+                  <div className="radio" align = "left">
                     <Label>
                       <Input 
                         type="radio" 
@@ -114,7 +90,7 @@ export default class Register extends Component {
                   </div>
                 </Col>
                 <Col>
-                  <div className="radio">
+                  <div className="radio" align = "left">
                     <Label>
                       <Input 
                         type="radio" 
@@ -126,7 +102,7 @@ export default class Register extends Component {
                   </div>
                 </Col>
                 <Col>
-                  <div className="radio">
+                  <div className="radio" align = "left">
                     <Label>
                       <Input 
                         type="radio" 
@@ -137,32 +113,13 @@ export default class Register extends Component {
                     </Label>
                   </div>
                 </Col>
-                <FormGroup>
-                      <Label>Country</Label>
-                      <Input type="text" className = "form-control" placeholder="Country" value = {this.state.country} 
-                  onChange = {this.onCountryChanged}/>
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>Education</Label>
-                      <Input type="text" className = "form-control" placeholder="Education" value = {this.state.education} 
-                  onChange = {this.onEducationChanged}/>
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>Workplace</Label>
-                      <Input type="text" className = "form-control" placeholder="Workplace" value = {this.state.workplace} 
-                  onChange = {this.onWorkplaceChanged}/>
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>About</Label>
-                      <Input type="textarea" className = "form-control" placeholder="About you" value = {this.state.about} 
-                  onChange = {this.onAboutChanged}/>
-                    </FormGroup>
                 <Button type="submit" className="btn btn-primary btn-block">Sign Up</Button>
                   <p className="forgot-password text-center">
                       Already registered? <Link href="/signIn">Sign in</Link>
                   </p>           
               </Form>
             </Container> 
+          </div>
           </div>
     );
   } 
