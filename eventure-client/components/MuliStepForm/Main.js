@@ -5,6 +5,8 @@ import axios from "axios";
 import EventDate from './EventDate';
 import EventLocation from './EventLocation';
 import AllInfo from './AllInfo';
+import Home from "../../pages/home";
+import Router from "next/router";
 
 
 
@@ -52,6 +54,7 @@ export class Main extends Component {
           console.log(res);
           console.log(res.data);
         })
+        Router.push('/dashboard');
       };
 
 
@@ -118,6 +121,7 @@ export class Main extends Component {
 
         return(
             <>
+                <Home />
                 <h2>Step {step} of 4.</h2>
                 {this.showStep()}
             </>

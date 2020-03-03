@@ -55,7 +55,6 @@
     "isomorphic-unfetch": "^3.0.0",
     "material-dashboard-react": "^1.8.0",
     "moment": "^2.24.0",
-    "nest": "^6.12.2",
     "next": "^9.1.7",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
