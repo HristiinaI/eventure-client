@@ -57,7 +57,7 @@ export class Main extends Component {
         .then(res => {
           console.log(res);
           console.log(res.data);
-            Router.push('/dashboard/' + res.data._id);
+            Router.push('/events/dashboard/' + res.data._id);
         })
 
       };
