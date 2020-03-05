@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Nav, Navbar, Form, NavDropdown, Button } from 'react-bootstrap';
+import { Nav, Navbar, Form, NavDropdown, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import Router from 'next/router';
 
@@ -8,11 +8,15 @@ import { Input } from 'reactstrap';
  
 export default class Home extends Component {
   state = {
-      item: '',
-      role: '', 
+    //id: '',  
+    item: '',
+    role: '',
+    isReqDone: '',
+    findOrg: '',
+    findUser: '',
+    hasUser: '',
+    hasOrg: '',
   };
-  
-
 
   onSearch = user => {
     this.setState({item: user.target.value});
@@ -29,42 +33,37 @@ export default class Home extends Component {
 
   handleSubmit = user => {
     user.preventDefault();
-
     const item = this.state.item;
     if(item) {
-        if(item.includes("@")) {
-          axios.get('http://localhost:8080/users/' + item)
-          .then(res => {
-            this.setState({ item: res.data.email });
-            this.setState({ role: res.data.role });
-          })
-          .catch(function (error) {
-            if(error.response) {
-              console.log(error);
-            }
-          });
-        }  else {
-            axios.get('http://localhost:8080/organizations/' + item)
+      if(this.state.findOrg == "true") {
+        axios.get('http://localhost:8080/organizations?name=' + item)
             .then(res => {
               this.setState({ item: res.data.name });
-            })
-            .catch(function (error) {
-              if(error.response) {
-                console.log(error);
-              }
+              //this.setState({ id: res.data._id });
+              this.setState({ role: "Organization" });
+              this.setState({ hasOrg: "true" });
+              localStorage.setItem('avatar', JSON.stringify(this.state.item));
+              Router.push('/organizations/orgAvatar');
+              Router.reload('/organizations/orgAvatar');
             });
-    }
-  
-      localStorage.setItem('avatar', JSON.stringify(this.state.item));
-      
-      if(item.includes("@")) {
-        Router.push('/users/userAvatar');
-        Router.reload('/users/userAvatar');
-      } else if(!item.includes("@")) {
-        Router.push('/organizations/orgAvatar');
-        Router.reload('/organizations/orgAvatar');
+      } else if(this.state.findUser == "true") {   
+        axios.get('http://localhost:8080/users?email=' + item)
+            .then(res => {
+              this.setState({ item: res.data.email });
+              //this.setState({ id: res.data._id });
+              this.setState({ role: "User" });
+              localStorage.setItem('avatar', JSON.stringify(this.state.item));
+              this.setState({ hasUser: "true" });
+              Router.push('/users/userAvatar');
+              Router.reload('/users/userAvatar');
+          });
       } 
+      //localStorage.setItem('avatar', JSON.stringify(this.state.id)); 
     }
+    this.setState({ findUser: ''});
+    this.setState({ findOrg: ''});
+    this.setState({ hasUser: ''});
+    this.setState({ hasOrg: ''});
   };
 
   hanleLogOut = user => {
@@ -72,6 +71,22 @@ export default class Home extends Component {
     Router.push('/');
   }
     
+  deleteProfile() {
+    const id = localStorage.getItem('id');
+    axios.delete('http://localhost:8080/users/' + id);
+    localStorage.clear();
+    Router.push('/');
+  }
+
+  findUser = user => {
+    const tmp = "true";
+    this.setState({ findUser: tmp });
+  }
+
+  findOrg = user => {
+    const tmp = "true";
+    this.setState({ findOrg: tmp });
+  }
 
   render() {
       return (
@@ -85,8 +100,17 @@ export default class Home extends Component {
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
                  <NavDropdown.Divider />
                  <NavDropdown.Item href="/users/changePassword">Change password</NavDropdown.Item>
+                 <NavDropdown.Divider />
+                 <NavDropdown.Item onClick = {this.deleteProfile} href="#">Delete profile</NavDropdown.Item>
                </NavDropdown>
              </Nav>
+             
+             <NavDropdown title="Find" id="collasible-nav-dropdown">
+                  <NavDropdown.Item  onClick={this.findOrg}>Organization</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={this.findUser} >User</NavDropdown.Item>
+              </NavDropdown>
+             
              <Form onSubmit = {this.handleSubmit} inline>
                <Input value = {this.state.item} onChange = {this.onSearch} 
                type="text" placeholder="Search" className="mr-sm-2" />

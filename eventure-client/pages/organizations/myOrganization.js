@@ -30,8 +30,8 @@ export default class MyOrganization extends Component {
     }
 
     componentDidMount() {
-      const org = JSON.parse(localStorage.getItem('orgName'));
-        axios.get('http://localhost:8080/organizations/' + org)
+      const id = JSON.parse(localStorage.getItem('id'));  
+      axios.get('http://localhost:8080/organizations/' + id)
         .then(res => {
           this.setState({ id: res.data._id });
           console.log(this.state.id);
