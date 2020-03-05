@@ -72,8 +72,12 @@ export default class Home extends Component {
   }
     
   deleteProfile() {
-    const id = localStorage.getItem('id');
-    axios.delete('http://localhost:8080/users/' + id);
+    const id = JSON.parse(localStorage.getItem('id'));
+    if(JSON.parse(localStorage.getItem('role')) == "Organization") {
+      axios.delete('http://localhost:8080/organizations/' + id);
+    } else {
+      axios.delete('http://localhost:8080/users/' + id);
+    }  
     localStorage.clear();
     Router.push('/');
   }
