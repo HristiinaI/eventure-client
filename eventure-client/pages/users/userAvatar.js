@@ -24,10 +24,9 @@ export default class Avatar extends Component {
   
   componentDidMount() {
     const item = JSON.parse(localStorage.getItem('avatar'));
-    
-    axios.get('http://localhost:8080/users/' + item)
+    //axios.get('http://localhost:8080/users/' + item)
+    axios.get('http://localhost:8080/users?email=' + item)
     .then(res => {
-        console.log(res.data.email);
       this.setState({ email: res.data.email });
       this.setState({ firstName: res.data.firstName });
       this.setState({ lastName: res.data.lastName });
