@@ -39,11 +39,6 @@ export default class AddOrganization extends Component {
             localStorage.setItem('organizations', data);
             console.log(localStorage.getItem('organizations'));
         });
-        
-        axios.get('http://localhost:8080/organizations', + name)
-        .then(res => {
-
-        });
     };
 
     render() {

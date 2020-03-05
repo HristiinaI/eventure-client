@@ -9,6 +9,7 @@ import bcrypt from 'bcryptjs';
 
 export default class SignInPage extends Component {
   state = {
+    id: '',
     email: '',
     password: '',
     organizations: '',
@@ -30,14 +31,15 @@ export default class SignInPage extends Component {
     const password = this.state.password;
 
     if(email.includes("@")) {
-      axios.get('http://localhost:8080/users/' + email)
+      axios.get('http://localhost:8080/users?email=' + email)
       .then(res => {
         this.setState({ organizations: res.data.organizations });
         this.setState({ role: res.data.role });
+        this.setState({ id: res.data._id });
         if(email === res.data.email) {
           if(bcrypt.compare(res.data.password, password)) {
+            localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('email', JSON.stringify(email));
-            localStorage.setItem('password', JSON.stringify(password));
             localStorage.setItem('role', JSON.stringify(this.state.role));
             localStorage.setItem('organizations', JSON.stringify(this.state.organizations));
             Router.push('/home');
@@ -46,14 +48,15 @@ export default class SignInPage extends Component {
       });
     } else {
       const name = this.state.email;
-      axios.get('http://localhost:8080/organizations/' + name)
+      axios.get('http://localhost:8080/organizations?name=' + name)
       .then(res => {
         this.setState({ organizations: res.data.organizations });
         this.setState({ role: res.data.role });
+        this.setState({ id: res.data._id });
         if(name === res.data.name) {
           if(bcrypt.compare(res.data.password, password)) {
             localStorage.setItem('orgName', JSON.stringify(name));
-            localStorage.setItem('orgPassword', JSON.stringify(password));
+            localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('role', JSON.stringify(this.state.role));
             Router.push('/home');
           } 

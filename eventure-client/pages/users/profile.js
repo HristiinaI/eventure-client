@@ -34,9 +34,9 @@ export default class Profile extends Component {
   }
   
   componentDidMount() {
-      const em = JSON.parse(localStorage.getItem('email'));
+      const id = JSON.parse(localStorage.getItem('id'));
 
-      axios.get('http://localhost:8080/users/' + em)
+      axios.get('http://localhost:8080/users/' + id)
       .then(res => {
         this.setState({ id: res.data._id });
         this.setState({ email: res.data.email });
