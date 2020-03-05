@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Home from './home';
+import Home from '../home';
 
 
 import 'bootstrap/dist/css/bootstrap.css';

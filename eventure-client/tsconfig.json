@@ -24,6 +24,6 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "pages/dashboard.jsx"
+    "**/*.tsx", "pages/events/dashboard.jsx"
   ]
 }
