@@ -1,19 +1,15 @@
-// // const express = require('nest')
-// // const app = nest()
-// // const bodyParser = require('body-parser')
-// // const cors = require('cors')
+const { createServer } = require('http')
+const next = require('next')
+const routes = require('./routes')
 
+const port = parseInt(process.env.PORT, 10) || 3000
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handler = routes.getRequestHandler(app)
 
-// // app.use(cors())
-// // app.use(bodyParser.urlencoded({ extended: true }))
-// // app.use(bodyParser.json())
-
-
-// app.post('/add-review', function (req, res) {
-//   pusher.trigger('rotten-pepper', 'new-movie-review', req.body)
-//   res.sendStatus(200)
-// })
-
-// app.listen(port, function () {
-//   console.log('Node app is running at localhost:' + 8080)
-// })
+app.prepare().then(() => {
+    createServer(handler).listen(port, err => {
+        if (err) throw err
+        console.log(`> Ready on http://localhost:${port}`)
+    })
+})
