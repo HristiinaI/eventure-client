@@ -115,7 +115,7 @@ export default class Register extends Component {
                 </Col>
                 <Button type="submit" className="btn btn-primary btn-block">Sign Up</Button>
                   <p className="forgot-password text-center">
-                      Already registered? <Link href="/signIn">Sign in</Link>
+                      Already registered? <Link href="/users/signIn">Sign in</Link>
                   </p>           
               </Form>
             </Container> 

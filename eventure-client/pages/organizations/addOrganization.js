@@ -11,6 +11,7 @@ export default class AddOrganization extends Component {
         name: '',
         members: '',
         password: '',
+        organizations: '',
     };
     
     onMembersChanged = organization =>{
@@ -32,13 +33,20 @@ export default class AddOrganization extends Component {
         const members = this.state.members.toString().split(', ');
         const password = this.state.password;
 
-        axios.post('http://localhost:8080/organizations', { name, members, password })
-        .then(res=>{
-            const temp = JSON.parse(localStorage.getItem('organizations'));
-            const data = temp ? temp + JSON.parse(localStorage.getItem('organizations')) : temp;
-            localStorage.setItem('organizations', data);
-            console.log(localStorage.getItem('organizations'));
-        });
+        axios.post('http://localhost:8080/organizations', { members, name, password });
+
+        for(let i = 0; i < members.length; i++) {
+            axios.get('http://localhost:8080/users?param=' + members[i], {})
+            .then(res => {
+                const temp = res.data.organizations;
+                temp.push(name);
+                this.setState({ organizations: temp});
+                this.setState({ id: res.data._id });       
+                const organizations = this.state.organizations;
+                axios.put('http://localhost:8080/users/' + this.state.id, {organizations});
+            });
+        }
+        
     };
 
     render() {

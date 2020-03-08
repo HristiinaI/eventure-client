@@ -12,7 +12,6 @@ export default class SignInPage extends Component {
     id: '',
     email: '',
     password: '',
-    organizations: '',
     role: '',
   };
   
@@ -31,17 +30,14 @@ export default class SignInPage extends Component {
     const password = this.state.password;
 
     if(email.includes("@")) {
-      axios.get('http://localhost:8080/users?email=' + email)
+      axios.get('http://localhost:8080/users?param=' + email)
       .then(res => {
-        this.setState({ organizations: res.data.organizations });
         this.setState({ role: res.data.role });
         this.setState({ id: res.data._id });
         if(email === res.data.email) {
           if(bcrypt.compare(res.data.password, password)) {
             localStorage.setItem('id', JSON.stringify(this.state.id));
-            localStorage.setItem('email', JSON.stringify(email));
             localStorage.setItem('role', JSON.stringify(this.state.role));
-            localStorage.setItem('organizations', JSON.stringify(this.state.organizations));
             Router.push('/home');
           } 
         } 
@@ -50,12 +46,10 @@ export default class SignInPage extends Component {
       const name = this.state.email;
       axios.get('http://localhost:8080/organizations?name=' + name)
       .then(res => {
-        this.setState({ organizations: res.data.organizations });
         this.setState({ role: res.data.role });
         this.setState({ id: res.data._id });
         if(name === res.data.name) {
           if(bcrypt.compare(res.data.password, password)) {
-            localStorage.setItem('orgName', JSON.stringify(name));
             localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('role', JSON.stringify(this.state.role));
             Router.push('/home');
