@@ -2,7 +2,7 @@ import * as React from "react";
 import '../../styles/App.css';
 import Main from '../../components/MuliStepForm/Main';
 
-export default class Home extends React.Component {
+export default class CreateEvent extends React.Component {
   
   render(){
     return (

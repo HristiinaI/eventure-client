@@ -72,12 +72,7 @@ class Dashboard extends React.Component{
         const type = this.state.type;
         const date = this.state.startDate;
         const location = this.state.location;
-        console.log(name);
 
-      //  localStorage.setItem('eventName', name);
-
-        //console.log(id);
-        console.log(name);
         axios.put('http://localhost:8080/events/' + id, { name, type, date, location})
             .then(res => {
                 console.log(res);

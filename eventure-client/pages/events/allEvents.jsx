@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
-import EventList from "../../components/eventsList";
+import Header from '../../components/events/Header';
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
+
+
+
+// const AllEvents = () => {    
 class AllEvents extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            name: '',
-            allEvents: new Array()
-        }
-    }
-    componentDidMount() {
+ 
+    state = {
+
+        allEvents: new Array()
+    }          
+
+    componentDidMount = () => {
         let events = [];
         let _this = this;
-        axios.get('http://localhost:8080/events?name=' + name)
+        axios.get('http://localhost:8080/events/')
         .then(function(results){
             for(let i = 0;i < results.data.length;i++){
-                events.push(results.data[i].name);
+                events.push(results.data[i]);
             }
             _this.setState({allEvents: events});
+            console.log(events);
 
         })
         .catch(function (error) {
@@ -30,13 +36,17 @@ class AllEvents extends React.Component{
         if(this.state.allEvents.length){  
             return(
                 <>
+                <Header />
                 <h2>Your Events: </h2>
                 <ul>
                     {this.state.allEvents.map(event => {   
                         console.log(event);
                         return ( 
                             <li>
-                                {event}
+                                 <Link href="/event/dashboard/[id]" 
+                                        as={`/event/dashboard/${event._id}`}>
+                                    <a>{event.name}</a>
+                                 </Link>
                             </li>
                         ); 
                        

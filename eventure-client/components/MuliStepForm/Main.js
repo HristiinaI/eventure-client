@@ -18,8 +18,6 @@ export class Main extends Component {
         location: '',
     }
 
-
-
     nextStep = () => {
         const { step } = this.state;
 
@@ -50,10 +48,11 @@ export class Main extends Component {
         const type = this.state.type;
         const date = this.state.startDate;
         const location = this.state.location;
-        localStorage.setItem('eventName', name);
-        console.log(name);
+        const creator = JSON.parse(localStorage.getItem("id"));
+        // localStorage.setItem('eventName', name);
+        // console.log(name);
 
-        axios.post('http://localhost:8080/events', { name, type, date, location})
+        axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
           console.log(res);
           console.log(res.data);
