@@ -4,9 +4,6 @@ import Header from '../../components/events/Header';
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-
-
-
 // const AllEvents = () => {    
 class AllEvents extends React.Component{
  

@@ -20,10 +20,10 @@
   },
   "exclude": [
     "node_modules"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx", "pages/events/dashboard.jsx"
   ]
+  // "include": [
+  //   "next-env.d.ts",
+  //   "**/*.ts",
+  //   "**/*.tsx", "components/events/dashboard, "pages/events/createEvent.jsx".jsx"
+  // ]
 }

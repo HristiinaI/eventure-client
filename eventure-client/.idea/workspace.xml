@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b939a5ce-b1ac-4120-b36a-cfe4bd893aa1" name="Default Changelist" comment="" />
+    <list default="true" id="b939a5ce-b1ac-4120-b36a-cfe4bd893aa1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/pages/events/allEvents.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/events/allEvents.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/events/createEvent.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/events/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/events/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -73,6 +78,7 @@
       <workItem from="1583347997504" duration="7956000" />
       <workItem from="1583410714718" duration="951000" />
       <workItem from="1583436988060" duration="447000" />
+      <workItem from="1584180182097" duration="61000" />
     </task>
     <servers />
   </component>

@@ -97,7 +97,8 @@ class Dashboard extends React.Component{
                                             <FormGroup>
                                                 <label>Event Name</label>
                                                 <Input
-                                                    defaultValue={this.state.name} onChange = {this.handleChange("name")}
+                                                    defaultValue={this.state.name}
+                                                    onChange = {this.handleChange("name")}
                                                     placeholder="First Name"
                                                     type="text"
                                                 />
