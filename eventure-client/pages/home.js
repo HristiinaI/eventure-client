@@ -12,10 +12,10 @@ export default class Home extends Component {
     item: '',
     role: '',
     isReqDone: '',
-    findOrg: '',
-    findUser: '',
-    hasUser: '',
-    hasOrg: '',
+    findOrg: false,
+    findUser: false,
+    hasUser: false,
+    hasOrg: false,
   };
 
   onSearch = user => {
@@ -35,35 +35,33 @@ export default class Home extends Component {
     user.preventDefault();
     const item = this.state.item;
     if(item) {
-      if(this.state.findOrg == "true") {
+      if(this.state.findOrg == true) {
         axios.get('http://localhost:8080/organizations?name=' + item)
             .then(res => {
-              this.setState({ item: res.data.name });
               //this.setState({ id: res.data._id });
               this.setState({ role: "Organization" });
-              this.setState({ hasOrg: "true" });
-              localStorage.setItem('avatar', JSON.stringify(this.state.item));
+              this.setState({ hasOrg: true });
+              localStorage.setItem('avatar', JSON.stringify(res.data.name));
               Router.push('/organizations/orgAvatar');
               Router.reload('/organizations/orgAvatar');
             });
-      } else if(this.state.findUser == "true") {   
-        axios.get('http://localhost:8080/users?email=' + item)
+      } else if(this.state.findUser == true) {
+          axios.get('http://localhost:8080/users?param=' + item)
             .then(res => {
-              this.setState({ item: res.data.email });
               //this.setState({ id: res.data._id });
               this.setState({ role: "User" });
-              localStorage.setItem('avatar', JSON.stringify(this.state.item));
-              this.setState({ hasUser: "true" });
+              localStorage.setItem('avatar', JSON.stringify(res.data.email));
+              this.setState({ hasUser: true });
               Router.push('/users/userAvatar');
               Router.reload('/users/userAvatar');
-          });
+          });  
       } 
       //localStorage.setItem('avatar', JSON.stringify(this.state.id)); 
     }
-    this.setState({ findUser: ''});
-    this.setState({ findOrg: ''});
-    this.setState({ hasUser: ''});
-    this.setState({ hasOrg: ''});
+    this.setState({ findUser: false});
+    this.setState({ findOrg: false});
+    this.setState({ hasUser: false});
+    this.setState({ hasOrg: false});
   };
 
   hanleLogOut = user => {
@@ -72,19 +70,23 @@ export default class Home extends Component {
   }
     
   deleteProfile() {
-    const id = localStorage.getItem('id');
-    axios.delete('http://localhost:8080/users/' + id);
+    const id = JSON.parse(localStorage.getItem('id'));
+    if(JSON.parse(localStorage.getItem('role')) == "Organization") {
+      axios.delete('http://localhost:8080/organizations/' + id);
+    } else {
+      axios.delete('http://localhost:8080/users/' + id);
+    }  
     localStorage.clear();
     Router.push('/');
   }
 
   findUser = user => {
-    const tmp = "true";
+    const tmp = true;
     this.setState({ findUser: tmp });
   }
 
   findOrg = user => {
-    const tmp = "true";
+    const tmp = true;
     this.setState({ findOrg: tmp });
   }
 

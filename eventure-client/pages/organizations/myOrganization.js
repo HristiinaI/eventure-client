@@ -34,7 +34,6 @@ export default class MyOrganization extends Component {
       axios.get('http://localhost:8080/organizations/' + id)
         .then(res => {
           this.setState({ id: res.data._id });
-          console.log(this.state.id);
           this.setState({ members: res.data.members });
           this.setState({ name: res.data.name });
           this.setState({ about: res.data.about });
