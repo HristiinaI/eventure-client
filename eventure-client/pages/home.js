@@ -38,21 +38,19 @@ export default class Home extends Component {
       if(this.state.findOrg == true) {
         axios.get('http://localhost:8080/organizations?name=' + item)
             .then(res => {
-              this.setState({ item: res.data.name });
               //this.setState({ id: res.data._id });
               this.setState({ role: "Organization" });
               this.setState({ hasOrg: true });
-              localStorage.setItem('avatar', JSON.stringify(this.state.item));
+              localStorage.setItem('avatar', JSON.stringify(res.data.name));
               Router.push('/organizations/orgAvatar');
               Router.reload('/organizations/orgAvatar');
             });
       } else if(this.state.findUser == true) {
           axios.get('http://localhost:8080/users?param=' + item)
             .then(res => {
-              this.setState({ item: res.data.email });
               //this.setState({ id: res.data._id });
               this.setState({ role: "User" });
-              localStorage.setItem('avatar', JSON.stringify(this.state.item));
+              localStorage.setItem('avatar', JSON.stringify(res.data.email));
               this.setState({ hasUser: true });
               Router.push('/users/userAvatar');
               Router.reload('/users/userAvatar');

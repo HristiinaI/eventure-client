@@ -94,7 +94,7 @@ export default class Register extends Component {
                     <Label>
                       <Input 
                         type="radio" 
-                        value="Sponsor" 
+                        value="sponsor" 
                         checked={this.state.type === 'sponsor'}
                         onChange={this.onTypeChanged} />
                         Sponsor
