@@ -49,14 +49,10 @@ export class Main extends Component {
         const date = this.state.startDate;
         const location = this.state.location;
         const creator = JSON.parse(localStorage.getItem("id"));
-        // localStorage.setItem('eventName', name);
-        // console.log(name);
 
         axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
-          console.log(res);
-          console.log(res.data);
-            Router.push('/events/dashboard/' + res.data._id);
+            Router.push('/events/allEvents');
         })
 
       };

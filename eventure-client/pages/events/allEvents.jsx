@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import Header from '../../components/events/Header';
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-
-// const AllEvents = () => {    
+import Link from 'next/link';
+import Home from '../home';
+  
 class AllEvents extends React.Component{
  
     state = {
@@ -21,7 +20,6 @@ class AllEvents extends React.Component{
                 events.push(results.data[i]);
             }
             _this.setState({allEvents: events});
-            console.log(events);
 
         })
         .catch(function (error) {
@@ -33,15 +31,14 @@ class AllEvents extends React.Component{
         if(this.state.allEvents.length){  
             return(
                 <>
-                <Header />
+                <Home />
                 <h2>Your Events: </h2>
                 <ul>
                     {this.state.allEvents.map(event => {   
-                        console.log(event);
                         return ( 
-                            <li>
+                            <li key={event._id} >
                                  <Link href="/event/dashboard/[id]" 
-                                        as={`/event/dashboard/${event._id}`}>
+                                    as={`/event/dashboard/${event._id}`} >
                                     <a>{event.name}</a>
                                  </Link>
                             </li>

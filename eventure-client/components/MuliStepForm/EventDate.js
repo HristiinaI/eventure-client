@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 
 class EventDate extends React.Component{
@@ -19,7 +19,6 @@ class EventDate extends React.Component{
             <DatePicker
                 selected={ startDate }
                 onChange={ handleDateChange}
-                name="date"
                 dateFormat="MM/dd/yyyy"
             />
            <button className="Back" onClick={this.back}>
