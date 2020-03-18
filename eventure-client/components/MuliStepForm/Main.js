@@ -7,8 +7,7 @@ import EventLocation from './EventLocation';
 import AllInfo from './AllInfo';
 import Home from "../../pages/home";
 import Router from "next/router";
-
-
+import { useRouter } from 'next/router';
 
 export class Main extends Component {
     state = {
@@ -18,6 +17,8 @@ export class Main extends Component {
         startDate: new Date(), 
         location: '',
     }
+
+
 
     nextStep = () => {
         const { step } = this.state;
@@ -37,8 +38,9 @@ export class Main extends Component {
     handleChange = input => e => {
         this.setState({[input]: e.target.value});
     }
-    handleDateChange = date => e => {
-        this.setState({[date]: e});
+
+    handleDateChange = date =>{
+        this.setState({startDate: date});
     }
 
     handleSubmit = () => {
@@ -48,13 +50,16 @@ export class Main extends Component {
         const type = this.state.type;
         const date = this.state.startDate;
         const location = this.state.location;
+        localStorage.setItem('eventName', name);
+        console.log(name);
 
         axios.post('http://localhost:8080/events', { name, type, date, location})
         .then(res => {
           console.log(res);
           console.log(res.data);
+            Router.push('/events/dashboard/' + res.data._id);
         })
-        Router.push('/dashboard');
+
       };
 
 

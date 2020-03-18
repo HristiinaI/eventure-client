@@ -1,12 +1,11 @@
-// // const express = require('nest')
-// // const app = nest()
-// // const bodyParser = require('body-parser')
-// // const cors = require('cors')
+const { createServer } = require('http')
+const next = require('next')
+const routes = require('./routes')
 
-
-// // app.use(cors())
-// // app.use(bodyParser.urlencoded({ extended: true }))
-// // app.use(bodyParser.json())
+const port = parseInt(process.env.PORT, 10) || 3000
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handler = routes.getRequestHandler(app)
 
 
 // app.post('/add-review', function (req, res) {

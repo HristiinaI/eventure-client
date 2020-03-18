@@ -38,7 +38,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -69,6 +69,9 @@
       <updated>1578769277364</updated>
       <workItem from="1578769279258" duration="4065000" />
       <workItem from="1578899756909" duration="13397000" />
+      <workItem from="1583334243376" duration="3952000" />
+      <workItem from="1583347997504" duration="7956000" />
+      <workItem from="1583410714718" duration="2191000" />
     </task>
     <servers />
   </component>
@@ -99,6 +102,14 @@
       <screen x="67" y="27" width="1533" height="873" />
     </state>
     <state width="1510" height="219" key="GridCell.Tab.0.right/67.27.1533.873@67.27.1533.873" timestamp="1583168236330" />
+    <state x="242" y="116" width="1482" height="872" key="MergeDialog" timestamp="1584203290269">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="242" y="116" width="1482" height="872" key="MergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584203290269" />
+    <state x="699" y="260" width="578" height="584" key="MultipleFileMergeDialog" timestamp="1584203290276">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="699" y="260" width="578" height="584" key="MultipleFileMergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584203290276" />
     <state x="487" y="80" width="683" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583167807237">
       <screen x="67" y="27" width="1533" height="873" />
     </state>

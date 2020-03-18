@@ -18,7 +18,7 @@ class EventDate extends React.Component{
             <label>Select date:</label>
             <DatePicker
                 selected={ startDate }
-                onChange={ handleDateChange("startDate") }
+                onChange={ handleDateChange}
                 name="date"
                 dateFormat="MM/dd/yyyy"
             />

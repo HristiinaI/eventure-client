@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Home from './home';
+import Home from '../home';
 
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -19,6 +19,7 @@ import {
     Form,
     Button
 } from "reactstrap";
+import {useRouter} from "next/router";
 
 
 class Dashboard extends React.Component{
@@ -26,19 +27,26 @@ class Dashboard extends React.Component{
         super(props);
         this.state = {
             id: '',
-            name: '',
+            eventName: '',
             type: '',
             date: new Date(),
             location: '',
         }
     }
-    componentDidMount() {
-        const em = JSON.parse(localStorage.getItem('name'));
 
-        axios.get('http://localhost:8080/events/' + em)
+    router = useRouter();
+
+    componentDidMount() {
+        const name = localStorage.getItem('eventName');
+
+        console.log(name);
+
+        axios.get('http://localhost:8080/events/' + name)
             .then(res => {
                 this.setState({ id: res.data._id });
+                console.log(this.state.id);
                 this.setState({ name: res.data.name });
+                // localStorage.setItem('eventName', res.data.name);
                 this.setState({ type: res.data.type });
                 this.setState({ date: res.data.date });
                 this.setState({ location: res.data.location });
@@ -57,13 +65,20 @@ class Dashboard extends React.Component{
     handleSubmit = event => {
         event.preventDefault();
 
+        console.log(this.state.eventName);
+
         const id = this.state.id;
         const name = this.state.eventName;
         const type = this.state.type;
         const date = this.state.startDate;
         const location = this.state.location;
+        console.log(name);
 
-        axios.put('http://localhost:8080/events' + id, { name, type, date, location})
+      //  localStorage.setItem('eventName', name);
+
+        //console.log(id);
+        console.log(name);
+        axios.put('http://localhost:8080/events/' + id, { name, type, date, location})
             .then(res => {
                 console.log(res);
                 console.log(res.data);
