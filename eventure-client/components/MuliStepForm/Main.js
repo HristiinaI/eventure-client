@@ -42,8 +42,6 @@ export class Main extends Component {
     }
 
     handleSubmit = () => {
-        // event.preventDefault();
-    
         const name = this.state.eventName;
         const type = this.state.type;
         const date = this.state.startDate;
@@ -54,8 +52,7 @@ export class Main extends Component {
         .then(res => {
             Router.push('/events/allEvents');
         })
-
-      };
+    };
 
 
     showStep = () => {

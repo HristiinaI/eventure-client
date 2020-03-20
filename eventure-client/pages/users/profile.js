@@ -36,6 +36,7 @@ export default class Profile extends Component {
   componentDidMount() {
       const id = JSON.parse(localStorage.getItem('id'));
 
+      console.log("ID0:" + id);
       axios.get('http://localhost:8080/users/' + id)
       .then(res => {
         this.setState({ id: res.data._id });
@@ -51,6 +52,7 @@ export default class Profile extends Component {
       .catch(function (error) {
         console.log(error);
       })
+      console.log("ID" + id);
   }
 
   onEmailChanged = user => {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import Header from '../../components/events/Header';
 import Link from 'next/link';
 import Home from '../home';
   
