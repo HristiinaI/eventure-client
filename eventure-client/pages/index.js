@@ -9,6 +9,7 @@ export default class App extends Component {
         <Navbar bg="light" variant="light">
         <Button href = "/users/signIn" type = "submit" variant="outline-primary">Sign in</Button>
         <Button href = "/users/signUp" type = "submit" variant="outline-primary">Sign Up</Button>
+        <Button href = "/organizations/addOrganization" type = "submit" variant="outline-primary">Create organization</Button>
         </Navbar>
         <br/>
         

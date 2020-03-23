@@ -36,7 +36,7 @@ export default class SignInPage extends Component {
         this.setState({ role: res.data.role });
         this.setState({ id: res.data._id });
         if(email === res.data.email) {
-          if(bcrypt.compare(res.data.password, password)) {
+          if(password === res.data.password) {
             localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('email', JSON.stringify(this.state.email));
             localStorage.setItem('role', JSON.stringify(this.state.role));
@@ -51,7 +51,7 @@ export default class SignInPage extends Component {
         this.setState({ role: res.data.role });
         this.setState({ id: res.data._id });
         if(name === res.data.name) {
-          if(bcrypt.compare(res.data.password, password)) {
+          if(password === res.data.password) {
             localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('role', JSON.stringify(this.state.role));
             Router.push('/home');
@@ -92,7 +92,10 @@ export default class SignInPage extends Component {
                     <Button type="submit" className="btn btn-primary btn-block">Sign In</Button>
                       <p className="forgot-password text-center">
                           Don't have an account yet? <Link href="signUp">Sign up</Link>
-                      </p>           
+                      </p>
+                      <p className="forgot-password text-center">
+                  Or create an organization <Link href="/organizations/addOrganization"> here </Link> 
+                  </p>          
                   </Form>
                 </Container>
           </div>

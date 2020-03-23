@@ -16,6 +16,7 @@ export default class Home extends Component {
     findUser: false,
     hasUser: false,
     hasOrg: false,
+    usrRole: '',
   };
 
   onSearch = user => {
@@ -29,6 +30,13 @@ export default class Home extends Component {
     } else {
       Router.push('/users/profile');
     }
+  }
+
+  componentDidMount() {
+    //this.setState({ usrRole: localStorage.getItem('role')});
+    const role = localStorage.getItem('role');
+
+    this.setState({ usrRole: role });
   }
 
   handleSubmit = user => {
@@ -98,7 +106,7 @@ export default class Home extends Component {
              <Nav className="mr-auto">
              <Nav.Link href = "/events/createEvent">Create event</Nav.Link>
              <Nav.Link href = "/events/allEvents">All events</Nav.Link>
-               <Nav.Link href="/organizations/addOrganization">Create organization</Nav.Link>            
+             <Nav.Link hidden={this.state.usrRole === "User" ? false: true} href = "#"> My organizations </Nav.Link>
                <NavDropdown title="Settings" id="collasible-nav-dropdown">
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
                  <NavDropdown.Divider />
