@@ -32,24 +32,7 @@ class Event extends React.Component{
         this.handleAddUser = this.handleAddUser.bind(this);
     }
     handleKanban = () =>{
-        let name = this.props.event.name;
-        let eventId = this.props.event._id;
-        let counter = 0;
-
-        console.log("eventId" + eventId);
-        if(counter < 1){
-            axios.post('http://localhost:8080/board',{name, eventId}
-                .then(res => {
-                    counter++;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-            );
-        }else{
-            Router.push('event/kanban/[id]');
-        }
-
+        Router.push()
     }
 
     handleAddInput = user => {
@@ -60,26 +43,19 @@ class Event extends React.Component{
     handleAddUser = () => {
         let users = [];
         let _this = this;
-        // console.log("User:" + this.state.user);
         axios.get('http://localhost:8080/users/')
         .then(function(results){
             for(let i = 0;i < results.data.length;i++){
                 users.push(results.data[i].email);
-                // console.log("Email:" + users)
             }
             _this.setState({allUsers: users});
-            // console.log("allUsers:" + _this.state.allUsers);
 
         })
         .catch(function (error) {
             console.log(error);
         })
-        console.log("User:" + this.state.user);       
         this.state.added.push(this.state.user);
-        console.log("Added:" + this.state.added);
         this.setState({addUsers: this.state.added});
-        // console.log("AddUsers:" + this.state.addUsers);
-
     }
 
     handleSubmmitUsers = () => {
@@ -95,8 +71,6 @@ class Event extends React.Component{
             })
 
     }
-    
-    
     render(){
     return(
         <div>

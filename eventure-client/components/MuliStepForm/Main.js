@@ -7,7 +7,6 @@ import EventLocation from './EventLocation';
 import AllInfo from './AllInfo';
 import Home from "../../pages/home";
 import Router from "next/router";
-import { useRouter } from 'next/router';
 
 export class Main extends Component {
     state = {
@@ -50,7 +49,14 @@ export class Main extends Component {
 
         axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
-            Router.push('/events/allEvents');
+            console.log(res);
+            axios.post('http://localhost:8080/board',{name, eventId:res.data.result._id})
+                .then(res => {
+                    Router.push('/events/allEvents');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         })
     };
 
