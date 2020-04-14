@@ -7,7 +7,6 @@ import EventLocation from './EventLocation';
 import AllInfo from './AllInfo';
 import Home from "../../pages/home";
 import Router from "next/router";
-import { useRouter } from 'next/router';
 
 export class Main extends Component {
     state = {
@@ -17,8 +16,6 @@ export class Main extends Component {
         startDate: new Date(), 
         location: '',
     }
-
-
 
     nextStep = () => {
         const { step } = this.state;
@@ -44,23 +41,24 @@ export class Main extends Component {
     }
 
     handleSubmit = () => {
-        // event.preventDefault();
-    
         const name = this.state.eventName;
         const type = this.state.type;
         const date = this.state.startDate;
         const location = this.state.location;
-        localStorage.setItem('eventName', name);
-        console.log(name);
+        const creator = JSON.parse(localStorage.getItem("id"));
 
-        axios.post('http://localhost:8080/events', { name, type, date, location})
+        axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
-          console.log(res);
-          console.log(res.data);
-            Router.push('/events/dashboard/' + res.data._id);
+            console.log(res);
+            axios.post('http://localhost:8080/board',{name, eventId:res.data.result._id})
+                .then(res => {
+                    Router.push('/events/allEvents');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         })
-
-      };
+    };
 
 
     showStep = () => {

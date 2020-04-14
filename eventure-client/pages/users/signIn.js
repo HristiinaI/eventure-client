@@ -29,14 +29,16 @@ export default class SignInPage extends Component {
     
     const email = this.state.email;
     const password = this.state.password;
-
+    console.log("email3")
     if(email.includes("@")) {
       axios.get('http://localhost:8080/users?param=' + email)
       .then(res => {
-        this.setState({ role: res.data.role });
-        this.setState({ id: res.data._id });
-        if(email === res.data.email) {
-          if(bcrypt.compare(res.data.password, password)) {
+        this.setState({ role: res.data[0].role });
+        this.setState({ id: res.data[0]._id });
+        if(email === res.data[0].email) {
+          console.log("email")
+          if(bcrypt.compare(res.data[0].password, password)) {
+            console.log("email2")
             localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('email', JSON.stringify(this.state.email));
             localStorage.setItem('role', JSON.stringify(this.state.role));
@@ -48,10 +50,10 @@ export default class SignInPage extends Component {
       const name = this.state.email;
       axios.get('http://localhost:8080/organizations?name=' + name)
       .then(res => {
-        this.setState({ role: res.data.role });
-        this.setState({ id: res.data._id });
-        if(name === res.data.name) {
-          if(bcrypt.compare(res.data.password, password)) {
+        this.setState({ role: res.data[0].role });
+        this.setState({ id: res.data[0]._id });
+        if(name === res.data[0].name) {
+          if(bcrypt.compare(res.data[0].password, password)) {
             localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('role', JSON.stringify(this.state.role));
             Router.push('/home');
@@ -91,7 +93,8 @@ export default class SignInPage extends Component {
                         </FormGroup>
                     <Button type="submit" className="btn btn-primary btn-block">Sign In</Button>
                       <p className="forgot-password text-center">
-                          Don't have an account yet? <Link href="signUp">Sign up</Link>
+                          Don't have an account yet? 
+                          <Link href="signUp"><a>Sign up</a></Link>
                       </p>           
                   </Form>
                 </Container>

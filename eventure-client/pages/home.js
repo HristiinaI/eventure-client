@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Nav, Navbar, Form, NavDropdown, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import Router from 'next/router';
+import Link from 'next/link';
 
 import { Input } from 'reactstrap';
  
@@ -12,10 +13,14 @@ export default class Home extends Component {
     item: '',
     role: '',
     isReqDone: '',
-    findOrg: false,
-    findUser: false,
-    hasUser: false,
-    hasOrg: false,
+    findOrg: '',
+    findUser: '',
+    findEvent: '',
+    hasUser: '',
+    hasOrg: '',
+    hasEvent: '',
+    loading: false,
+    allEvents: new Array()
   };
 
   onSearch = user => {
@@ -33,35 +38,55 @@ export default class Home extends Component {
 
   handleSubmit = user => {
     user.preventDefault();
+    this.setState({loading: true});
     const item = this.state.item;
     if(item) {
-      if(this.state.findOrg == true) {
+      if(this.state.findOrg == "true") {
         axios.get('http://localhost:8080/organizations?name=' + item)
             .then(res => {
+              this.setState({ item: res.data.name });
               //this.setState({ id: res.data._id });
               this.setState({ role: "Organization" });
-              this.setState({ hasOrg: true });
-              localStorage.setItem('avatar', JSON.stringify(res.data.name));
+              this.setState({ hasOrg: "true" });
+              localStorage.setItem('avatar', JSON.stringify(this.state.item));
               Router.push('/organizations/orgAvatar');
               Router.reload('/organizations/orgAvatar');
+              this.setState({loading: false});
             });
-      } else if(this.state.findUser == true) {
-          axios.get('http://localhost:8080/users?param=' + item)
+      } else if(this.state.findUser == "true") {   
+        axios.get('http://localhost:8080/users?email=' + item)
             .then(res => {
+              this.setState({ item: res.data.email });
               //this.setState({ id: res.data._id });
               this.setState({ role: "User" });
-              localStorage.setItem('avatar', JSON.stringify(res.data.email));
-              this.setState({ hasUser: true });
+              localStorage.setItem('avatar', JSON.stringify(this.state.item));
+              this.setState({ hasUser: "true" });
               Router.push('/users/userAvatar');
               Router.reload('/users/userAvatar');
-          });  
-      } 
-      //localStorage.setItem('avatar', JSON.stringify(this.state.id)); 
+              this.setState({loading: false});
+          });
+      } else if(this.state.findEvent == "true"){
+        let events = [];
+        let _this = this; 
+        axios.get('http://localhost:8080/events?name=' + item)
+          .then(res => {
+            events = res.data;
+            _this.setState({allEvents: events});
+            this.setState({loading: false});
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+
+      }
     }
-    this.setState({ findUser: false});
-    this.setState({ findOrg: false});
-    this.setState({ hasUser: false});
-    this.setState({ hasOrg: false});
+    this.setState({ findUser: ''});
+    this.setState({ findOrg: ''});
+    this.setState({ findEvent: ''});
+    this.setState({ hasUser: ''});
+    this.setState({ hasOrg: ''});
+    this.setState({ hasEvent: ''});
+
   };
 
   hanleLogOut = user => {
@@ -70,24 +95,56 @@ export default class Home extends Component {
   }
     
   deleteProfile() {
-    const id = JSON.parse(localStorage.getItem('id'));
-    if(JSON.parse(localStorage.getItem('role')) == "Organization") {
-      axios.delete('http://localhost:8080/organizations/' + id);
-    } else {
-      axios.delete('http://localhost:8080/users/' + id);
-    }  
+    const id = localStorage.getItem('id');
+    axios.delete('http://localhost:8080/users/' + id);
     localStorage.clear();
     Router.push('/');
   }
 
   findUser = user => {
-    const tmp = true;
+    const tmp = "true";
     this.setState({ findUser: tmp });
   }
 
   findOrg = user => {
-    const tmp = true;
+    const tmp = "true";
     this.setState({ findOrg: tmp });
+  }
+  findEvent = () => {
+    const tmp = "true";
+    this.setState({ findEvent: tmp });
+  }
+
+
+  listEvents(){ 
+    if(this.state.allEvents.length){  
+        return(
+            <>
+            <h2>Your Events: </h2>
+            <ul>
+                {this.state.allEvents.map(event => {   
+                    return ( 
+                        <li key={event._id} >
+                             <Link href="/event/dashboard/[id]" 
+                                as={`/event/dashboard/${event._id}`} >
+                                <a>{event.name}</a>
+                             </Link>
+                        </li>
+                    ); 
+                   
+                })
+                }
+            </ul>
+            </>    
+        );
+    }else if(this.state.loading){
+        return(
+            <>
+            <h2>Your Events: </h2>
+            Loading...
+            </>    
+        );
+    }
   }
 
   render() {
@@ -97,7 +154,7 @@ export default class Home extends Component {
            <Navbar.Brand href="/home">Home</Navbar.Brand>
              <Nav className="mr-auto">
              <Nav.Link href = "/events/createEvent">Create event</Nav.Link>
-             <Nav.Link href = "/events/allEvents">All events</Nav.Link>
+             <Nav.Link href = '/events/allEvents'>All events</Nav.Link>
                <Nav.Link href="/organizations/addOrganization">Create organization</Nav.Link>            
                <NavDropdown title="Settings" id="collasible-nav-dropdown">
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
@@ -112,6 +169,7 @@ export default class Home extends Component {
                   <NavDropdown.Item  onClick={this.findOrg}>Organization</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={this.findUser} >User</NavDropdown.Item>
+                  <NavDropdown.Item onClick={this.findEvent} >Event</NavDropdown.Item>
               </NavDropdown>
              
              <Form onSubmit = {this.handleSubmit} inline>
@@ -124,6 +182,8 @@ export default class Home extends Component {
              </Form>
          </Navbar>
          <br/>
+
+         {this.listEvents()}
         </div>
        );
     } 
