@@ -33,12 +33,19 @@ export default class SignInPage extends Component {
     if(email.includes("@")) {
       axios.get('http://localhost:8080/users?param=' + email)
       .then(res => {
+<<<<<<< HEAD
         this.setState({ role: res.data[0].role });
         this.setState({ id: res.data[0]._id });
         if(email === res.data[0].email) {
           console.log("email")
           if(bcrypt.compare(res.data[0].password, password)) {
             console.log("email2")
+=======
+        this.setState({ role: res.data.role });
+        this.setState({ id: res.data._id });
+        if(email === res.data.email) {
+          if(password === res.data.password) {
+>>>>>>> bbd91eff221685fe16e541d31a364074dfb66525
             localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('email', JSON.stringify(this.state.email));
             localStorage.setItem('role', JSON.stringify(this.state.role));
@@ -50,10 +57,17 @@ export default class SignInPage extends Component {
       const name = this.state.email;
       axios.get('http://localhost:8080/organizations?name=' + name)
       .then(res => {
+<<<<<<< HEAD
         this.setState({ role: res.data[0].role });
         this.setState({ id: res.data[0]._id });
         if(name === res.data[0].name) {
           if(bcrypt.compare(res.data[0].password, password)) {
+=======
+        this.setState({ role: res.data.role });
+        this.setState({ id: res.data._id });
+        if(name === res.data.name) {
+          if(password === res.data.password) {
+>>>>>>> bbd91eff221685fe16e541d31a364074dfb66525
             localStorage.setItem('id', JSON.stringify(this.state.id));
             localStorage.setItem('role', JSON.stringify(this.state.role));
             Router.push('/home');
@@ -93,9 +107,17 @@ export default class SignInPage extends Component {
                         </FormGroup>
                     <Button type="submit" className="btn btn-primary btn-block">Sign In</Button>
                       <p className="forgot-password text-center">
+<<<<<<< HEAD
                           Don't have an account yet? 
                           <Link href="signUp"><a>Sign up</a></Link>
                       </p>           
+=======
+                          Don't have an account yet? <Link href="signUp">Sign up</Link>
+                      </p>
+                      <p className="forgot-password text-center">
+                  Or create an organization <Link href="/organizations/addOrganization"> here </Link> 
+                  </p>          
+>>>>>>> bbd91eff221685fe16e541d31a364074dfb66525
                   </Form>
                 </Container>
           </div>

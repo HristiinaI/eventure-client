@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
+import Link from 'next/link';
+import Home from '../home';
 
 import {
   Button,
@@ -18,32 +20,54 @@ import {
 
 import { ListGroup } from 'react-bootstrap';
 
-import Home from '../home';
-
 export default class MyOrganizations extends Component {
     state = {
-        name: '',
+        myOrganizations: new Array()
     }
-    handleClick = user => {
-        const names = JSON.parse(localStorage.getItem('organizations'));
-       // axios.get('http://localhost:8000/organizations/');
-        console.log(names);
+
+    componentDidMount = () => {
+        let organizations = [];
+        let _this = this;
+        axios.get('http://localhost:8080/users/')
+        .then(function(results) {
+            for(let i = 0; i < results.data.length; i++) {
+                organizations.push(results.data[i]);
+            }
+            _this.setState({myOrganizations: organizations});
+        })
+        .catch(function(error){
+            console.log(error);
+        })
     }
+    
     render() {
-        return (
-            <div class = "col-md-6" align = "center"> 
-                <ListGroup defaultActiveKey="#link1">
-                    <ListGroup.Item action href="#link1">
-                        Link 1
-                    </ListGroup.Item>
-                    <ListGroup.Item action href="#link2" disabled>
-                        Link 2
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={this.handleClick}>
-                        This one is a button
-                    </ListGroup.Item>
-                </ListGroup>
-            </div> 
-        );
+        if(this.state.myOrganizations.length) {
+            <>
+            return (
+                <Home />
+                <h2> Your organizations: </h2>
+                <ul> 
+                    {this.state.myOrganizations.map(org => {
+                        return(
+                            <li key={org._id} >
+                                <Link href="/organizations/myOrganization/[id]"
+                                as={`/organizations/myOrganization/${org._id}`} >
+                                <a> {org.name} </a>
+                                </Link>
+                            </li>
+                        );
+                    })
+                    }
+                </ul>
+            );
+            </>
+        } else {
+            return(
+                <>
+                <h2> Your organizations: </h2>
+                Loading...
+                </>
+            );
+        }
     }
 }

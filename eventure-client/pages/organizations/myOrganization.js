@@ -124,16 +124,6 @@ export default class MyOrganization extends Component {
                     </CardFooter>
                   </Card>
                 </Col>
-                <Col md="4">
-                  <Card className="card-user">
-                    <CardBody>
-                      <CardText />
-                        <div> 
-                          <img src = "https://www.elsys-bg.org/web/files/news/270/gallery/thumb_980x630_logo2.png" width="356" height="256"/>
-                        </div>
-                    </CardBody>
-                  </Card>
-                </Col>
               </Row>
             </div>
         );

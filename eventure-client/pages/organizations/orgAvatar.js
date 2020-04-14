@@ -5,6 +5,7 @@ import axios from 'axios';
 import {
   FormGroup,
   Input,
+  Button,
 } from "reactstrap";
 
 import Home from '../home';
@@ -19,7 +20,6 @@ export default class Avatar extends Component {
   componentDidMount() {
     const item = JSON.parse(localStorage.getItem('avatar'));
 
-    //axios.get('http://localhost:8080/organizations/' + item)
     axios.get('http://localhost:8080/organizations?name=' + item)
     .then(res => {
       this.setState({ members: res.data.members });
@@ -33,16 +33,19 @@ export default class Avatar extends Component {
     })
   }
 
+  sendMessage = org => {
+    console.log('Hello!');
+  }
+
   render() {
     return (
         <div className="col-md-12" align = "center">
             <Home />
-            <div align = "center">
-                <img src = "https://ezadtech.com/wp-content/uploads/2019/03/chilled-cool-whatsapp-dp.jpg" width="200" height="200"/>
-            </div>
+
+            <br/>
             <br/>
             <div className = "col-md-4"  >
-            
+
             <FormGroup>
                 <label htmlFor="exampleInputEmail1">
                     Members
@@ -69,7 +72,10 @@ export default class Avatar extends Component {
                     rows="4"
                     type="textarea"
                 />
-            </FormGroup>     
+            </FormGroup>   
+            <FormGroup> 
+                <Button className="btn-fill" color="primary" type="submit" onClick = {this.sendMessage}> Send message </Button>
+            </FormGroup>   
         </div>
         </div>
     );

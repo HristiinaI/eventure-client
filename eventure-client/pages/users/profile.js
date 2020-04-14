@@ -212,15 +212,7 @@ export default class Profile extends Component {
                 </CardFooter>
               </Card>
             </Col>
-            <Col md="4">
-              <Card className="card-user">
-                <CardBody>
-                  <div >
-                      <img src = "https://ezadtech.com/wp-content/uploads/2019/03/chilled-cool-whatsapp-dp.jpg" width="256" height="256"/>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
+
           </Row>
         </div>
     );

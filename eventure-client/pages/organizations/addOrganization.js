@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import { Container,  FormGroup, Label, Input } from 'reactstrap';
 import { Form, Button } from 'react-bootstrap';
+import Link from 'next/link';
 
 import Home from '../home';
 
@@ -37,28 +38,17 @@ export default class AddOrganization extends Component {
         members.push(creator);
 
         axios.post('http://localhost:8080/organizations', { members, name, password, creator });
-
-        for(let i = 0; i < members.length; i++) {
-            axios.get('http://localhost:8080/users?param=' + members[i], {})
-            .then(res => {
-                const temp = res.data.organizations;
-                temp.push(name);
-                this.setState({ organizations: temp});
-                this.setState({ id: res.data._id });       
-                const organizations = this.state.organizations;
-                axios.put('http://localhost:8080/users/' + this.state.id, {organizations});
-            });
-        }
         
     };
 
     render() {
         return(
-            <div align = "center">
-                <Home />        
+            <div align = "center">      
+              <br/>
+              <br/>
               <div className = "col-md-6" >           
                   <Container className = "App">
-                  <h2>Add organization</h2>
+                  <h2>Create organization</h2>
                   <Form className = "form" onSubmit = {this.handleSubmit}>
                         <FormGroup>
                           <Label>Members</Label>
@@ -76,6 +66,12 @@ export default class AddOrganization extends Component {
                       onChange = {this.onPasswordChanged}/>
                         </FormGroup>
                     <Button type="submit" className="btn btn-primary btn-block">Add</Button>          
+                    <p className="forgot-password text-center">
+                      Already registered? <Link href="/users/signIn">Sign in</Link>
+                  </p> 
+                  <p className="forgot-password text-center">
+                  Or create an account <Link href="/users/signUp"> here </Link>
+                    </p>
                   </Form>
                 </Container> 
               </div>
