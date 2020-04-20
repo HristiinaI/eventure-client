@@ -22,16 +22,19 @@ import { ListGroup } from 'react-bootstrap';
 
 export default class MyOrganizations extends Component {
     state = {
-        myOrganizations: new Array()
+        id: '',
+        myOrganizations: []
     }
 
     componentDidMount = () => {
         let organizations = [];
         let _this = this;
-        axios.get('http://localhost:8080/users/')
+        const id = JSON.parse(localStorage.getItem('id'));
+        axios.get('http://localhost:8080/users/' + id)
         .then(function(results) {
-            for(let i = 0; i < results.data.length; i++) {
-                organizations.push(results.data[i]);
+            for(let i = 0; i < results.data.organizations.length; i++) {
+                console.log(results.data.organizations[i]);
+                organizations.push(results.data.organizations[i]);
             }
             _this.setState({myOrganizations: organizations});
         })
@@ -42,25 +45,26 @@ export default class MyOrganizations extends Component {
     
     render() {
         if(this.state.myOrganizations.length) {
-            <>
             return (
+                <>
                 <Home />
                 <h2> Your organizations: </h2>
                 <ul> 
                     {this.state.myOrganizations.map(org => {
                         return(
-                            <li key={org._id} >
-                                <Link href="/organizations/myOrganization/[id]"
-                                as={`/organizations/myOrganization/${org._id}`} >
-                                <a> {org.name} </a>
+                            <li key={org} >
+                                <Link href="/organizations/[orgid]"
+                                as={`/organizations/${org}`} >
+                                <a> {org} </a>
                                 </Link>
                             </li>
                         );
                     })
                     }
                 </ul>
+                </>
             );
-            </>
+
         } else {
             return(
                 <>

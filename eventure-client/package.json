@@ -22,6 +22,7 @@
     "prop-types": "^15.7.2",
     "react-admin": "^3.1.2",
     "react-avatar": "^3.9.1",
+    "react-chat-elements": "^10.8.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-table": "^7.0.0-rc.15",
