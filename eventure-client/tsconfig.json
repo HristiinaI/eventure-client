@@ -20,14 +20,6 @@
   },
   "exclude": [
     "node_modules"
-<<<<<<< HEAD
-=======
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx", "pages/dashboard.jsx", "pages/organizations/addOrganization.js"
->>>>>>> bbd91eff221685fe16e541d31a364074dfb66525
   ]
   // "include": [
   //   "next-env.d.ts",

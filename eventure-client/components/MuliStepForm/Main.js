@@ -50,9 +50,10 @@ export class Main extends Component {
         axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
             console.log(res);
+            Router.push('/events/allEvents');
             axios.post('http://localhost:8080/board',{name, eventId:res.data.result._id})
                 .then(res => {
-                    Router.push('/events/allEvents');
+                    
                 })
                 .catch(function (error) {
                     console.log(error);

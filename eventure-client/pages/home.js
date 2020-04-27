@@ -162,7 +162,7 @@ export default class Home extends Component {
              <Nav className="mr-auto">
              <Nav.Link href = "/events/createEvent">Create event</Nav.Link>
              <Nav.Link href = '/events/allEvents'>All events</Nav.Link>
-               <Nav.Link href="/organizations/addOrganization">Create organization</Nav.Link>            
+             
                <NavDropdown title="Settings" id="collasible-nav-dropdown">
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
                  <NavDropdown.Divider />

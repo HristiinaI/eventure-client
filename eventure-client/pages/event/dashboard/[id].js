@@ -38,8 +38,6 @@ class Event extends React.Component{
     handleAddInput = user => {
         this.setState({ user: user.target.value });
     }
-    
-    
     handleAddUser = () => {
         let users = [];
         let _this = this;
