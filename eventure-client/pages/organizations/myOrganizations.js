@@ -33,7 +33,6 @@ export default class MyOrganizations extends Component {
         axios.get('http://localhost:8080/users/' + id)
         .then(function(results) {
             for(let i = 0; i < results.data.organizations.length; i++) {
-                console.log(results.data.organizations[i]);
                 organizations.push(results.data.organizations[i]);
             }
             _this.setState({myOrganizations: organizations});

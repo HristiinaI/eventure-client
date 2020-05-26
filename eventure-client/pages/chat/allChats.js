@@ -11,6 +11,7 @@ import AllChatsComponent from '../../components/Chat/AllChatsComponent';
 class AllChats extends React.Component{
     state = {
         allChats: [],
+        names: [],
         chatId: '',
     }
 
@@ -20,7 +21,6 @@ class AllChats extends React.Component{
         const id = JSON.parse(localStorage.getItem('id'));
         axios.get('http://localhost:8080/users/' + id)
             .then(function(results){
-                console.log("res.data " + results.data);
                 for(let i = 0;i < results.data.chats.length;i++){
                     chats.push(results.data.chats[i]);
                 }
@@ -30,7 +30,6 @@ class AllChats extends React.Component{
             .catch(function (error) {
                 console.log(error);
             })
-        console.log(this.state.allChats);
     }
 
     render(){
@@ -38,7 +37,7 @@ class AllChats extends React.Component{
             return(
                 <>
                     <AllChatsComponent
-                    allChats = {this.state.allChats}
+                        allChats = {this.state.allChats}
                     />
                 </>
             );

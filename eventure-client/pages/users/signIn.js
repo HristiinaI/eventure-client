@@ -37,6 +37,7 @@ export default class SignInPage extends Component {
                     localStorage.setItem('id', JSON.stringify(this.state.id));
                     localStorage.setItem('email', JSON.stringify(this.state.email));
                     localStorage.setItem('role', JSON.stringify(this.state.role));
+                    localStorage.setItem('accessToken', JSON.stringify(res.data.tokens.accessToken));
                     Router.push('/home');
                     console.log(res.data.tokens.accessToken);
                     console.log(res.data.tokens.refreshToken);
