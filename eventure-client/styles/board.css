@@ -183,3 +183,9 @@ select {
 .close-btn:hover {
     background-color: #DCDCDC;
 }
+
+.addCard {
+    opacity: 0.5px;
+    color: black;
+    background-color: rgba(190,190,255,1);
+}

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import {
     Card,
@@ -26,6 +27,9 @@ class Event extends React.Component{
             addUsers: new Array(),
             user: '',
             added: [],
+            newEventName: '',
+            newEventLocation: '',
+            newEventDate: new Date()
         }
         this.handleKanban = this.handleKanban.bind(this);
         this.handleSubmmitUsers = this.handleSubmmitUsers.bind(this);
@@ -69,6 +73,32 @@ class Event extends React.Component{
             })
 
     }
+    handleChange = input => e => {
+        this.setState({[input]: e.target.value});
+    }
+
+    handleDateChange = date =>{
+        this.setState({
+            newEventDate: date
+          });
+    }
+
+    handleSubmit = () =>{
+        const name = this.state.newEventName;
+        // const type = this.state.type;
+        const date = this.state.newEventDate;
+        const location = this.state.newEventLocation;
+        let eventId = this.props.event._id;
+        
+
+        axios.put('http://localhost:8080/events/' + eventId, {name, date, location})
+        .then(res => {
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
     render(){
     return(
         <div>
@@ -78,7 +108,7 @@ class Event extends React.Component{
             <Col md="8">
                 <Card>
                     <CardHeader>
-                        <h5 className="title">{this.props.event.name} </h5>
+                        <h5 className="title">{this.state.newEventName} </h5>
                     </CardHeader>
                     <CardBody>
                         <Form >
@@ -88,20 +118,24 @@ class Event extends React.Component{
                                         <label>Event Name</label>
                                         <Input
                                             defaultValue={this.props.event.name} 
-                                            // onChange = {this.handleChange("name")}
+                                            onChange={this.handleChange('newEventName')}
                                             placeholder="Event Name"
                                             type="text"
                                         />
                                     </FormGroup>
                                 </Col>
-                                <Col className="pl-md-1" md="6">
+                                <Col >
                                     <FormGroup>
                                         <label>Event Date</label>
                                         <DatePicker
-                                            defaultValue={this.props.event.date}
-                                            // onChange={ this.handleDateChange }
-                                            name="date"
-                                            dateFormat="MM/dd/yyyy"
+                                            defaultValue={this.props.event.startDate}
+                                            onChange={ this.handleDateChange}
+                                            showTimeSelect
+                                            timeFormat="HH:mm"
+                                            timeIntervals={15}
+                                            timeCaption="time"
+                                            name="startDate"
+                                            dateFormat="MMMM d, yyyy h:mm aa"
                                         />
                                     </FormGroup>
                                 </Col>
@@ -112,7 +146,7 @@ class Event extends React.Component{
                                         <label>Location</label>
                                         <Input
                                             defaultValue={this.props.event.location}
-                                            // onChange = {this.handleChange("location")}
+                                            onChange = {this.handleChange('newEventLocation')}
                                             placeholder="Location"
                                             type="text"
                                         />
@@ -151,7 +185,7 @@ class Event extends React.Component{
                     </CardBody>
                     <CardFooter>
                         <Button className="btn-fill" color="primary" type="submit"
-                        // onClick = {this.handleSubmit}
+                        onClick = {this.handleSubmit}
                         >
                             Save
                         </Button>

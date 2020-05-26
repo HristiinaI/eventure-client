@@ -4,12 +4,9 @@ import Link from 'next/link';
 import Home from '../home';
   
 class AllEvents extends React.Component{
- 
     state = {
-
         allEvents: new Array()
     }          
-
     componentDidMount = () => {
         let events = [];
         let _this = this;

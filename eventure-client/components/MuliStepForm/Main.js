@@ -7,14 +7,23 @@ import EventLocation from './EventLocation';
 import AllInfo from './AllInfo';
 import Home from "../../pages/home";
 import Router from "next/router";
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+
 
 export class Main extends Component {
-    state = {
-        step: 1,
-        eventName: '',
-        type: '',
-        startDate: new Date(), 
-        location: '',
+    constructor (props) {
+        super(props)
+        this.state = {
+            step: 1,
+            eventName: '',
+            type: '',
+            startDate: new Date(), 
+            location: '',
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     nextStep = () => {
@@ -37,7 +46,9 @@ export class Main extends Component {
     }
 
     handleDateChange = date =>{
-        this.setState({startDate: date});
+        this.setState({
+            startDate: date
+          });
     }
 
     handleSubmit = () => {

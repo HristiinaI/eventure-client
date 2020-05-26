@@ -7,10 +7,10 @@ import "../styles/board.css";
 
 const App = () => {
     return (
-        <DndProvider backend={Backend}>
+        <>
             <Header />
             <Board />
-        </DndProvider>
+        </>
     );
 };
 

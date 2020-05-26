@@ -6,51 +6,69 @@ import Backend from "react-dnd-html5-backend";
 import Item from "../../../components/Board/Item";
 import DropWrapper from "../../../components/Board/DropWrapper";
 import Col from "../../../components/Board/Col";
-import { data, statuses } from "../../../data/index";
+import {data, statuses } from "../../../data/index";
+import CardCreate from "../../../components/Board/CardCreate";
 
-const Board = () => {
-  const [items, setItems] = useState(data);
+class Board extends React.Component {
 
-  const onDrop = (item, monitor, status) => {
-      const mapping = statuses.find(si => si.status === status);
+    state = {
+        items: new Array(),
+    }
 
-      setItems(prevState => {
-          const newItems = prevState
-              .filter(i => i.id !== item.id)
-              .concat({ ...item, status, icon: mapping.icon });
-          return [ ...newItems ];
-      });
-  };
+    componentDidMount = () => {
+        let cards = [];
+        let _this = this;
+        axios.get('http://localhost:8080/cards/')
+        .then(function(results){
+            for(let i = 0;i < results.data.length;i++){
+                cards.push(results.data[i]);
+            }
+            
+            _this.setState({items: cards});
+            console.log(items);
+        })
+        .catch(function (error) {
+            console.log(error);
+        }) 
+    }
 
-  const moveItem = (dragIndex, hoverIndex) => {
-      const item = items[dragIndex];
-      setItems(prevState => {
-          const newItems = prevState.filter((i, idx) => idx !== dragIndex);
-          newItems.splice(hoverIndex, 0, item);
-          return  [ ...newItems ];
-      });
-  };
+    // onDrop = (item, monitor, status) => {
+    //     const mapping = statuses.find(si => si.status === status);
 
-  return (
-      <div className={"row"}>
-          {statuses.map(s => {
-              return (
-                  <div key={s.status} className={"col-wrapper"}>
-                      <h2 className={"col-header"}>{s.status.toUpperCase()}</h2>
-                      <DropWrapper onDrop={onDrop} status={s.status}>
-                          <Col>
-                              {items
-                                  .filter(i => i.status === s.status)
-                                  .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={s} />)
-                              }
-                          </Col>
-                      </DropWrapper>
-                  </div>
-              );
-          })}
-      </div>
-  );
+    //     setItems(prevState => {
+    //         const newItems = prevState
+    //             .filter(i => i.id !== item.id)
+    //             .concat({ ...item, status, icon: mapping.icon });
+    //         return [ ...newItems ];
+    //     });
+    // };
+
+
+    render(){
+    return (
+        <div className={"row"}>
+            {statuses.map(s => {
+                return (
+                    <div key={s.status} className={"col-wrapper"}>
+                        <h2 className={"col-header"}>{s.status.toUpperCase()}</h2>
+                        <Col>
+                        {this.status.items.map(item => {
+                                return(
+                                    <li key={item._id} >
+                                         <a>{item.name}</a>
+                                    </li>
+                                )
+                            })
+                        }
+                        </Col>
+                    </div>
+                );
+            })}
+        </div>
+    );
+        }
 };
+
 
 
 Board.getInitialProps = async function (context) {
