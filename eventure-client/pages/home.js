@@ -38,9 +38,9 @@ export default class Home extends Component {
 
   componentDidMount() {
     //this.setState({ usrRole: localStorage.getItem('role')});
-    const role = localStorage.getItem('role');
+    const role = JSON.parse(localStorage.getItem('role'));
 
-    this.setState({ usrRole: role });
+    this.setState({ role: role });
   }
 
   handleSubmit = user => {
@@ -155,32 +155,40 @@ export default class Home extends Component {
   }
 
   render() {
+      const check = this.state.role === "User" ? 1:0;
       return (
         <div>
          <Navbar bg="light" variant="light">
            <Navbar.Brand href="/home">Home</Navbar.Brand>
              <Nav className="mr-auto">
              <Nav.Link href = "/events/createEvent">Create event</Nav.Link>
+<<<<<<< HEAD
              <Nav.Link href = '/events/allEvents'>All events</Nav.Link>
              
+=======
+                 <Nav.Link href = '/events/allEvents'>All events</Nav.Link>
+                 <Nav.Link href = '/chat/allChats' >All chats</Nav.Link>
+>>>>>>> 58b2c240654a6b8fba3fc6e1e119c1d78d17cfd3
                <NavDropdown title="Settings" id="collasible-nav-dropdown">
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
                  <NavDropdown.Divider />
-                 <NavDropdown.Item href="/users/changePassword">Change password</NavDropdown.Item>
+                 <NavDropdown.Item hidden={check !== 1} href="/organizations/myOrganizations" >My organizations</NavDropdown.Item>
+                   <NavDropdown.Divider hidden={check !== 1}/>
+                   <NavDropdown.Item href="/users/changePassword">Change password</NavDropdown.Item>
                  <NavDropdown.Divider />
                  <NavDropdown.Item onClick = {this.deleteProfile} href="#">Delete profile</NavDropdown.Item>
-               </NavDropdown>
-             </Nav>
-             
+             </NavDropdown >
+               </Nav>
+
              <NavDropdown title="Find" id="collasible-nav-dropdown">
                   <NavDropdown.Item  onClick={this.findOrg}>Organization</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={this.findUser} >User</NavDropdown.Item>
                   <NavDropdown.Item onClick={this.findEvent} >Event</NavDropdown.Item>
               </NavDropdown>
-             
+
              <Form onSubmit = {this.handleSubmit} inline>
-               <Input value = {this.state.item} onChange = {this.onSearch} 
+               <Input value = {this.state.item} onChange = {this.onSearch}
                type="text" placeholder="Search" className="mr-sm-2" />
                <Button  type = "submit" variant="outline-primary">Search</Button>
              </Form>

@@ -12,7 +12,6 @@ export default class App extends Component {
         <Button href = "/organizations/addOrganization" type = "submit" variant="outline-primary">Create organization</Button>
         </Navbar>
         <br/>
-        
       </div>
     );
   }
