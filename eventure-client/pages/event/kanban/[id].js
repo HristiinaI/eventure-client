@@ -9,6 +9,8 @@ import Header from "../../../components/Board/Header";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 import "../../../styles/board.css";  
+import Home from '../../home';
+
 
 class Board extends React.Component {
     constructor(props){
@@ -38,7 +40,6 @@ class Board extends React.Component {
     }
 
 
-
     onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
         const newItems = this.state.items
@@ -64,7 +65,7 @@ class Board extends React.Component {
   render(){
   return (
     <DndProvider backend={Backend}>
-         {/* <Home /> */}
+         <Home />
         <Header />
       <div className={"row"}>
           {statuses.map(s => {

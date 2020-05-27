@@ -1,11 +1,24 @@
 import React from "react";
-import Icon from "@material-ui/core/Icon";
 import BoardButton from "../Board/BoardButton";
-import { connect } from "react-redux";
 import styled from "styled-components";
 import BoardForm from "../Board/BoardForm";
 import BoardOpenForm from "../Board/BoardOpenForm";
 import axios from "axios";
+
+const OpenFormButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 3px;
+  height: 36px;
+  margin-left: 8px;
+  width: 300px;
+  padding-left: 10px;
+  padding-right: 10px;
+  opacity: 0.5;
+  color: "inherit";
+  background-color:"inherit";
+  `;
 
 class CardCreate extends React.PureComponent {
   state = {
@@ -36,8 +49,11 @@ class CardCreate extends React.PureComponent {
     const content = this.state.text;
     const status = "open";
     const icon = "⭕️";
+    const boardId = JSON.parse(localStorage.getItem("boardId"));
 
-    axios.post('http://localhost:8080/cards', {content, status, icon})
+    console.log("BoardId in create card" + boardId);
+
+    axios.post('http://localhost:8080/cards', {content, status, icon, boardId})
         .then(res => {
             console.log(res);
             this.props.onCreate();
@@ -46,24 +62,6 @@ class CardCreate extends React.PureComponent {
 
   renderOpenForm = () => {
     const buttonText =  "Add another card";
-    const buttonTextOpacity = 0.5;
-    const buttonTextColor ="inherit";
-    const buttonTextBackground ="inherit";
-
-    const OpenFormButton = styled.div`
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      border-radius: 3px;
-      height: 36px;
-      margin-left: 8px;
-      width: 300px;
-      padding-left: 10px;
-      padding-right: 10px;
-      opacity: ${buttonTextOpacity};
-      color: ${buttonTextColor};
-      background-color: ${buttonTextBackground};
-    `;
 
     return (
       <OpenFormButton onClick={this.openForm}>
@@ -75,6 +73,7 @@ class CardCreate extends React.PureComponent {
 
   render() {
     const { text } = this.state;
+
     return this.state.formOpen ? (
       <BoardForm
         text={text}

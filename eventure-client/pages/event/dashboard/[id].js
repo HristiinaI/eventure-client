@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -168,7 +168,7 @@ class Event extends React.Component{
                                 <Col className="pr-md-1" md="6">
                                     <FormGroup>
                                         <Link href="/event/kanban/[id]"
-                                                as = {`/event/kanban/${this.props.event.boardID}`}>
+                                                as = {`/event/kanban/${this.props.event.boardId}`}>
                                             <Button>
                                                 {this.props.event.name} Kanban
                                             </Button>
