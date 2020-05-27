@@ -2,14 +2,26 @@ import React, { useState } from 'react';
 import axios from "axios";
 import Link from 'next/link';
 import Home from '../home';
-  
+import 'bootstrap/dist/css/bootstrap.css';
+import {
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    FormGroup,
+    Input,
+    Row,
+    Col,
+    Form,
+    Button
+} from "reactstrap";
+
 class AllEvents extends React.Component{
- 
+
     state = {
-
-        allEvents: new Array()
+        allEvents: new Array(),
+        eventId: ''
     }          
-
     componentDidMount = () => {
         let events = [];
         let _this = this;
@@ -40,6 +52,7 @@ class AllEvents extends React.Component{
                                     as={`/event/dashboard/${event._id}`} >
                                     <a>{event.name}</a>
                                  </Link>
+                                 
                             </li>
                         ); 
                        
@@ -51,8 +64,9 @@ class AllEvents extends React.Component{
         }else{
             return(
                 <>
+                <Home />
                 <h2>Your Events: </h2>
-                Loading...
+                You do not have any events!
                 </>    
             );
         }

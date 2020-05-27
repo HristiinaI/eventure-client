@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Nav, Navbar, Form, NavDropdown, Button, InputGroup } from 'react-bootstrap';
+import { Nav, Navbar, Form, NavDropdown, Button} from 'react-bootstrap';
 import axios from 'axios';
 import Router from 'next/router';
 import Link from 'next/link';
