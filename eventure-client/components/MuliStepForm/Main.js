@@ -8,13 +8,21 @@ import AllInfo from './AllInfo';
 import Home from "../../pages/home";
 import Router from "next/router";
 
+
 export class Main extends Component {
-    state = {
-        step: 1,
-        eventName: '',
-        type: '',
-        startDate: new Date(), 
-        location: '',
+    constructor (props) {
+        super(props)
+        this.state = {
+            step: 1,
+            eventName: '',
+            type: '',
+            startDate: new Date(), 
+            location: '',
+            boardId: '',
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     nextStep = () => {
@@ -37,8 +45,11 @@ export class Main extends Component {
     }
 
     handleDateChange = date =>{
-        this.setState({startDate: date});
+        this.setState({
+            startDate: date
+          });
     }
+
 
     handleSubmit = () => {
         const name = this.state.eventName;
@@ -46,13 +57,30 @@ export class Main extends Component {
         const date = this.state.startDate;
         const location = this.state.location;
         const creator = JSON.parse(localStorage.getItem("id"));
+        // const boardId = this.state.boardId;
+        const _this = this;
 
         axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
             console.log(res);
-            axios.post('http://localhost:8080/board',{name, eventId:res.data.result._id})
+            Router.push('/events/allEvents');
+            const eventId = res.data.result._id;
+            console.log("EventId:" + eventId);
+            axios.post('http://localhost:8080/board',{name, eventId: eventId})
                 .then(res => {
-                    Router.push('/events/allEvents');
+                    // const boardId = res.data.result._id;
+                    _this.setState({boardId: res.data.result._id})
+                    const addEventId = res.data.result.eventId;
+                    console.log("this.state.boardId:" + this.state.boardId);
+                    console.log("AddEventId:" + addEventId);
+                    axios.put('http://localhost:8080/events/' + addEventId, {boardId: res.data.result._id})
+                    .then(res => {
+                        localStorage.setItem('boardId', JSON.stringify(this.state.boardId));
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                        
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -62,7 +90,7 @@ export class Main extends Component {
 
 
     showStep = () => {
-        const { step, eventName, type, startDate, location} = this.state;
+        const { step, eventName, type, startDate, location, eventId} = this.state;
 
         if(step === 1){
             return (

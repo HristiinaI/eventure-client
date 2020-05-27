@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Nav, Navbar, Form, NavDropdown, Button, InputGroup } from 'react-bootstrap';
+import { Nav, Navbar, Form, NavDropdown, Button} from 'react-bootstrap';
 import axios from 'axios';
 import Router from 'next/router';
 import Link from 'next/link';
@@ -55,7 +55,7 @@ export default class Home extends Component {
               //this.setState({ id: res.data._id });
               this.setState({ role: "Organization" });
               this.setState({ hasOrg: "true" });
-              localStorage.setItem('avatar', JSON.stringify(this.state.item));
+              localStorage.setItem('avatar', this.state.item);
               Router.push('/organizations/orgAvatar');
               Router.reload('/organizations/orgAvatar');
               this.setState({loading: false});
@@ -162,15 +162,15 @@ export default class Home extends Component {
            <Navbar.Brand href="/home">Home</Navbar.Brand>
              <Nav className="mr-auto">
              <Nav.Link href = "/events/createEvent">Create event</Nav.Link>
-                 <Nav.Link href = '/events/allEvents'>All events</Nav.Link>
+
+             <Nav.Link href = '/events/allEvents'>All events</Nav.Link>
                  <Nav.Link href = '/chat/allChats' >All chats</Nav.Link>
                <NavDropdown title="Settings" id="collasible-nav-dropdown">
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
                  <NavDropdown.Divider />
                  <NavDropdown.Item hidden={check !== 1} href="/organizations/myOrganizations" >My organizations</NavDropdown.Item>
                    <NavDropdown.Divider hidden={check !== 1}/>
-                   <NavDropdown.Item href="/users/changePassword">Change password</NavDropdown.Item>
-                 <NavDropdown.Divider />
+                 <NavDropdown.Divider hidden={check !== 0}/>
                  <NavDropdown.Item onClick = {this.deleteProfile} href="#">Delete profile</NavDropdown.Item>
              </NavDropdown >
                </Nav>

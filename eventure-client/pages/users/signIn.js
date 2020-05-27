@@ -22,7 +22,6 @@ export default class SignInPage extends Component {
     onPasswordChanged = user => {
         this.setState({password: user.target.value})
     }
-
     handleSubmit = user => {
         user.preventDefault();
 
