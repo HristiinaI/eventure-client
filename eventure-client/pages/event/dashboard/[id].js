@@ -4,6 +4,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import "../../../styles/deleteButton.css";
+
 import {
     Card,
     CardHeader,
@@ -18,6 +22,8 @@ import {
 } from "reactstrap";
 import Home from '../../home';
 import Router from "next/router";
+import Link from 'next/link';
+
 
 class Event extends React.Component{
     constructor(props){
@@ -35,8 +41,8 @@ class Event extends React.Component{
         this.handleSubmmitUsers = this.handleSubmmitUsers.bind(this);
         this.handleAddUser = this.handleAddUser.bind(this);
     }
-    handleKanban = () =>{
-        Router.push()
+    handleKanban = kanban =>{
+   
     }
 
     handleAddInput = user => {
@@ -99,6 +105,13 @@ class Event extends React.Component{
             console.log(error);
         })
     }
+
+    handleDelete = eventId => {
+        axios.delete('http://localhost:8080/events/' + eventId);
+        Router.push('/events/allEvents');
+    }
+
+
     render(){
     return(
         <div>
@@ -154,10 +167,12 @@ class Event extends React.Component{
                                 </Col>
                                 <Col className="pr-md-1" md="6">
                                     <FormGroup>
-                                        <Button color="primary" type="submit"
-                                         onClick = {this.handleKanban}>
-                                             {this.props.event.name} Kanban
-                                         </Button>
+                                        <Link href="/event/kanban/[id]"
+                                                as = {`/event/kanban/${this.props.event.boardID}`}>
+                                            <Button>
+                                                {this.props.event.name} Kanban
+                                            </Button>
+                                         </Link>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -172,22 +187,32 @@ class Event extends React.Component{
                                             type="email"
                                             name="email"
                                         />
+                                    </FormGroup>
+                                    <FormGroup>
                                         <Button color = "primary" onClick = {this.handleAddUser}>
                                             Add Friend
                                         </Button>
+                                        {' '}
                                         <Button color = "primary" onClick = {this.handleSubmmitUsers}>
                                             Submit Friends
                                         </Button>
                                     </FormGroup>
+                                   
                                 </Col>
                             </Row>
                         </Form>
                     </CardBody>
                     <CardFooter>
                         <Button className="btn-fill" color="primary" type="submit"
-                        onClick = {this.handleSubmit}
-                        >
+                        onClick = {this.handleSubmit}>
                             Save
+                        </Button>
+                        {' '}
+                        <Button class="btnDelete" onClick={() => 
+                        { if (window.confirm('Are you sure you wish to delete this event ?')) 
+                            this.handleDelete(this.props.event._id) } } >
+                             <FontAwesomeIcon icon={faTrash} />
+                            Delete
                         </Button>
                     </CardFooter>
                 </Card>

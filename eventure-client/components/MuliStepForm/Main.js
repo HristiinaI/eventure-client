@@ -62,9 +62,20 @@ export class Main extends Component {
         .then(res => {
             console.log(res);
             Router.push('/events/allEvents');
+            console.log("EventId:" + res.data.result._id);
             axios.post('http://localhost:8080/board',{name, eventId:res.data.result._id})
                 .then(res => {
-                    
+                    const boardID = res.data.result._id;
+                    const addEventId = res.data.result.eventId;
+                    console.log("BoardID:" + boardID);
+                    axios.put('http://localhost:8080/events/' + addEventId, {boardID})
+                    .then(res => {
+            
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                        
                 })
                 .catch(function (error) {
                     console.log(error);

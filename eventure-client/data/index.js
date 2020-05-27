@@ -1,10 +1,33 @@
 const data = [{
     id: 1,
     icon: "⭕️",
-    status: "open",
+    status: "in progress",
     title: "Make logo",
     content: "Use pink, purple and white"
-}];
+},
+{
+    id: 2,
+    icon: "⭕️",
+    status: "in progress",
+    title: "Make logo",
+    content: "Use pink, purple and white"
+},
+{
+    id: 3,
+    icon: "⭕️",
+    status: "in review",
+    title: "Make logo",
+    content: "Use pink, purple and white"
+},
+{
+    id: 4,
+    icon: "⭕️",
+    status: "done",
+    title: "Make logo",
+    content: "Use pink, purple and white"
+},
+
+];
 
 const statuses = [{
     status: "open",
