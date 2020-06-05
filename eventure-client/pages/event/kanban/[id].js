@@ -27,7 +27,8 @@ class Board extends React.Component {
     loadData = () => {
         let cards = [];
         let _this = this;
-        axios.get('http://localhost:8080/cards/')
+        axios.get('http://localhost:8080/cards?param=' + this.props.board._id)
+        // axios.get('http://localhost:8080/cards')
         .then(function(results){
             for(let i = 0;i < results.data.length;i++){
                 cards.push(results.data[i]);
@@ -78,7 +79,7 @@ class Board extends React.Component {
                                   .filter(i => i.status === s.status)
                                   .map((i, idx) => <Item key={i._id} item={i} index={idx} moveItem={this.moveItem} status={s} />)
                               }
-                              <CardCreate onCreate = {this.loadData}>
+                              <CardCreate onCreate = {this.loadData} boardId = {this.props.board._id}>
                               </CardCreate>
                           </Col>
                           

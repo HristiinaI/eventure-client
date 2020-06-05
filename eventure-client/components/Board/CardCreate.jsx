@@ -47,13 +47,11 @@ class CardCreate extends React.PureComponent {
 
   handleAddCard = () => {
     const content = this.state.text;
-    const status = "open";
-    const icon = "⭕️";
-    const boardId = JSON.parse(localStorage.getItem("boardId"));
+    // const status = "open";
+    // const icon = "⭕️";
+    const boardId = this.props.boardId;
 
-    console.log("BoardId in create card" + boardId);
-
-    axios.post('http://localhost:8080/cards', {content, status, icon, boardId})
+    axios.post('http://localhost:8080/cards', {content, boardId})
         .then(res => {
             console.log(res);
             this.props.onCreate();

@@ -57,7 +57,6 @@ export class Main extends Component {
         const date = this.state.startDate;
         const location = this.state.location;
         const creator = JSON.parse(localStorage.getItem("id"));
-        // const boardId = this.state.boardId;
         const _this = this;
 
         axios.post('http://localhost:8080/events', { name, type, date, location, creator})
@@ -65,14 +64,10 @@ export class Main extends Component {
             console.log(res);
             Router.push('/events/allEvents');
             const eventId = res.data.result._id;
-            console.log("EventId:" + eventId);
             axios.post('http://localhost:8080/board',{name, eventId: eventId})
                 .then(res => {
-                    // const boardId = res.data.result._id;
                     _this.setState({boardId: res.data.result._id})
                     const addEventId = res.data.result.eventId;
-                    console.log("this.state.boardId:" + this.state.boardId);
-                    console.log("AddEventId:" + addEventId);
                     axios.put('http://localhost:8080/events/' + addEventId, {boardId: res.data.result._id})
                     .then(res => {
                         localStorage.setItem('boardId', JSON.stringify(this.state.boardId));

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -208,7 +208,7 @@ class Event extends React.Component{
                             Save
                         </Button>
                         {' '}
-                        <Button class="btnDelete" onClick={() => 
+                        <Button className = "btnDelete" onClick={() => 
                         { if (window.confirm('Are you sure you wish to delete this event ?')) 
                             this.handleDelete(this.props.event._id) } } >
                              <FontAwesomeIcon icon={faTrash} />

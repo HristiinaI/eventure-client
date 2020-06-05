@@ -3,29 +3,17 @@ import axios from "axios";
 import Link from 'next/link';
 import Home from '../home';
 import 'bootstrap/dist/css/bootstrap.css';
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    FormGroup,
-    Input,
-    Row,
-    Col,
-    Form,
-    Button
-} from "reactstrap";
 
 class AllEvents extends React.Component{
 
     state = {
         allEvents: new Array(),
-        eventId: ''
+        creatorId: ''
     }          
     componentDidMount = () => {
         let events = [];
         let _this = this;
-        axios.get('http://localhost:8080/events/')
+        axios.get(`http://localhost:8080/events/`)
         .then(function(results){
             for(let i = 0;i < results.data.length;i++){
                 events.push(results.data[i]);
@@ -72,5 +60,7 @@ class AllEvents extends React.Component{
         }
     }
 }
+
+
 
 export default AllEvents;
