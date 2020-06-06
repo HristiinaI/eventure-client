@@ -34,8 +34,6 @@ class AllChatsComponent extends React.Component{
                                                 avatar: 'https://facebook.github.io/react/img/logo.svg',
                                                 alt: 'Reactjs',
                                                 title: chat,
-                                                subtitle: 'test',
-                                                unread: 0,
                                             }
                                         ]}
                                     />

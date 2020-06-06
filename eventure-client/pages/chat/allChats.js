@@ -11,7 +11,6 @@ import AllChatsComponent from '../../components/Chat/AllChatsComponent';
 class AllChats extends React.Component{
     state = {
         allChats: [],
-        names: [],
         chatId: '',
     }
 
@@ -19,17 +18,31 @@ class AllChats extends React.Component{
         let chats = [];
         let _this = this;
         const id = JSON.parse(localStorage.getItem('id'));
-        axios.get('http://localhost:8080/users/' + id)
-            .then(function(results){
-                for(let i = 0;i < results.data.chats.length;i++){
-                    chats.push(results.data.chats[i]);
-                }
-                _this.setState({allChats: chats});
+        if(JSON.parse(localStorage.getItem('role')) === 'User') {
+            axios.get('http://localhost:8080/users/' + id)
+                .then(function(results){
+                    for(let i = 0;i < results.data.chats.length;i++){
+                        chats.push(results.data.chats[i]);
+                    }
+                    _this.setState({allChats: chats});
 
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        } else if(JSON.parse(localStorage.getItem('role')) === 'Organization') {
+            axios.get('http://localhost:8080/organizations/' + id)
+                .then(function(results){
+                    for(let i = 0;i < results.data.chats.length;i++){
+                        chats.push(results.data.chats[i]);
+                    }
+                    _this.setState({allChats: chats});
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
     }
 
     render(){

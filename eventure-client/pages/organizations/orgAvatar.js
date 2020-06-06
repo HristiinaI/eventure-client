@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
+import Router from "next/router";
 
 import {
   FormGroup,
@@ -34,7 +35,23 @@ export default class Avatar extends Component {
   }
 
   sendMessage = org => {
-    console.log('Hello!');
+      const email = JSON.parse(localStorage.getItem('email'));
+      const name = JSON.parse(localStorage.getItem('orgName'));
+
+      let members = [];
+      members.push(this.state.name);
+      if(JSON.parse(localStorage.getItem('role')) === 'User') {
+          members.push(email);
+      } else if(JSON.parse(localStorage.getItem('role')) === 'Organization') {
+          members.push(name);
+      }
+      console.log('chat members = ' + members);
+      axios.post('http://localhost:8080/chats', {members})
+          .then(res => {
+              this.setState({chatId: res.data._id});
+          });
+      Router.push('/chat/allChats');
+
   }
 
   render() {
