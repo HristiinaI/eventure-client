@@ -174,7 +174,16 @@ class Event extends React.Component{
                                                     </Link>
                                                 </FormGroup>
                                             </Col>
-
+                                            <Col className="pr-md-1" md="6">
+                                                <FormGroup>
+                                                    <Link href="/chat/[chatid]"
+                                                          as = {`/chat/${this.props.event.chatId}`}>
+                                                        <Button>
+                                                            {this.state.newEventName} Chat
+                                                        </Button>
+                                                    </Link>
+                                                </FormGroup>
+                                            </Col>
                                         </Row>
                                         <Row>
                                             <Col className="pr-md-1" md="6">

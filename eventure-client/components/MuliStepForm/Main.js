@@ -94,13 +94,15 @@ export class Main extends Component {
                 .catch(function (error) {
                     console.log(error);
                 })
-        })
 
-        axios.post('http://localhost:8080/chats', {name, members: [this.state.email]})
-            .then(res => {
-                localStorage.setItem('chatId', JSON.stringify(this.state.chatId));
-                console.log(res.data);
-            });
+            console.log("members = " + this.state.email);
+            axios.post('http://localhost:8080/chats', {name, members: this.state.email})
+                .then(res => {
+                    _this.setState({chatId: res.data.result._id});
+                    axios.put('http://localhost:8080/events/' + eventId, {chatId: res.data._id});
+                    console.log(res.data);
+                });
+        })
     };
 
 
