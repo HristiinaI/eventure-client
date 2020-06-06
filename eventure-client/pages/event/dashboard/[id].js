@@ -26,8 +26,8 @@ import Link from 'next/link';
 import DateInput from '../../../components/DateInput';
 
 
-class Event extends React.Component{
-    constructor(props){
+class Event extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
             allUsers: new Array(),
@@ -37,21 +37,23 @@ class Event extends React.Component{
             newEventName: '',
             newEventLocation: '',
             newEventDate: new Date(),
-            localStorageUserId: ''
+            localStorageUserId: '',
+            successDate: false,
 
         }
         this.handleSubmmitUsers = this.handleSubmmitUsers.bind(this);
         this.handleAddUser = this.handleAddUser.bind(this);
     }
+
     handleAddInput = user => {
-        this.setState({ user: user.target.value });
+        this.setState({user: user.target.value});
     }
     handleAddUser = () => {
         let users = [];
         let _this = this;
         axios.get('http://localhost:8080/users/')
-            .then(function(results){
-                for(let i = 0;i < results.data.length;i++){
+            .then(function (results) {
+                for (let i = 0; i < results.data.length; i++) {
                     users.push(results.data[i].email);
                 }
                 _this.setState({allUsers: users});
@@ -81,13 +83,13 @@ class Event extends React.Component{
         this.setState({[input]: e.target.value});
     }
 
-    handleDateChange = date =>{
+    handleDateChange = date => {
         this.setState({
             newEventDate: date
         });
     }
 
-    handleSubmit = () =>{
+    handleSubmit = () => {
         const name = this.state.newEventName;
         // const type = this.state.type;
         const date = this.state.newEventDate;
@@ -117,19 +119,20 @@ class Event extends React.Component{
 
     }
 
-    render(){
-        if(this.state.localStorageUserId === this.props.event.creator){
-            return(
+    render() {
+
+        if (this.state.localStorageUserId === this.props.event.creator) {
+            return (
                 <div>
-                    <Home />
+                    <Home/>
                     <Row>
                         <Col md="8">
                             <Card>
                                 <CardHeader>
-                                    <h3 className="title">{this.state.newEventName}   -{this.props.event.type} </h3>
+                                    <h3 className="title">{this.state.newEventName} -{this.props.event.type} </h3>
                                 </CardHeader>
                                 <CardBody>
-                                    <Form >
+                                    <Form>
                                         <Row>
                                             <Col className="pr-md-1" md="6">
                                                 <FormGroup>
@@ -142,12 +145,13 @@ class Event extends React.Component{
                                                     />
                                                 </FormGroup>
                                             </Col>
-                                            <Col >
+                                            <Col>
                                                 <FormGroup>
                                                     <label>Event Date</label>
                                                     <DateInput
-                                                        defaultValue = {this.state.newEventDate}
-                                                        onChange={ this.handleDateChange}
+                                                        defaultValue={this.state.newEventDate}
+                                                        onChange={this.handleDateChange}
+                                                        successDate={this.state.successDate}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -158,7 +162,7 @@ class Event extends React.Component{
                                                     <label>Location</label>
                                                     <Input
                                                         defaultValue={this.state.newEventLocation}
-                                                        onChange = {this.handleChange('newEventLocation')}
+                                                        onChange={this.handleChange('newEventLocation')}
                                                         placeholder="Location"
                                                         type="text"
                                                     />
@@ -167,7 +171,7 @@ class Event extends React.Component{
                                             <Col className="pr-md-1" md="6">
                                                 <FormGroup>
                                                     <Link href="/event/kanban/[id]"
-                                                          as = {`/event/kanban/${this.props.event.boardId}`}>
+                                                          as={`/event/kanban/${this.props.event.boardId}`}>
                                                         <Button>
                                                             {this.state.newEventName} Kanban
                                                         </Button>
@@ -190,19 +194,19 @@ class Event extends React.Component{
                                                 <FormGroup>
                                                     <label>Add your friend by email:</label>
                                                     <Input
-                                                        defaultValue = {this.state.user}
-                                                        onChange = {this.handleAddInput}
+                                                        defaultValue={this.state.user}
+                                                        onChange={this.handleAddInput}
                                                         placeholder="Enter your friend email"
                                                         type="email"
                                                         name="email"
                                                     />
                                                 </FormGroup>
                                                 <FormGroup>
-                                                    <Button color = "primary" onClick = {this.handleAddUser}>
+                                                    <Button color="primary" onClick={this.handleAddUser}>
                                                         Add Friend
                                                     </Button>
                                                     {' '}
-                                                    <Button color = "primary" onClick = {this.handleSubmmitUsers}>
+                                                    <Button color="primary" onClick={this.handleSubmmitUsers}>
                                                         Submit Friends
                                                     </Button>
                                                 </FormGroup>
@@ -213,14 +217,15 @@ class Event extends React.Component{
                                 </CardBody>
                                 <CardFooter>
                                     <Button className="btn-fill" color="primary" type="submit"
-                                            onClick = {this.handleSubmit}>
+                                            onClick={this.handleSubmit}>
                                         Save
                                     </Button>
                                     {' '}
-                                    <Button className = "btnDelete" onClick={() =>
-                                    { if (window.confirm('Are you sure you wish to delete this event ?'))
-                                        this.handleDelete(this.props.event._id) } } >
-                                        <FontAwesomeIcon icon={faTrash} />
+                                    <Button className="btnDelete" onClick={() => {
+                                        if (window.confirm('Are you sure you wish to delete this event ?'))
+                                            this.handleDelete(this.props.event._id)
+                                    }}>
+                                        <FontAwesomeIcon icon={faTrash}/>
                                         Delete
                                     </Button>
                                 </CardFooter>
@@ -229,8 +234,10 @@ class Event extends React.Component{
                         <Col md="4">
                             <Card className="card-user">
                                 <CardBody>
-                                    <div >
-                                        <img src = "https://ezadtech.com/wp-content/uploads/2019/03/chilled-cool-whatsapp-dp.jpg" width="256" height="256"/>
+                                    <div>
+                                        <img
+                                            src="https://ezadtech.com/wp-content/uploads/2019/03/chilled-cool-whatsapp-dp.jpg"
+                                            width="256" height="256"/>
                                     </div>
                                 </CardBody>
                             </Card>
@@ -238,18 +245,18 @@ class Event extends React.Component{
                     </Row>
                 </div>
             );
-        }else{
-            return(
+        } else {
+            return (
                 <div>
-                    <Home />
+                    <Home/>
                     <Row>
                         <Col md="8">
                             <Card>
                                 <CardHeader>
-                                    <h3 className="title">{this.state.newEventName}   -{this.props.event.type} </h3>
+                                    <h3 className="title">{this.state.newEventName} -{this.props.event.type} </h3>
                                 </CardHeader>
                                 <CardBody>
-                                    <Form >
+                                    <Form>
                                         <Row>
                                             <Col className="pr-md-1" md="6">
                                                 <FormGroup>
@@ -262,12 +269,13 @@ class Event extends React.Component{
                                                     />
                                                 </FormGroup>
                                             </Col>
-                                            <Col >
+                                            <Col>
                                                 <FormGroup>
                                                     <label>Event Date</label>
                                                     <DateInput
-                                                        defaultValue = {this.state.newEventDate}
-                                                        onChange={ this.handleDateChange}
+                                                        defaultValue={this.state.newEventDate}
+                                                        onChange={this.handleDateChange}
+                                                        successDate={this.state.successDate}
                                                     ></DateInput>
                                                 </FormGroup>
                                             </Col>
@@ -292,8 +300,10 @@ class Event extends React.Component{
                         <Col md="4">
                             <Card className="card-user">
                                 <CardBody>
-                                    <div >
-                                        <img src = "https://ezadtech.com/wp-content/uploads/2019/03/chilled-cool-whatsapp-dp.jpg" width="256" height="256"/>
+                                    <div>
+                                        <img
+                                            src="https://ezadtech.com/wp-content/uploads/2019/03/chilled-cool-whatsapp-dp.jpg"
+                                            width="256" height="256"/>
                                     </div>
                                 </CardBody>
                             </Card>
@@ -302,8 +312,9 @@ class Event extends React.Component{
                 </div>
             );
         }
-    }
-};
+
+    };
+}
 
 Event.getInitialProps = async function (context) {
     const { id } = context.query;

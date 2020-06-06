@@ -12,6 +12,7 @@ import "../../../styles/board.css";
 import Home from '../../home';
 
 
+
 class Board extends React.Component {
     constructor(props){
         super(props);
@@ -57,10 +58,9 @@ class Board extends React.Component {
         .filter((i, idx) => idx !== dragIndex);
         newItems.splice(hoverIndex, 0, item);
 
-        this.setState({items: [...newItems]})
-            
-   
+        this.setState({items: [...newItems]})   
   };
+
 
   render(){
   return (
@@ -84,6 +84,7 @@ class Board extends React.Component {
                                 status={s.status}
                               >
                               </CardCreate>
+                              
                           </Col>
                           
                       </DropWrapper>

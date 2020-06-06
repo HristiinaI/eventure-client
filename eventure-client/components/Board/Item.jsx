@@ -2,6 +2,14 @@ import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../../data/types";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import "../../styles/deleteButton.css";
+import {
+    Button
+} from "reactstrap";
+import axios from 'axios';
+import Router from 'next/router';
 
 const Item = ({ item, index, moveItem, status }) => {
     const ref = useRef(null);
@@ -43,6 +51,12 @@ const Item = ({ item, index, moveItem, status }) => {
         })
     });
 
+    const deleteItem = (itemId) => {
+        axios.delete('http://localhost:8080/cards/' + itemId);
+        // Router.reload('/event/kanban')
+        location.reload();
+    }
+
     const [show, setShow] = useState(false);
 
     const onOpen = () => setShow(true);
@@ -62,6 +76,11 @@ const Item = ({ item, index, moveItem, status }) => {
                 <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
                 <p className={"item-title"}>{item.content}</p>
                 <p className={"item-status"}>{item.icon}</p>
+                <Button className="btnDelete" onClick={() => {
+                            if (window.confirm('Are you sure you wish to delete this card ?'))
+                                            deleteItem(item._id)
+                 }}>Delete</Button>
+
             </div>
             <Window
                 item={item}
