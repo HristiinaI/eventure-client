@@ -25,6 +25,7 @@ class EventDate extends React.Component{
                 timeIntervals={15}
                 timeCaption="time"
                 name="startDate"
+                minDate={new Date()}
                 dateFormat="MMMM d, yyyy h:mm aa"
             />
            <button className="Back" onClick={this.back}>

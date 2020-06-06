@@ -37,7 +37,8 @@ class Event extends React.Component{
             newEventName: '',
             newEventLocation: '',
             newEventDate: new Date(),
-            localStorageUserId: ''
+            localStorageUserId: '',
+            successDate: false
             
         }
         this.handleSubmmitUsers = this.handleSubmmitUsers.bind(this);
@@ -148,6 +149,7 @@ class Event extends React.Component{
                                             <DateInput
                                                 defaultValue = {this.state.newEventDate}
                                                 onChange={ this.handleDateChange}
+                                                successDate = {this.state.successDate}
                                             />
                                         </FormGroup>
                                     </Col>
@@ -258,6 +260,7 @@ class Event extends React.Component{
                                             <DateInput
                                                 defaultValue = {this.state.newEventDate}
                                                 onChange={ this.handleDateChange}
+                                                successDate = {this.state.successDate}
                                             ></DateInput>
                                         </FormGroup>
                                     </Col>
