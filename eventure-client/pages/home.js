@@ -29,7 +29,7 @@ export default class Home extends Component {
 
   handleClick = user => {
     user.preventDefault();
-    if(JSON.parse(localStorage.getItem('role')) == "Organization") {
+    if(JSON.parse(localStorage.getItem('role')) === "Organization") {
       Router.push('/organizations/myOrganization');
     } else {
       Router.push('/users/profile');
@@ -48,31 +48,29 @@ export default class Home extends Component {
     this.setState({loading: true});
     const item = this.state.item;
     if(item) {
-      if(this.state.findOrg == "true") {
+      if(this.state.findOrg === "true") {
         axios.get('http://localhost:8080/organizations?name=' + item)
             .then(res => {
               this.setState({ item: res.data.name });
-              //this.setState({ id: res.data._id });
               this.setState({ role: "Organization" });
               this.setState({ hasOrg: "true" });
-              localStorage.setItem('avatar', this.state.item);
+              localStorage.setItem('avatar', JSON.stringify(this.state.item));
               Router.push('/organizations/orgAvatar');
               Router.reload('/organizations/orgAvatar');
               this.setState({loading: false});
             });
-      } else if(this.state.findUser == "true") {   
-        axios.get('http://localhost:8080/users?email=' + item)
+      } else if(this.state.findUser === "true") {
+        axios.get('http://localhost:8080/users?param=' + item)
             .then(res => {
               this.setState({ item: res.data.email });
-              //this.setState({ id: res.data._id });
               this.setState({ role: "User" });
-              localStorage.setItem('avatar', JSON.stringify(this.state.item));
               this.setState({ hasUser: "true" });
+              localStorage.setItem('avatar', JSON.stringify(this.state.item));
               Router.push('/users/userAvatar');
               Router.reload('/users/userAvatar');
               this.setState({loading: false});
           });
-      } else if(this.state.findEvent == "true"){
+      } else if(this.state.findEvent === "true"){
         let events = [];
         let _this = this; 
         axios.get('http://localhost:8080/events?name=' + item)

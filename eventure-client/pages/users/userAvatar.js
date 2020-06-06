@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 
 import Home from '../home';
+import Router from "next/router";
 
 export default class Avatar extends Component {
     state = { 
@@ -20,31 +21,90 @@ export default class Avatar extends Component {
       education: '',
       workplace: '',
       about: '',
-      statusCode: '',  
+      statusCode: '',
+      chatId: '',
+        isCreated: false,
     };
-  
+
+    loadInformation = () => {
+        const item = JSON.parse(localStorage.getItem('avatar'));
+        axios.get('http://localhost:8080/users?param=' + item)
+            .then(res => {
+                this.setState({ email: res.data.email });
+                this.setState({ firstName: res.data.firstName });
+                this.setState({ lastName: res.data.lastName });
+                this.setState({ type: res.data.type });
+                this.setState({ country: res.data.country });
+                this.setState({ education: res.data.education });
+                this.setState({ workplace: res.data.workplace });
+                this.setState({ about: res.data.about });
+            })
+            .catch(function (error) {
+                if(error.response) {
+                    console.log(error);
+                }
+            })
+    }
+
   componentDidMount() {
-    const item = JSON.parse(localStorage.getItem('avatar'));
-    axios.get('http://localhost:8080/users?param=' + item)
-    .then(res => {
-        this.setState({ email: res.data.email });
-        this.setState({ firstName: res.data.firstName });
-        this.setState({ lastName: res.data.lastName });
-        this.setState({ type: res.data.type });
-        this.setState({ country: res.data.country });
-        this.setState({ education: res.data.education });
-        this.setState({ workplace: res.data.workplace });
-        this.setState({ about: res.data.about });
-    })
-    .catch(function (error) {
-        if(error.response) {
-            console.log(error);    
-        }
-    })
+    this.loadInformation();
   }
 
-  sendMessage = user => {
-      console.log('Hello!');
+  sendMessage = () => {
+        const email = JSON.parse(localStorage.getItem('email'));
+        const name = JSON.parse(localStorage.getItem('orgName'));
+        const id = JSON.parse(localStorage.getItem('id'));
+
+      let members = [];
+        if(JSON.parse(localStorage.getItem('role')) === 'User') {
+            axios.get('http://localhost:8080/users/' + id)
+                .then(res => {
+                   for(let i = 0; i < res.data.chats.length; i++) {
+                       axios.get('http://localhost:8080/chats/' + res.data.chats[i])
+                           .then(result => {
+                               for(let j = 0; j < result.data.members.length; j++) {
+                                   console.log('member = ' + result.data.members[i]);
+                                   console.log('person = ' + this.state.email);
+                                   if(result.data.members[j] === this.state.email) {
+                                       this.setState({isCreated: true});
+                                   }
+                               }
+                           })
+                   }
+                });
+            if(!this.state.isCreated) {
+                members.push(this.state.email);
+                members.push(email);
+            }
+
+        } else if(JSON.parse(localStorage.getItem('role')) === 'Organization') {
+            axios.get('http://localhost:8080/organizations/' + id)
+                .then(res => {
+                    for(let i = 0; i < res.data.chats.length; i++) {
+                        axios.get('http://localhost:8080/chats/' + res.data.chats[i])
+                            .then(result => {
+                                for(let j = 0; j < result.data.members.length; j++) {
+                                    if(result.data.members[j] === this.state.email) {
+                                        this.setState({isCreated: true});
+                                    }
+                                }
+                            })
+                    }
+                });
+            if(!this.state.isCreated) {
+                members.push(this.state.email);
+                members.push(name);
+            }
+        }
+        console.log('chat members = ' + members);
+        if(!this.state.isCreated) {
+            axios.post('http://localhost:8080/chats', {members})
+                .then(res => {
+                    this.setState({chatId: res.data._id});
+                });
+        }
+
+       Router.push('/chat/allChats');
   }
 
   render() {

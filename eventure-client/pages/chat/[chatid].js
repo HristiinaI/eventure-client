@@ -4,7 +4,7 @@ import 'react-chat-elements/dist/main.css';
 import Home from '../home';
 import { Input } from "react-chat-elements";
 import { Button } from "react-chat-elements";
-import { withRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import  { MessageBox }  from 'react-chat-elements';
 import React from "react";
 import '../../styles/Chat.css';
@@ -16,73 +16,89 @@ class Chat extends React.Component{
         super();
         this.state = {
             messages: new Array(),
-            id: ''
+            id: '',
+            socket: '',
+            message: '',
+            length: '',
         };
     }
 
-// ideqta e che mi vrushta spisuk s absoliutno vsichki chatove shtoto id-to
-    // deto se opitvam da my setna po nqkva prichina mi dava undefined, demek
-    // ne e zaredilo vse edno? abe ebalo si e maikata
-    componentDidMount() {
-        this.setState({id: this.props.router.query.id})
-        const socket = socketIOClient('http://localhost:1080', {
+    onSubmit = () => {
+        const chatId = this.props.chat._id;
+        const sender = JSON.parse(localStorage.getItem('id'));
+        const isUser = true;
+        const message = this.state.message;
+        this.state.socket.emit('message', {chatId, sender, isUser, message});
+        this.state.socket.emit('join');
+        this.onReload(message);
+    }
+
+
+    onReload = () => {
+        let messages = [];
+        const socket = socketIOClient('http://localhost:8080', {
             query: {
-              token: JSON.parse(localStorage.getItem('accessToken')),
+                token: JSON.parse(localStorage.getItem('accessToken')),
+                id: this.props.chat._id,
             },
         });
-        //const socket = io('http://localhost:1080');
-        socket.on('join', (data) => {
-            console.log("socket data: " + data);
-        })
-
-        axios.get('http://localhost:8080/chats?param=' + this.state.id)
+        this.setState({socket: socket});
+        let test = socket.emit('join');
+        console.log('test: ' + test);
+        axios.get('http://localhost:8080/chats?param=' + this.props.chat._id)
             .then(res => {
                 for(let i = 0; i < res.data.length; i++) {
-                    if(res.data[i]._id === this.props.router.query.id) {
-                        for(let j = 0; j < res.data[i].messages.length; j++) {
-                            this.setState({messages: res.data[i].messages[j].message} );
-
-                            console.log("from res = " + res.data[i].messages[j].message);
-                        }
-                    }
+                    messages.push(res.data[i]);
+                    this.setState({messages: messages});
+                    this.setState({length: i});
                 }
-
-                console.log("res " + this.state.messages);
             })
+    }
 
+    onChange = event => {
+        this.setState({message: event.target.value});
+    }
+
+    checkPosition = message => {
+        if (message.sender === JSON.parse(localStorage.getItem('id'))) {
+            return "right";
+        } else {
+            return "left";
+        }
+    }
+
+    componentDidMount() {
+        this.onReload();
     }
 
     render() {
-        if (this.props.router.query.id) {
+        if (this.props.chat._id) {
             return (
                 <>
                     <body>
                     <Home/>
+                    <footer className="footer">
+                        {this.state.messages.map(message => {
+                                return (
+                                    <MessageBox
+                                        position={this.checkPosition(message)}
+                                        type={'text'}
+                                        text={message.message}
+                                    />
+                                );
+                        }
 
+                        )}
 
-                    <footer classname="footer">
-                        <MessageBox
-                            position={'left'}
-                            type={'text'}
-                            text={"test"}
-                            
-                        />
-                        <MessageBox
-                            position={'right'}
-                            type={'text'}
-                            text={"hello"}
-                            date= {new Date()}
-                        />
-
-                        <Input
-                            placeholder="Type here..."
-                            multiline={true}
-                            rightButtons={
-                                <Button
-                                    color='white'
-                                    backgroundColor='black'
-                                    text='Send'/>
-                            }
+                        <Input onChange={this.onChange}
+                               placeholder="Type your message here..."
+                               multiline={true}
+                               rightButtons={
+                                   <Button onClick = {this.onSubmit}
+                                           color='white'
+                                           backgroundColor='black'
+                                           text='Send'/>
+                               }
 
                         />
                     </footer>
@@ -99,4 +115,13 @@ class Chat extends React.Component{
     }
 };
 
+Chat.getInitialProps = async function(context) {
+    const { id } = context.query;
+    let chat = {};
+    await axios.get(`http://localhost:8080/chats/${id}`)
+        .then(res => {
+            chat = res.data;
+        });
+    return {chat};
+}
 export default withRouter(Chat);

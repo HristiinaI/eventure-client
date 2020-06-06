@@ -19,6 +19,8 @@ export class Main extends Component {
             startDate: new Date(), 
             location: '',
             boardId: '',
+            chatId: '',
+            email: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -59,6 +61,16 @@ export class Main extends Component {
         const creator = JSON.parse(localStorage.getItem("id"));
         const _this = this;
 
+        axios.get('http://localhost:8080/users/' + creator)
+            .then(res => {
+                if(JSON.parse(localStorage.getItem('role')) === 'User') {
+                    this.setState({email: res.data.email});
+                } else if(JSON.parse(localStorage.getItem('role')) === 'Organization') {
+                    this.setState({email: res.data.name});
+                }
+
+            });
+
         axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
             console.log(res);
@@ -83,6 +95,12 @@ export class Main extends Component {
                     console.log(error);
                 })
         })
+
+        axios.post('http://localhost:8080/chats', {name, members: [this.state.email]})
+            .then(res => {
+                localStorage.setItem('chatId', JSON.stringify(this.state.chatId));
+                console.log(res.data);
+            });
     };
 
 

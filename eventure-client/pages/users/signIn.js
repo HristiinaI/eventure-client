@@ -22,6 +22,7 @@ export default class SignInPage extends Component {
     onPasswordChanged = user => {
         this.setState({password: user.target.value})
     }
+
     handleSubmit = user => {
         user.preventDefault();
 
@@ -38,8 +39,6 @@ export default class SignInPage extends Component {
                     localStorage.setItem('role', JSON.stringify(this.state.role));
                     localStorage.setItem('accessToken', JSON.stringify(res.data.tokens.accessToken));
                     Router.push('/home');
-                    console.log(res.data.tokens.accessToken);
-                    console.log(res.data.tokens.refreshToken);
                 });
         } else {
             const name = this.state.email;
@@ -51,6 +50,7 @@ export default class SignInPage extends Component {
                         if (password === res.data.password) {
                             localStorage.setItem('id', JSON.stringify(this.state.id));
                             localStorage.setItem('role', JSON.stringify(this.state.role));
+                            localStorage.setItem('orgName', JSON.stringify(this.state.email));
                             Router.push('/home');
                         }
                     }
