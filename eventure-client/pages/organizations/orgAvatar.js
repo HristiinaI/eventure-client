@@ -37,21 +37,58 @@ export default class Avatar extends Component {
   sendMessage = org => {
       const email = JSON.parse(localStorage.getItem('email'));
       const name = JSON.parse(localStorage.getItem('orgName'));
+      const id = JSON.parse(localStorage.getItem('id'));
 
       let members = [];
-      members.push(this.state.name);
       if(JSON.parse(localStorage.getItem('role')) === 'User') {
-          members.push(email);
+          axios.get('http://localhost:8080/users/' + id)
+              .then(res => {
+                  for(let i = 0; i < res.data.chats.length; i++) {
+                      axios.get('http://localhost:8080/chats/' + res.data.chats[i])
+                          .then(result => {
+                              for(let j = 0; j < result.data.members.length; j++) {
+                                  console.log('member = ' + result.data.members[i]);
+                                  console.log('person = ' + this.state.email);
+                                  if(result.data.members[j] === this.state.name) {
+                                      this.setState({isCreated: true});
+                                  }
+                              }
+                          })
+                  }
+              });
+          if(!this.state.isCreated) {
+              members.push(this.state.name);
+              members.push(email);
+          }
+
       } else if(JSON.parse(localStorage.getItem('role')) === 'Organization') {
-          members.push(name);
+          axios.get('http://localhost:8080/organizations/' + id)
+              .then(res => {
+                  for(let i = 0; i < res.data.chats.length; i++) {
+                      axios.get('http://localhost:8080/chats/' + res.data.chats[i])
+                          .then(result => {
+                              for(let j = 0; j < result.data.members.length; j++) {
+                                  if(result.data.members[j] === this.state.name) {
+                                      this.setState({isCreated: true});
+                                  }
+                              }
+                          })
+                  }
+              });
+          if(!this.state.isCreated) {
+              members.push(this.state.name);
+              members.push(name);
+          }
       }
       console.log('chat members = ' + members);
-      axios.post('http://localhost:8080/chats', {members})
-          .then(res => {
-              this.setState({chatId: res.data._id});
-          });
-      Router.push('/chat/allChats');
+      if(!this.state.isCreated) {
+          axios.post('http://localhost:8080/chats', {members})
+              .then(res => {
+                  this.setState({chatId: res.data._id});
+              });
+      }
 
+      Router.push('/chat/allChats');
   }
 
   render() {

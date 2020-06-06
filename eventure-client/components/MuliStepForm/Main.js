@@ -74,7 +74,9 @@ export class Main extends Component {
         axios.post('http://localhost:8080/events', { name, type, date, location, creator})
         .then(res => {
             console.log(res);
-            Router.push('/events/allEvents');
+            Router.push({
+                pathname: '/events/allEvents',
+            });
             const eventId = res.data.result._id;
             axios.post('http://localhost:8080/board',{name, eventId: eventId})
                 .then(res => {

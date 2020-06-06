@@ -125,19 +125,22 @@ export default class Home extends Component {
     if(this.state.allEvents.length){  
         return(
             <>
-            <h2>Your Events: </h2>
+            <h2>Public events you search: </h2>
             <ul>
-                {this.state.allEvents.map(event => {   
+                {this.state.allEvents.map(event => {
+                  if(event.type === "public"){   
                     return ( 
                         <li key={event._id} >
                              <Link href="/event/dashboard/[id]" 
                                 as={`/event/dashboard/${event._id}`} >
                                 <a>{event.name}</a>
                              </Link>
+                              {' '} 
+                              <a>{event.type}</a>
                         </li>
-                    ); 
-                   
-                })
+                    );
+                  }  
+                  })
                 }
             </ul>
             </>    

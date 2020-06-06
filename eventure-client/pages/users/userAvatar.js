@@ -104,7 +104,7 @@ export default class Avatar extends Component {
                 });
         }
 
-       //Router.push('/chat/allChats');
+       Router.push('/chat/allChats');
   }
 
   render() {

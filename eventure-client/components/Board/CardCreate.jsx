@@ -4,6 +4,8 @@ import styled from "styled-components";
 import BoardForm from "../Board/BoardForm";
 import BoardOpenForm from "../Board/BoardOpenForm";
 import axios from "axios";
+import { statuses } from "../../data/index";
+
 
 const OpenFormButton = styled.div`
   display: flex;
@@ -23,7 +25,8 @@ const OpenFormButton = styled.div`
 class CardCreate extends React.PureComponent {
   state = {
     formOpen: false,
-    text: ""
+    text: "",
+    // status: ""
   };
 
   openForm = () => {
@@ -47,11 +50,11 @@ class CardCreate extends React.PureComponent {
 
   handleAddCard = () => {
     const content = this.state.text;
-    // const status = "open";
-    // const icon = "⭕️";
+    const status = "open";
+    const icon = "⭕️";
     const boardId = this.props.boardId;
 
-    axios.post('http://localhost:8080/cards', {content, boardId})
+    axios.post('http://localhost:8080/cards', {content, boardId, icon, status})
         .then(res => {
             console.log(res);
             this.props.onCreate();
@@ -63,7 +66,6 @@ class CardCreate extends React.PureComponent {
 
     return (
       <OpenFormButton onClick={this.openForm}>
-        {/* <Icon>add</Icon> */}
         <p style={{ flexShrink: 0 }}>{buttonText}</p>
       </OpenFormButton>
     );
@@ -71,22 +73,27 @@ class CardCreate extends React.PureComponent {
 
   render() {
     const { text } = this.state;
-
-    return this.state.formOpen ? (
-      <BoardForm
-        text={text}
-        onChange={this.handleInputChange}
-        closeForm={this.closeForm}
-      >
-        <BoardButton onClick={this.handleAddCard}>
-          {"Add Card"}
-        </BoardButton>
-      </BoardForm>
-    ) : (
-      <BoardOpenForm onClick={this.openForm}>
-        {"Add another card"}
-      </BoardOpenForm>
-    );
+    const status = this.props.status;
+  
+    if(status === "open"){
+      return this.state.formOpen ? (
+        <BoardForm
+          text={text}
+          onChange={this.handleInputChange}localeCompare
+          closeForm={this.closeForm}
+        >
+          <BoardButton onClick={this.handleAddCard}>
+            {"Add Card"}
+          </BoardButton>
+        </BoardForm>
+      ) : (
+        <BoardOpenForm onClick={this.openForm}>
+          {"Add another card"}
+        </BoardOpenForm>
+      );
+    }else{
+      return null;
+    }
   }
 }
 
