@@ -19,7 +19,6 @@ class DateInput extends React.Component{
                 name="date"
                 dateFormat="MMMM d, yyyy h:mm aa"
                 min={today}
-                // validationMessage={checkInValidationMessage}
             />
         )
     }

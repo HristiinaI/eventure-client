@@ -50,7 +50,6 @@ const Item = ({ item, index, moveItem, status }) => {
 
     const deleteItem = (itemId) => {
         axios.delete('http://localhost:8080/cards/' + itemId);
-        // Router.reload('/event/kanban')
         location.reload();
     }
 

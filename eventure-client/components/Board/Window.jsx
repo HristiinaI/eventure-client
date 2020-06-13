@@ -1,9 +1,12 @@
-import React from "react";
 import Modal from "react-modal";
+import ReactDOM from 'react-dom';
+import React, {  useEffect } from "react";
 
-// Modal.setAppElement("#app");
 
 const Window = ({ show, onClose, item }) => {
+    useEffect(() => {
+        Modal.setAppElement('body');
+    }, []);
     return (
         <Modal
             isOpen={show}
@@ -24,5 +27,6 @@ const Window = ({ show, onClose, item }) => {
         </Modal>
     );
 };
+
 
 export default Window;

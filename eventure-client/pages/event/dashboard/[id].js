@@ -151,8 +151,9 @@ class Event extends React.Component {
     }
 
     render() {
-
-        if (this.state.localStorageUserId === this.props.event.creator) {
+        
+        for(let i = 0;i <= this.props.event.members.length; i++){
+        if (this.state.localStorageUserId === this.props.event.creator || this.props.event.members.includes(JSON.parse(localStorage.getItem('email')))) {
             return (
                 <div>
                     <Home/>
@@ -353,6 +354,7 @@ class Event extends React.Component {
                 </div>
             );
         }
+    }
 
     };
 }
