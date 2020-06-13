@@ -5,8 +5,7 @@ import React from 'react';
 class DateInput extends React.Component{
 
     render(){
-        const {handleDateChange, date, successDate} = this.props;
-        const checkInValidationMessage = "Dates in the past are not valid Check-In dates.";
+        const {handleDateChange, date} = this.props;
         const today = new Date();
         return(
             <DatePicker

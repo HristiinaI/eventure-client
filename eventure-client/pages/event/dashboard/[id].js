@@ -37,10 +37,12 @@ class Event extends React.Component {
             newEventLocation: '',
             newEventDate: new Date(),
             localStorageUserId: '',
-            successDate: false,
+            membersOfEvents: '',
+            creatorFName: '',
+            creatorLName: '',
 
         }
-        this.handleSubmmitUsers = this.handleSubmmitUsers.bind(this);
+        
         this.handleAddUser = this.handleAddUser.bind(this);
     }
 
@@ -65,19 +67,33 @@ class Event extends React.Component {
         this.setState({addUsers: this.state.added});
     }
 
-    handleSubmmitUsers = () => {
-        let members = this.state.addUsers;
-        let eventId = this.props.event._id;
+    // handleSubmmitUsers = () => {
+    //     let members = this.state.addUsers;
+    //     let eventId = this.props.event._id;
+    //     // let members = [];
+    //     // let currentUserEmail;
+    //     // const creator = JSON.parse(localStorage.getItem("id"));
+    //     // axios.get(`http://localhost:8080/events/` + eventId)
+    //     // .then(function(results){
+    //     //     for(let i = 0;i < results.data.members.length;i++){
+    //     //         members.push(results.data[i].members);
+    //     //     }
+    //     //     _this.setState({membersOfEvents: members});
+    //     // })
+    //         // if(!results.data.members.includes(currentUserEmail)){
+    //             axios.put('http://localhost:8080/events/' + eventId, {members})
+    //                 .then(res => {
 
-        axios.put('http://localhost:8080/events/' + eventId, {members})
-            .then(res => {
+    //                 })
+    //                 .catch(function (error) {
+    //                     console.log(error);
+    //                 })
+    //         // }else{
+    //         //     console.log("This event is already yours!")
+    //         // }
+      
 
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-
-    }
+    // }
     handleChange = input => e => {
         this.setState({[input]: e.target.value});
     }
@@ -100,19 +116,14 @@ class Event extends React.Component {
 
     handleSubmit = () => {
         const name = this.state.newEventName;
-        // const type = this.state.type;
         const date = this.state.newEventDate;
         const location = this.state.newEventLocation;
         let eventId = this.props.event._id;
+        let members = this.state.addUsers;
 
 
-        axios.put('http://localhost:8080/events/' + eventId, {name, date, location})
-            .then(res => {
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        axios.put('http://localhost:8080/events/' + eventId, {name, date, location, members});
+        
     }
 
     handleDelete = eventId => {
@@ -125,6 +136,17 @@ class Event extends React.Component {
         this.setState({newEventName: this.props.event.name});
         this.setState({newEventDate: this.props.event.date});
         this.setState({newEventLocation: this.props.event.location});
+        const _this = this;
+
+        axios.get('http://localhost:8080/users/' + this.state.localStorageUserId)
+        .then(function (res) {
+            _this.setState({creatorFName: res.data[0].firstName});
+            _this.setState({creatorLName: res.data[0].lastName}); 
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
 
     }
 
@@ -143,6 +165,11 @@ class Event extends React.Component {
                                 <CardBody>
                                     <Form onSubmit={this.handleClick(this.props.event.chatId)}>
                                         <Row>
+                                            <Col> <h4>Event`s creator:  
+                                            {this.state.creatorFName} {this.state.creatorLName}</h4> 
+                                             </Col>
+                                        </Row>
+                                        <Row>
                                             <Col className="pr-md-1" md="6">
                                                 <FormGroup>
                                                     <label>Event Name</label>
@@ -160,7 +187,6 @@ class Event extends React.Component {
                                                     <DateInput
                                                         defaultValue={this.state.newEventDate}
                                                         onChange={this.handleDateChange}
-                                                        successDate={this.state.successDate}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -200,7 +226,7 @@ class Event extends React.Component {
                                                 <FormGroup>
                                                     <label>Add your friend by email:</label>
                                                     <Input
-                                                        defaultValue={this.state.user}
+                                                       value = {this.state.user || ''}
                                                         onChange={this.handleAddInput}
                                                         placeholder="Enter your friend email"
                                                         type="email"
@@ -208,13 +234,18 @@ class Event extends React.Component {
                                                     />
                                                 </FormGroup>
                                                 <FormGroup>
-                                                    <Button color="primary" onClick={this.handleAddUser}>
+                                                    <Button color="primary" onClick={this.handleAddUser} >
                                                         Add Friend
                                                     </Button>
                                                     {' '}
-                                                    <Button color="primary" onClick={this.handleSubmmitUsers}>
-                                                        Submit Friends
-                                                    </Button>
+
+                                                    <ul>
+                                                        {this.state.addUsers.map(function(user) {
+                                                        return <li key={user}>{user}</li>;
+                                                        })}
+                                                    </ul>
+                                                    {' '}
+        
                                                 </FormGroup>
 
                                             </Col>
@@ -264,6 +295,11 @@ class Event extends React.Component {
                                 <CardBody>
                                     <Form>
                                         <Row>
+                                            <Col> <h4>Event`s creator:  
+                                            {this.state.creatorFName} {this.state.creatorLName}</h4> 
+                                             </Col>
+                                        </Row>
+                                        <Row>
                                             <Col className="pr-md-1" md="6">
                                                 <FormGroup>
                                                     <label>Event Name</label>
@@ -281,7 +317,6 @@ class Event extends React.Component {
                                                     <DateInput
                                                         defaultValue={this.state.newEventDate}
                                                         onChange={this.handleDateChange}
-                                                        successDate={this.state.successDate}
                                                     ></DateInput>
                                                 </FormGroup>
                                             </Col>

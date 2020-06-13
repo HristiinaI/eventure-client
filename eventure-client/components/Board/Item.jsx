@@ -1,15 +1,12 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import Window from "./Window";
+import Window from "../../components/Board/Window";
 import ITEM_TYPE from "../../data/types";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import "../../styles/deleteButton.css";
 import {
     Button
 } from "reactstrap";
 import axios from 'axios';
-import Router from 'next/router';
 
 const Item = ({ item, index, moveItem, status }) => {
     const ref = useRef(null);
@@ -74,7 +71,7 @@ const Item = ({ item, index, moveItem, status }) => {
                 onClick={onOpen}
             >
                 <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
-                <p className={"item-title"}>{item.content}</p>
+                <p className={"item-title"}>{item.title}</p>
                 <p className={"item-status"}>{item.icon}</p>
                 <Button className="btnDelete" onClick={() => {
                             if (window.confirm('Are you sure you wish to delete this card ?'))
