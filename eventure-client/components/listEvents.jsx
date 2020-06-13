@@ -8,7 +8,7 @@ class ListEvents extends React.Component {
         if(this.props.length){  
             return(
                 <>
-                <h2>Your Events: </h2>
+                <h2>{this.props.heading} </h2>
                 <ul>
                     {this.props.allEvents.map(event => {   
                         return ( 
@@ -31,8 +31,8 @@ class ListEvents extends React.Component {
         }else{
             return(
                 <>
-                <h2>Your Events: </h2>
-                You do not have any events!
+                <h2>{this.props.heading} </h2>
+                    {this.props.headingEmpty}
                 </>    
             );
         }

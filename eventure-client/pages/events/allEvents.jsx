@@ -9,9 +9,12 @@ class AllEvents extends React.Component{
 
     state = {
         allEvents: new Array(),
+        otherEvents: new Array(),
+        userEmail: ''
     }          
     componentDidMount = () => {
         let events = [];
+        let otherEvents = [];
         let _this = this;
         const creator = JSON.parse(localStorage.getItem("id"));
 
@@ -25,6 +28,30 @@ class AllEvents extends React.Component{
         .catch(function (error) {
             console.log(error);
         })
+
+        axios.get(`http://localhost:8080/users/` + creator)
+        .then(function(results){
+            if(results.data.members.length >= 1){
+                axios.get(`http://localhost:8080/events?email=` + results.data.email)
+                .then(function(results){
+                    for(let i = 0;i < results.data.length;i++){
+                        otherEvents.push(results.data[i]);
+                    }
+                    _this.setState({otherEvents: otherEvents});
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
+
+
+      
+
     }
 
     render(){ 
@@ -32,8 +59,16 @@ class AllEvents extends React.Component{
          <>
          <Home />
          <ListEvents 
+            heading = "Events you create:"
+            headingEmpty = "You do not create any events"
             allEvents = {this.state.allEvents} 
             length = {this.state.allEvents.length}   
+        />
+        <ListEvents 
+            heading = "Events you participate in:"
+            headingEmpty = "You do not participate in any events"
+            allEvents = {this.state.otherEvents} 
+            length = {this.state.otherEvents.length}   
         />
         </>
      );
