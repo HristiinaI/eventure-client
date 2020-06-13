@@ -21,9 +21,7 @@ class AllInfo extends React.Component {
                 <button className="Back" onClick={this.back}>
                     « Back
                 </button>
-                {/* <button  onClick={this.submiting}>
-                    Submit
-                 </button> */}
+               
             
             </>
         );

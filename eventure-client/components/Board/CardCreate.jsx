@@ -26,7 +26,6 @@ class CardCreate extends React.PureComponent {
   state = {
     formOpen: false,
     text: "",
-    // status: ""
   };
 
   openForm = () => {

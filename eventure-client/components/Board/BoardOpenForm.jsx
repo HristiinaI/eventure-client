@@ -21,7 +21,6 @@ const OpenFormButton = styled.div`
 const BoardOpenForm = ({children, onClick }) => {
   return (
     <OpenFormButton onClick={onClick}>
-      {/* <Icon>add</Icon> */}
       <p style={{ flexShrink: 0 }}>{children}</p>
     </OpenFormButton>
   );

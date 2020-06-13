@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
-import { statuses } from "../../data/index";
 
 const StyledButton = styled(Button)`
   && {
