@@ -3,9 +3,6 @@ import Router from 'next/router';
 import Home from '../../pages/home';
 import 'react-chat-elements/dist/main.css';
 import { ChatList } from 'react-chat-elements';
-import ChatComponent from "./ChatComponent";
-import { Redirect } from "react-router-dom";
-import Link from 'next/link';
 
 class AllChatsComponent extends React.Component{
     handleClick = chat => e => {
