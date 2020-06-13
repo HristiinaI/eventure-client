@@ -141,10 +141,10 @@ class Event extends React.Component {
         this.setState({newEventLocation: this.props.event.location});
         const _this = this;
 
-        axios.get('http://localhost:8080/users/' + this.state.localStorageUserId)
+        axios.get('http://localhost:8080/users/' + JSON.parse(localStorage.getItem('id')))
         .then(function (res) {
-            _this.setState({creatorFName: res.data[0].firstName});
-            _this.setState({creatorLName: res.data[0].lastName}); 
+            _this.setState({creatorFName: res.data.firstName});
+            _this.setState({creatorLName: res.data.lastName});
 
         })
         .catch(function (error) {
