@@ -5,6 +5,7 @@ import 'react-chat-elements/dist/main.css';
 import { ChatList } from 'react-chat-elements';
 import ChatComponent from "./ChatComponent";
 import { Redirect } from "react-router-dom";
+import Link from 'next/link';
 
 class AllChatsComponent extends React.Component{
     handleClick = chat => e => {
@@ -24,19 +25,20 @@ class AllChatsComponent extends React.Component{
                     <Home />
                     {allChats.map(chat => {
                         return (
-                                    <ChatList
-                                        onClick={this.handleClick(chat)}
-                                       // onClick = {<Redirect to={"/chat/[chatid]"}/>}
-                                        key = {chat}
-                                        className='chat-list'
-                                        dataSource={[
-                                            {
-                                                avatar: 'https://facebook.github.io/react/img/logo.svg',
-                                                alt: 'Reactjs',
-                                                title: chat,
-                                            }
-                                        ]}
-                                    />
+
+                                <ChatList
+                                    onClick={this.handleClick(chat)}
+                                    key = {chat}
+                                    className='chat-list'
+                                    dataSource={[
+                                        {
+                                            avatar: 'https://facebook.github.io/react/img/logo.svg',
+                                            alt: 'Reactjs',
+                                            title: chat,
+                                        }
+                                    ]}
+
+                                />
 
                         );
 

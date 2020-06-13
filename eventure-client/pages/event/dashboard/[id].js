@@ -25,7 +25,6 @@ import Link from 'next/link';
 
 import DateInput from '../../../components/DateInput';
 
-
 class Event extends React.Component {
     constructor(props) {
         super(props);
@@ -89,6 +88,16 @@ class Event extends React.Component {
         });
     }
 
+    handleClick = id => e => {
+
+        console.log('push');
+        Router.push({
+            pathname: '/chat/chatid',
+            query: {id: `${id}`}
+        });
+        // e.preventDefault();
+    }
+
     handleSubmit = () => {
         const name = this.state.newEventName;
         // const type = this.state.type;
@@ -132,7 +141,7 @@ class Event extends React.Component {
                                     <h3 className="title">{this.state.newEventName} -{this.props.event.type} </h3>
                                 </CardHeader>
                                 <CardBody>
-                                    <Form>
+                                    <Form onSubmit={this.handleClick(this.props.event.chatId)}>
                                         <Row>
                                             <Col className="pr-md-1" md="6">
                                                 <FormGroup>
@@ -168,7 +177,7 @@ class Event extends React.Component {
                                                     />
                                                 </FormGroup>
                                             </Col>
-                                            <Col className="pr-md-1" md="6">
+                                            <Col className="pr-md-1" md="3">
                                                 <FormGroup>
                                                     <Link href="/event/kanban/[id]"
                                                           as={`/event/kanban/${this.props.event.boardId}`}>
@@ -178,14 +187,11 @@ class Event extends React.Component {
                                                     </Link>
                                                 </FormGroup>
                                             </Col>
-                                            <Col className="pr-md-1" md="6">
-                                                <FormGroup>
-                                                    <Link href="/chat/[chatid]"
-                                                          as = {`/chat/${this.props.event.chatId}`}>
-                                                        <Button>
-                                                            {this.state.newEventName} Chat
-                                                        </Button>
-                                                    </Link>
+                                            <Col className="pr-md-1" md="2">
+                                                <FormGroup >
+                                                    <Button type="submit">
+                                                        {this.state.newEventName} Chat
+                                                    </Button>
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -319,11 +325,9 @@ class Event extends React.Component {
 Event.getInitialProps = async function (context) {
     const { id } = context.query;
     let event = {};
-
     await axios.get(`http://localhost:8080/events/${id}`)
         .then(res => {
             event = res.data;
-
         })
         .catch(function (error) {
             console.log(error);

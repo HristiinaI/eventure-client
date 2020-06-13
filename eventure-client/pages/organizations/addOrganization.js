@@ -5,8 +5,6 @@ import { Container,  FormGroup, Label, Input } from 'reactstrap';
 import { Form, Button } from 'react-bootstrap';
 import Link from 'next/link';
 
-import Home from '../home';
-
 export default class AddOrganization extends Component {
     state = {
         name: '',

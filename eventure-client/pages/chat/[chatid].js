@@ -4,16 +4,14 @@ import 'react-chat-elements/dist/main.css';
 import Home from '../home';
 import { Input } from "react-chat-elements";
 import { Button } from "react-chat-elements";
-import Router, { withRouter } from 'next/router'
 import  { MessageBox }  from 'react-chat-elements';
 import React from "react";
 import '../../styles/Chat.css';
-import {List} from "@material-ui/core";
 import socketIOClient from "socket.io-client";
 
 class Chat extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             messages: new Array(),
             id: '',
@@ -29,13 +27,15 @@ class Chat extends React.Component{
         const isUser = true;
         const message = this.state.message;
         this.state.socket.emit('message', {chatId, sender, isUser, message});
-        this.state.socket.emit('join');
+        const temp = this.state.socket.emit('join');
+        console.log('temp = ' + temp);
         this.onReload(message);
     }
 
 
     onReload = () => {
         let messages = [];
+        console.log('chatId socket: ' + this.props.chat._id);
         const socket = socketIOClient('http://localhost:8080', {
             query: {
                 token: JSON.parse(localStorage.getItem('accessToken')),
@@ -124,4 +124,4 @@ Chat.getInitialProps = async function(context) {
         });
     return {chat};
 }
-export default withRouter(Chat);
+export default Chat;

@@ -52,7 +52,6 @@ export default class Profile extends Component {
       .catch(function (error) {
         console.log(error);
       })
-      console.log("ID" + id);
   }
 
   onEmailChanged = user => {

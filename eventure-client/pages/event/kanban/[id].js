@@ -66,7 +66,7 @@ class Board extends React.Component {
   return (
     <DndProvider backend={Backend}>
          <Home />
-        <Header />
+        <Header boardName = {this.props.board.name}/>
       <div className={"row"}>
           {statuses.map(s => {
               return (
@@ -101,7 +101,6 @@ class Board extends React.Component {
 Board.getInitialProps = async function (context) {
   const { id } = context.query;
   let board = {};
-
   await axios.get(`http://localhost:8080/board/${id}`)
   .then(res => {
       board = res.data;

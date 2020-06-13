@@ -95,12 +95,16 @@ export class Main extends Component {
                     console.log(error);
                 })
 
-            console.log("members = " + this.state.email);
-            axios.post('http://localhost:8080/chats', {name, members: this.state.email})
+            const members = [];
+            members.push(this.state.email);
+
+            axios.post('http://localhost:8080/chats', {name, members})
                 .then(res => {
                     _this.setState({chatId: res.data.result._id});
-                    axios.put('http://localhost:8080/events/' + eventId, {chatId: res.data._id});
-                    console.log(res.data);
+                    axios.put('http://localhost:8080/events/' + eventId, {chatId: res.data.result._id})
+                        .then(res => {
+                            localStorage.setItem('chatId', JSON.stringify(this.state.chatId))
+                        });
                 });
         })
     };

@@ -9,7 +9,6 @@ import { Input } from 'reactstrap';
  
 export default class Home extends Component {
   state = {
-    //id: '',  
     item: '',
     role: '',
     isReqDone: '',
@@ -37,9 +36,7 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    //this.setState({ usrRole: localStorage.getItem('role')});
     const role = JSON.parse(localStorage.getItem('role'));
-
     this.setState({ role: role });
   }
 
@@ -169,8 +166,6 @@ export default class Home extends Component {
                <NavDropdown title="Settings" id="collasible-nav-dropdown">
                  <NavDropdown.Item onClick={this.handleClick} >My profile</NavDropdown.Item>
                  <NavDropdown.Divider />
-                 <NavDropdown.Item hidden={check !== 1} href="/organizations/myOrganizations" >My organizations</NavDropdown.Item>
-                   <NavDropdown.Divider hidden={check !== 1}/>
                  <NavDropdown.Divider hidden={check !== 0}/>
                  <NavDropdown.Item onClick = {this.deleteProfile} href="#">Delete profile</NavDropdown.Item>
              </NavDropdown >

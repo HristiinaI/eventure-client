@@ -1,9 +1,9 @@
 import React from "react";
 
-const Header = () => {
+const Header = ({boardName}) => {
     return (
         <div className={"row"}>
-            <p className={"page-header"}>Dashboard 🗂</p>
+            <p className={"page-header"}> {boardName} Dashboard🗂</p>
         </div>
     );
 };
