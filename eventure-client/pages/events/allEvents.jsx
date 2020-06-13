@@ -31,7 +31,6 @@ class AllEvents extends React.Component{
 
         axios.get(`http://localhost:8080/users/` + creator)
         .then(function(results){
-            if(results.data.members.length >= 1){
                 axios.get(`http://localhost:8080/events?email=` + results.data.email)
                 .then(function(results){
                     for(let i = 0;i < results.data.length;i++){
@@ -42,16 +41,10 @@ class AllEvents extends React.Component{
                 .catch(function (error) {
                     console.log(error);
                 })
-            }
         })
         .catch(function (error) {
             console.log(error);
         })
-
-
-
-      
-
     }
 
     render(){ 

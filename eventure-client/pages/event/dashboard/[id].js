@@ -1,8 +1,5 @@
 import axios from 'axios';
-
 import 'bootstrap/dist/css/bootstrap.css';
-
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import "../../../styles/deleteButton.css";
@@ -105,13 +102,10 @@ class Event extends React.Component {
     }
 
     handleClick = id => e => {
-
-        console.log('push');
         Router.push({
             pathname: '/chat/chatid',
             query: {id: `${id}`}
         });
-        // e.preventDefault();
     }
 
     handleSubmit = () => {
@@ -121,9 +115,18 @@ class Event extends React.Component {
         let eventId = this.props.event._id;
         let members = this.state.addUsers;
 
-
         axios.put('http://localhost:8080/events/' + eventId, {name, date, location, members});
-        
+        axios.get('http://localhost:8080/chats/' + this.props.event.chatId)
+            .then(res => {
+                let chatMembers = [];
+                for(let i = 0; i < res.data.members.length; i++) {
+                    chatMembers.push(res.data.members[i]);
+                }
+                for(let i = 0; i < members.length; i++) {
+                    chatMembers.push(members[i]);
+                }
+                axios.put('http://localhost:8080/chats/' + this.props.event.chatId, {members: chatMembers});
+            });
     }
 
     handleDelete = eventId => {

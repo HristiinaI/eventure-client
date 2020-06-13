@@ -97,9 +97,11 @@ export class Main extends Component {
 
             const members = [];
             members.push(this.state.email);
-
+            console.log('creator: ' + this.state.email);
+            console.log('name: ' + name)
             axios.post('http://localhost:8080/chats', {name, members})
                 .then(res => {
+                    console.log('id: ' + res.data.result._id);
                     _this.setState({chatId: res.data.result._id});
                     axios.put('http://localhost:8080/events/' + eventId, {chatId: res.data.result._id})
                         .then(res => {
